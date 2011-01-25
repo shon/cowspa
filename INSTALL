@@ -2,3 +2,5 @@ git clone cowspa
 virtualenv .
 . ./bin/activate
 easy_install jinja2
+# test
+firefox fe/src/demo.html
