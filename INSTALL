@@ -1,6 +1,7 @@
-git clone cowspa
-virtualenv .
+git clone git@github.com:shon/cowspa.git
+virtualenv cowspa
+cd cowspa
 . ./bin/activate
 easy_install jinja2
 # test
-firefox fe/src/demo.html
+rm -rf out; python  fe/build/compile.py; firefox out/dashboard.html
