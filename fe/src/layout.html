@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {% include 'js.html' %}
+    {% include 'style.html' %}
+    <div id="style">{% block style %}{% endblock %}</div>
+</head>
+<body>
+    {% include 'topbar.html' %}
+    <div id="tabs">{% block tabs %}{% endblock %}</div>
+    {% include 'nav.html' %}
+    <div id="content">{% block content %}{% endblock %}</div>
+</body>
+    {% include 'footer.html' %}
+</html>
