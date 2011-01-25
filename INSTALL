@@ -1,0 +1,4 @@
+git clone cowspa
+virtualenv .
+. ./bin/activate
+easy_install jinja2
