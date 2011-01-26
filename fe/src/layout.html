@@ -7,10 +7,27 @@
     <div id="style">{% block style %}{% endblock %}</div>
 </head>
 <body>
-    {% include 'topbar.html' %}
-    <div id="tabs">{% block tabs %}{% endblock %}</div>
-    {% include 'nav.html' %}
-    <div id="content">{% block content %}{% endblock %}</div>
+
+
+
+    <div class="main">
+        <div class="dp100">
+            {% include 'topbar.html' %}
+        </div>
+        <div class="pl1 pr1">
+            {% include 'nav.html' %}
+        </div>
+        <div class="fluid">
+            <div class="mt3">
+                {% block tabs %}{% endblock %}
+            <br/>
+            </div>
+            <div class="mt3 ml5">
+            <br/>
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
 </body>
     {% include 'footer.html' %}
 </html>

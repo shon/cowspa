@@ -1,61 +1,30 @@
 {% extends "layout.html" %}
 
-{% block style %}
-<style>
-body { background: -moz-linear-gradient(top, #133300, #fffff0); }
-h3 {color:#F0C030;}
-p {color:#ddd;}
-.around {
-    color:#ddd;
-    background: -moz-linear-gradient(top, #001200, #000000);
-} 
-.content {background:gray;}
-
-/*--- LINKS ---*/
-a{
-    color:#ddd;
-    text-decoration:underline;
-    padding:3px;
-    
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-}
-a:visited {
-    color:#aaa;
-}
-a:hover {
-    background:gray;
-    text-decoration:none;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-}
-</style>
+{% block tabs %}
+    <span class="tab-open"> <a> Tab1 </a> </span> <span class="tab-closed"> Tab2 </span> <span class="tab-closed"> Tab3 </span>
 {% endblock %}
 
 {% block content %}
-<div>
-<img class="ml5" src="http://chart.apis.google.com/chart?chf=a,s,000000|bg,s,67676700|c,s,67676700&chxl=0:|2000|2500|3000|3500&chxr=0,-5,100&chxs=0,000000,11.5,0,l,000000&chxt=r&chs=220x75&cht=ls&chco=DA3B15,F7A10A,4582E7&chds=0,3000,-5,3000&chd=t2:1900,2100,2700,3000,2500,2700|1800,2100,2600,3000,2500,2900|24.59,27.869,31.148,29.508,24.59,21.311,26.23,39.344,36.066,27.869,22.951,26.23,31.148,37.705,39.344,27.869,26.23,-1&chdl=Invoiced|Uninvoiced&chls=1|1|1&chma=|5&chtt=Revenue+(Months)&chts=000000,11.5" width="220" height="75" alt="Revenue (Months)" />
-<div class="fluid">
-    <div class="ml5 dp30 fr">
+<img src="http://chart.apis.google.com/chart?chf=a,s,000000|bg,s,67676700|c,s,67676700&chxl=0:|2000|2500|3000|3500&chxr=0,-5,100&chxs=0,000000,11.5,0,l,000000&chxt=r&chs=220x75&cht=ls&chco=DA3B15,F7A10A,4582E7&chds=0,3000,-5,3000&chd=t2:1900,2100,2700,3000,2500,2700|1800,2100,2600,3000,2500,2900|24.59,27.869,31.148,29.508,24.59,21.311,26.23,39.344,36.066,27.869,22.951,26.23,31.148,37.705,39.344,27.869,26.23,-1&chdl=Invoiced|Uninvoiced&chls=1|1|1&chma=|5&chtt=Revenue+(Months)&chts=000000,11.5" width="220" height="75" alt="Revenue (Months)" />
+<br/>
+
+    <div class="pl2 pr2 dp30 rc box-shadow">
         <h3>Today</h3>
+        <hr/>
+        <ol>
+            <li>event one - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -- - - - - - - - -  - - - - - - - - ------------------------</li>
+            <li>event two</li>
+        </ol>
+    </div>
+    <div class="ml5 pl2 pr2 dp30 rc box-shadow">
+        <h3>Tomorrow</h3>
         <hr/>
         <ol>
             <li>event one</li>
             <li>event two</li>
         </ol>
     </div>
-    <div class="fr ml5 dp30">
-        <h3>Today</h3>
-        <hr/>
-        <ol>
-            <li>event one</li>
-            <li>event two</li>
-        </ol>
-    </div>
-</div>
 </div>
 <!-- to add some space at the end of content section TODO: replace with better option -->
-<div class="dp100"/> <br/>
+<div class="clear"/> <br/>
 {% endblock %}
