@@ -10,22 +10,19 @@
 
 
 
-    <div class="main">
-        <div class="hp">
+    <div class="main tc">
+        <div class="hp tl">
             {% include 'topbar.html' %}
         </div>
         <div class="pl1 pr1 dl10">
             {% include 'nav.html' %}
         </div>
-        <div class="pl2 pt5">
-            <div class="mt3">
-		&nbsp;<br/><br/>
+        <div class="pl2 ml2 mt3 pt5">
+            <div class="mt2">
                 {% block tabs %}{% endblock %}
-		</div>
-            <br/>
+                <br/>
             </div>
-            <div class="mt3">
-            <br/>
+            <div class="mt1">
                 {% block content %}{% endblock %}
             </div>
         </div>

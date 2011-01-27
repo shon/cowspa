@@ -2,6 +2,7 @@ body {
     font-size: 13px;
     background: #001200;
 }
+h1 { text-shadow: 0px 1px 1px #FFFFFF; }
 h3 { color:#F0C030; }
 p { color:#ddd; }
 hr {color:black;}
@@ -28,16 +29,17 @@ a:visited {
     color:#aaa;
 }
 a:hover {
-    background:gray;
     text-decoration:none;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
     border-radius:5px;
+    text-shadow: 0px 1px 1px #FFFFF0;
 }
 
 .pr1 {padding-right:1em;}
 .pr2 {padding-right:2em;}
 .pr3 {padding-right:3em;}
+.mt2{margin-top:2em;}
 
 .box-shadow { 
     box-shadow:10px 10px 20px #000000;
@@ -46,40 +48,78 @@ a:hover {
 }
 
 .tabs {
+    font-weight:bold;
     color:#ddd;
-    border:1px solid black;
+    background: #133300;
+    border:1px solid #133300;
     -moz-border-radius:5px;
     border-radius:5px;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    margin: 5px;
-    padding: 6px;
+    margin: 2px;
+    padding: 10px;
 }
 .tab-open {
     border:1px solid black;
+    font-weight:bold;
     color: black;
     border-bottom: none;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    margin-bottom: 2px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    -moz-border-radius:5px;
     -moz-border-radius-bottomleft: 0px;
     -moz-border-radius-bottomright: 0px;
-    width: 5%;
-    padding: 5px;
-    margin: 1px;
 }
 .tab-closed {
-    color: white;
     background: #001200;
+    font-weight:bold;
     border:1px solid black;
     border-left: none;
     border-right: none;
     border-top: none;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 2px;
+    margin-left: 1px;
+    -moz-border-radius:5px;
     -moz-border-radius-bottomleft: 0px;
     -moz-border-radius-bottomright: 0px;
-    margin: 0px;
-    width: 5%;
-    padding: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    border-radius:5px;
+}
+.tabs2 {
+    text-align:left;
+    border-bottom: 1px solid black;
+}
+.tab2-open {
+    border:1px solid black;
+    color: black;
+    border-bottom: none;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    margin-bottom: 2px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -moz-border-radius-bottomleft: 0px;
+    -moz-border-radius-bottomright: 0px;
+}
+.tab2-closed {
+    font-weight:bold;
+    background: #133300;
+    border:1px solid black;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 2px;
     margin-left: 1px;
 }
 
