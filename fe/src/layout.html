@@ -11,18 +11,20 @@
 
 
     <div class="main">
-        <div class="dp100">
+        <div class="hp">
             {% include 'topbar.html' %}
         </div>
-        <div class="pl1 pr1">
+        <div class="pl1 pr1 dl10">
             {% include 'nav.html' %}
         </div>
-        <div class="fluid">
+        <div class="pl2 pt5">
             <div class="mt3">
+		&nbsp;<br/><br/>
                 {% block tabs %}{% endblock %}
+		</div>
             <br/>
             </div>
-            <div class="mt3 ml5">
+            <div class="mt3">
             <br/>
                 {% block content %}{% endblock %}
             </div>

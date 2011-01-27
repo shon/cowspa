@@ -36,11 +36,13 @@ a:hover {
 }
 
 .tab-open {
-    border:1px groove black;
+    border:1px solid black;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
     border-radius:5px;
     border-bottom: none;
+    -moz-border-radius-bottomleft: 0px;
+    -moz-border-radius-bottomright: 0px;
     width: 5%;
     color:black;
     margin: 5px;
@@ -58,10 +60,13 @@ a:hover {
     color:#ddd;
     background: -moz-linear-gradient(top, #001200, #000000);
     margin: 5px;
+    box-shadow:10px 10px 10px #000000;
+    -moz-box-shadow:10px 10px 10px #000000; 
 }
 .pr1 {padding-right:1em;}
 .pr2 {padding-right:2em;}
 .pr3 {padding-right:3em;}
+.linebelow {border-bottom:1px solid black;}
 .box-shadow { 
     box-shadow:10px 10px 20px #000000;
     -moz-box-shadow:10px 10px 20px #000000; 
