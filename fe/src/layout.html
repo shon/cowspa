@@ -8,7 +8,7 @@
 </head>
 <body>
 
-
+{% import 'macros.html' as macros %}
 
     <div class="main tc">
         <div class="hp tl">
@@ -19,7 +19,9 @@
         </div>
         <div class="pl2 ml2 mt3 pt5">
             <div class="mt2">
-                {% block tabs %}{% endblock %}
+                {% block tabs %}
+                    macros.tabs()
+                {% endblock %}
                 <br/>
             </div>
             <div class="mt1">

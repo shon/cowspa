@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block tabs %}
-    <span class="tab-open"> <a> Tab1 </a> </span> <span class="tab-closed"> <a> Tab2 </a> </span> <span class="tab-closed"> <a>Tab3</a> </span>
+    {{ macros.tabs([('Dashboard', '/dashboard.html'), ('Feeds', '/feeds'), ('Events', '/events')]) }}
 {% endblock %}
 
 {% block content %}
@@ -27,6 +27,5 @@
         </ol>
     </div>
 </div>
-<!-- to add some space at the end of content section TODO: replace with better option -->
 <div class="clear"/> <br/>
 {% endblock %}
