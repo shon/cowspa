@@ -1,0 +1,9 @@
+{% macro tabs(links=[]) %}
+    {% for label, link in links %}
+        <a class="tab-closed" href="{{ link }}">{{ label }}</a>
+    {% endfor %}
+    <script type="text/javascript">
+        {% include 'js/tabs.js' %}
+    </script>
+{% endmacro %}
+
