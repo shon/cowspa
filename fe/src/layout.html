@@ -10,22 +10,25 @@
 
 {% import 'macros.html' as macros %}
 
-    <div class="main tc">
-        <div class="hp tl">
+    <div class="main tl">
+        <div class="hp">
             {% include 'topbar.html' %}
         </div>
-        <div class="pl1 pr1 dl10">
-            {% include 'nav.html' %}
-        </div>
-        <div class="pl2 ml2 mt3 pt5">
-            <div class="mt2">
-                {% block tabs %}
-                    macros.tabs()
-                {% endblock %}
-                <br/>
+        <div class="clear"/>
+        <div class="p1 content">
+            <div class="pr1 dl10">
+                {% include 'nav.html' %}
             </div>
-            <div class="mt1">
-                {% block content %}{% endblock %}
+            <div class="pl2 ml2 mt2 pt5">
+                <div>
+                    {% block tabs %}
+                        macros.tabs()
+                    {% endblock %}
+                    <br/>
+                </div>
+                <div class="mt1">
+                    {% block content %}{% endblock %}
+                </div>
             </div>
         </div>
     </div>

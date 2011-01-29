@@ -8,17 +8,23 @@ p { color:#ddd; }
 hr {color:black;}
 .main { 
     width: 95em;
-    background: -moz-linear-gradient(top, #133300, #fffff0); 
+
 }
 .topbar {
     background: #001200;
 }
 .around {
     color:#ddd;
+    background: #001200;
     background: -moz-linear-gradient(top, #001200, #000000);
+    background: -webkit-gradient(linear, left top, left bottom, from(#001200), to(#000));
 } 
 .slogan {
     color: white;
+}
+.content {
+    background: -moz-linear-gradient(top, #133300, #fffff0); 
+    background: -webkit-gradient(linear, left top, left bottom, from(#133300), to(#FFF));
 }
 a{
     color:#ddd;
@@ -45,7 +51,22 @@ a:hover {
 .pr2 {padding-right:2em;}
 .pr3 {padding-right:3em;}
 .mt2{margin-top:2em;}
+.mt3{margin-top:3em;}
+.mt4{margin-top:4em;}
 
+.p2 { 
+    padding-right: 2em;
+    padding-left: 2em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+    
+.p1 { 
+    padding-right: 1em;
+    padding-left: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
 .box-shadow { 
     box-shadow:10px 10px 20px #000000;
     -moz-box-shadow:10px 10px 20px #000000; 
@@ -56,11 +77,6 @@ a:hover {
     font-weight:bold;
     color:#ddd;
     background: #133300;
-    border:1px solid #133300;
-    -moz-border-radius:5px;
-    border-radius:5px;
-    margin: 2px;
-    padding: 10px;
 }
 .tab-open {
     border:1px solid black;
