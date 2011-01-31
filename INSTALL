@@ -4,5 +4,5 @@ cd cowspa
 . ./bin/activate
 easy_install jinja2
 # test
-rm -rf pub; python  fe/build/compile.py; cd pub; python -m SimpleHTTPServer ; cd -
-firefox http://127.0.0.1:8000/dashboard.htm
+rm -rf pub; python  fe/build/compile.py
+firefox pub/dashboard
