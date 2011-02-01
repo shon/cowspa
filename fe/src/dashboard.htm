@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block tabs %}
-    {{ macros.tabs([('Dashboard', '/dashboard.htm'), ('Feeds', '/feeds'), ('Events', '/events')]) }}
+    {{ macros.tabs([('Dashboard', '/dashboard'), ('Feeds', '/feeds'), ('Events', '/events')]) }}
 {% endblock %}
 
 {% block content %}
@@ -17,6 +17,7 @@
             <li>event one - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -- - - - - - - - -  - - - - - - - - ------------------------</li>
             <li>event two</li>
         </ol>
+
     </div>
     <div class="ml5 pl2 pr2 dp30 rc box-shadow">
         <h3 class="mt1">Tomorrow</h3>
@@ -27,5 +28,5 @@
         </ol>
     </div>
 </div>
-<div class="clear"/> <br/>
+
 {% endblock %}

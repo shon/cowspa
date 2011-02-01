@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block tabs %}
+    <h2 class="b beer">Add Coworking space</h2>
+    <hr/>
+
+    {{ macros.tabs([('Business Information', '/new'), ('Contact Information', '/PLACEID/contact'), ('Billing Preferences', '/PLACEID/billing')]) }}
+{% endblock %}
+
+{% block content %}
+
+<div>
+<form action="/spaces/new" method="post">
+    <table class="dl60 rc box-shadow">
+        <tr>
+            <td><label for="name">Business name </label></td>
+            <td><input type="text" id="name" placeholder="My Co-Working Place" /></td>
+        </tr>
+        <tr>
+            <td><label for="summary">Business summary</label>  </td>
+            <td><input type="text" name="summary" placeholder="Best coworking place in Amsterdamn"/></td>
+        </tr>
+        <tr>
+            <td><label for="summary1">Business Description</label></td>
+            <td><input type="text" name="summary1" placeholder="Best coworking place in Amsterdamn" class="p05"/></td>
+        </tr>
+    </table>
+</form>
+</div>
+<div class="clear"/>
+{% endblock %}
+<!--
+Name
+Summary
+Description
+Company number
+Cutstom fields
+
+Contact Info
+Phone number
+Fax number
+Email address
+Website
+Blog
+Twitter
+City
+Address
+Pincode
+Country
+
+Billing 
+Currency
+Locale
+TimeZone
+
+Invoicing Preferences
+Bank
+Account number
+Tax Included
+
+Resources
+
+Messages
+-->

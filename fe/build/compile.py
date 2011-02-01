@@ -14,7 +14,8 @@ env = Environment(loader=FileSystemLoader('fe/src'))
 
 for root, dirs, filenames in os.walk(srcdir):
     for filename in filenames:
-        if (not filename.endswith('.htm') and not 'extends' in file(os.path.join(root, filename)).read()): continue
+        if not (filename.endswith('.htm') and 'extends' in file(os.path.join(root, filename)).read()): continue
+        if filename.startswith('.'): continue
         print "compiling", os.path.join(root, filename)
         reldir = root.replace(srcdir, '')
         if reldir.startswith(os.sep):
