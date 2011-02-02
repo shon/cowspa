@@ -2,7 +2,7 @@
 
 {% block tabs %}
     <h2 class="b beer">Add Coworking space</h2>
-    <hr/>
+    <hr class="ourgreen"/>
 
     {{ macros.tabs([('Business Information', '/new'), ('Contact Information', '/PLACEID/contact'), ('Billing Preferences', '/PLACEID/billing')]) }}
 {% endblock %}
@@ -13,20 +13,32 @@
 <form action="/spaces/new" method="post">
     <table class="dl60 rc box-shadow">
         <tr>
-            <td><label for="name">Business name </label></td>
+            <td><label for="name">Name </label></td>
             <td><input type="text" id="name" placeholder="My Co-Working Place" /></td>
         </tr>
         <tr>
-            <td><label for="summary">Business summary</label>  </td>
+            <td><label for="summary">Summary</label>  </td>
             <td><input type="text" name="summary" placeholder="Best coworking place in Amsterdamn"/></td>
         </tr>
         <tr>
-            <td><label for="summary1">Business Description</label></td>
-            <td><input type="text" name="summary1" placeholder="Best coworking place in Amsterdamn" class="p05"/></td>
+            <td><label for="description">Business Description</label></td>
+            <td><textarea name="description" id="description" class="dl50 richtext"> </textarea></td>
+        </tr>
+        <tr>
+            <td><label for="company_number">Company Number</label>  </td>
+            <td><input type="text" name="company_number" placeholder="If any"/></td>
         </tr>
     </table>
 </form>
 </div>
+
+<script>
+    $('description').mooEditable({
+        actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview'
+    });
+    
+</script>
+
 <div class="clear"/>
 {% endblock %}
 <!--

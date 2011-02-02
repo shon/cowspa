@@ -1,14 +1,28 @@
 body { 
     font-size: 13px;
-    background: #001200;
+    background: white;
+    color: black;
 }
-h1 { color: white; text-shadow: 0px 1px 1px #FFFFFF; }
-h2 { font-family: "Museo-bold"; text-shadow: 1px 1px 1px ; }
-h3 { color:#F0C030; }
+h1 { text-shadow: 0px 1px 1px white; color:#F0C030;}
+h3 { color:blue; }
 p { color:#ddd; }
 hr {color:black;}
+.main { 
+    width: 95em;
+    background: white; 
+}
+.topbar {
+    color: white;
+    background: #3B5998;
+}
+
+.around {
+    color: black;
+    background: white;
+} 
+
 a{
-    color:#ddd;
+    color: #3B5998;
     text-decoration:underline;
     padding:3px;
     cursor: pointer;
@@ -18,7 +32,7 @@ a{
     border-radius:5px;
 }
 a:visited {
-    color:#aaa;
+    color:blue;
 }
 a:hover {
     text-decoration:none;
@@ -27,83 +41,31 @@ a:hover {
     border-radius:5px;
     text-shadow: 0px 1px 1px #FFFFF0;
 }
-label {
-    text-align: right;
-}
-form td { 
-    padding: 0.5em;
-}
-form input, 
-form textarea {
-    padding: 0.5em;
-    background: #ECE9E1;
-    border-radius:5px;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-}
-
-
-/* emastic leftover */
 
 .pr1 {padding-right:1em;}
 .pr2 {padding-right:2em;}
 .pr3 {padding-right:3em;}
 .mt2{margin-top:2em;}
-.mt3{margin-top:3em;}
-.mt4{margin-top:4em;}
-
-.p2 { 
-    padding-right: 2em;
-    padding-left: 2em;
-    padding-top: 2em;
-    padding-bottom: 2em;
-}
-    
-.p1 { 
-    padding: 1em;
-}
-.p05 { 
-    padding: 0.5em;
-}
-
-/* classes */
-.main { 
-    width: 95em;
-
-}
-.topbar {
-    background: #001200;
-}
-.around {
-    color:#ddd;
-    background: #001200;
-    background: -moz-linear-gradient(top, #001200, #000000);
-    background: -webkit-gradient(linear, left top, left bottom, from(#001200), to(#000));
-} 
-.slogan {
-    color: white;
-}
-.content {
-    background: -moz-linear-gradient(top, #133300, #fffff0); 
-    background: -webkit-gradient(linear, left top, left bottom, from(#133300), to(#FFF));
-}
 
 .box-shadow { 
-    margin: 0.5em;
     box-shadow:10px 10px 20px #000000;
     -moz-box-shadow:10px 10px 20px #000000; 
-    -webkit-box-shadow:10px 10px 20px #000000; 
-    border: 1px;
+    border: none;
 }
 
-.search-box {
+.tabs {
     font-weight:bold;
     color:#ddd;
-    background: #133300;
-}
-.ourgreen { color: #133300; }
-.tab-open {
+    background: #627AAD;
     border:1px solid black;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    margin: 2px;
+    padding: 10px;
+}
+.tab-open {
+    border:1px solid #333333;
+    font-weight:bold;
     color: black;
     border-bottom: none;
     padding-top: 10px;
@@ -111,17 +73,15 @@ form textarea {
     padding-right: 10px;
     padding-bottom: 3px;
     margin-bottom: 2px;
-    border-radius:5px;
     -moz-border-radius:5px;
+    border-radius:5px;
     -moz-border-radius:5px;
     -moz-border-radius-bottomleft: 0px;
     -moz-border-radius-bottomright: 0px;
-    -webkit-border-radius:5px;
-    -webkit-border-bottom-right-radius: 0px;
-    -webkit-border-bottom-left-radius: 0px;
 }
 .tab-closed {
-    background: #001200;
+    background: #ccccff;
+    font-weight:bold;
     border:1px solid black;
     border-left: none;
     border-right: none;
@@ -135,10 +95,6 @@ form textarea {
     -moz-border-radius-bottomleft: 0px;
     -moz-border-radius-bottomright: 0px;
     border-radius:5px;
-    text-shadow: 1px 0px 0px gray;
-}
-.navheader {
-    text-shadow: 1px 0px 0px gray;
 }
 .tabs2 {
     text-align:left;
@@ -172,6 +128,4 @@ form textarea {
     padding-bottom: 2px;
     margin-left: 1px;
 }
-.richtext {
-    height: 20em;
-}
+
