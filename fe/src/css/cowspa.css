@@ -1,14 +1,14 @@
 body { 
-    font-size: 13px;
+    font-size: 0.81em;
     background: #001200;
 }
-h1 { color: white; text-shadow: 0px 1px 1px #FFFFFF; }
+h1 { text-shadow: 0px 1px 1px #FFFFFF; }
 h2 { font-family: "Museo-bold"; text-shadow: 1px 1px 1px ; }
 h3 { color:#F0C030; }
 p { color:#ddd; }
 hr {color:black;}
 a{
-    color:#ddd;
+    color: inherit;
     text-decoration:underline;
     padding:3px;
     cursor: pointer;
@@ -16,9 +16,7 @@ a{
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
     border-radius:5px;
-}
-a:visited {
-    color:#aaa;
+    text-shadow: 1px 1px 0px gray;
 }
 a:hover {
     text-decoration:none;
@@ -26,6 +24,9 @@ a:hover {
     -webkit-border-radius:5px;
     border-radius:5px;
     text-shadow: 0px 1px 1px #FFFFF0;
+}
+.content a:hover {
+    background: gray;
 }
 label {
     text-align: right;
@@ -48,9 +49,13 @@ form textarea {
 .pr1 {padding-right:1em;}
 .pr2 {padding-right:2em;}
 .pr3 {padding-right:3em;}
+.ml1{margin-left:1em;}
+.ml2{margin-left:2em;}
 .mt2{margin-top:2em;}
 .mt3{margin-top:3em;}
 .mt4{margin-top:4em;}
+.mr1{margin-right:1em;}
+.mr2{margin-right:2em;}
 
 .p2 { 
     padding-right: 2em;
@@ -67,7 +72,7 @@ form textarea {
 }
 
 /* classes */
-.main { 
+.page { 
     width: 95em;
 
 }
@@ -80,12 +85,20 @@ form textarea {
     background: -moz-linear-gradient(top, #001200, #000000);
     background: -webkit-gradient(linear, left top, left bottom, from(#001200), to(#000));
 } 
-.slogan {
-    color: white;
-}
-.content {
+.slogan { color: white; }
+.toplinks a { color: white; }
+.main {
     background: -moz-linear-gradient(top, #133300, #fffff0); 
     background: -webkit-gradient(linear, left top, left bottom, from(#133300), to(#FFF));
+    border: none;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -moz-border-radius:5px;
+    -moz-border-radius-bottomleft: 0px;
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-radius:5px;
+    -webkit-border-bottom-right-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
 }
 
 .box-shadow { 
@@ -121,6 +134,7 @@ form textarea {
     -webkit-border-bottom-left-radius: 0px;
 }
 .tab-closed {
+    color:#ddd;
     background: #001200;
     border:1px solid black;
     border-left: none;
@@ -138,6 +152,7 @@ form textarea {
     text-shadow: 1px 0px 0px gray;
 }
 .navheader {
+    color:#ddd;
     text-shadow: 1px 0px 0px gray;
 }
 .tabs2 {
@@ -174,4 +189,33 @@ form textarea {
 }
 .richtext {
     height: 20em;
+}
+.engrave { text-shadow: 0px 0px 1px black; }
+.invisible { display: none; }
+.red { color: red; }
+.feeds a { color: black; }
+.highlight { 
+    color: #001200;
+    background: gray;
+}
+.tag-1 { 
+    padding: 1px;
+    font-size: .90em;
+    border: 1px solid black;
+    color: white;
+    background: blue;
+}
+.tag-2 { 
+    padding: 1px;
+    font-size: .90em;
+    color: #001200;
+    border: 1px solid black;
+    background: orange;
+}
+.tag-3 { 
+    padding: 1px;
+    font-size: .90em;
+    color: #001200;
+    border: 1px solid black;
+    background: gray;
 }

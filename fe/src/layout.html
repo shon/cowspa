@@ -10,16 +10,17 @@
 
 {% import 'macros.html' as macros %}
 
-    <div class="main tl">
+    <div class="page tl ml1 fluid">
         <div class="hp">
             {% include 'topbar.html' %}
         </div>
         <div class="clear"/>
-        <div class="p1 content">
+        <div class="p1 main fluid">
+            <br/>
             <div class="pr1 dl10">
                 {% include 'nav.html' %}
             </div>
-            <div class="pl2 ml2 mt2 pt5">
+            <div class="pl2 ml2 mt2 pt5 content">
                 <div>
                     {% block tabs %}
                         macros.tabs()
