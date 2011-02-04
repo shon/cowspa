@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block tabs %}
+    {{ macros.tabs([('Add Member', '/addMember'), ('Account', '/account'), ('Membership Information', '/membership_info')]) }}
+{% endblock %}
+
+{% block content %}
+<br/>
+
+    <div class="pl2 pr2 dp60 rc box-shadow">
+        <h3 class="mt1">Add Member</h3>
+        <hr/>
+    <form id="add_member">		
+                <table class="basicInfo" cellpadding="0" cellspacing="0">			
+                    <tbody>
+		    <tr>
+                        <td class="line">First Name</td>
+                        <td><input id="first_name" class="text" value="" name="first_name" type="text" placeholder="First Name">
+                        </td>
+                    </tr>
+
+		    <tr>
+                        <td class="line">Last name</td>
+                        <td><input id="last_name" class="text" value="" name="last_name" type="text" placeholder="Last Name">
+                        </td>
+                    </tr>
+
+		    <tr>
+                        <td class="line">Username</td>
+                        <td><input id="user_name" class="text" value="" name="user_name" type="text" placeholder="Choose a username">
+                        </td>
+                    </tr>
+                    <tr>                    
+                        <td><em font-size=1px>Changing your username will change existing links to your Hub+ profile from external sites</em></td>
+			<td class="line"></td>
+                    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+                    <tr>
+                        <td class="line">Password</td>
+                        <td><input class="text" name="password" id="password" type="password" placeholder="Choose password for the user"</td>
+                    </tr>
+                    <tr>
+                        <td class="line">Confirm Password</td>
+
+                        <td><input class="text" name="password2" id="password2" type="password" placeholder="Confirm the password"></td>
+                    </tr>
+                    <tr>
+                        <td><em>To change your password enter the new one in the two fields below</em></td>
+			<td class="line"></td>
+                    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+		    <tr>
+                        <td class="line">Membership Id</td>
+                        <td><input id="user_id" class="text" value="" name="user_id" type="text" placeholder="Do we need this field - Membership Id?">
+                        </td>
+                    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+                    <tr>
+			<td class="line">Email Address</td>
+			<td><input id="email_address" class="text" value="" name="email_address" type="text" placeholder="Type Email Address"></td>
+		    </tr>
+                    <tr>
+                        <td class="line">Make email address Public?</td>
+                        <td><input name="public_field" value="1" id="public_field" type="checkbox"></td>
+                    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+		    <tr>
+			<td class="line">Secondary Email Address</td>
+			<td><input id="email2" class="text" value="" name="email2" type="text" placeholder="Type Secondary Email Address"></td>
+		    </tr>
+                    <tr>
+                        <td class="line">Show this secondary email address on The Hub's public website</td>
+                        <td><input name="public_field" value="1" id="public_field" type="checkbox"></td>
+                    </tr>
+				
+  </tbody></table>	
+  <input id="submit_add_member" value="Add Member" type="button">
+  </form>
+    </div>
+    <div class="ml25 pl2 pr2 dp20 rc box-shadow">
+        <h3>Shraddha More</h3>
+        <hr/>
+	
+		<img src="file:///home/shraddha/Desktop/extra/Jpegs/chhan pics from net/muhhaaa.jpg" width="200" height="200" alt="Shraddha More" />
+		<br/><br/>
+    </div>
+</div>
+
+{% endblock %}

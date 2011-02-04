@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block tabs %}
+    {{ macros.tabs([('Add Member', '/addMember'), ('Personal Information', '/personal_info'), ('Membership Information', '/membership_info')]) }}
+{% endblock %}
+
+{% block content %}
+<br/>
+
+    <div class="pl2 pr2 dp60 rc box-shadow">
+        <h3 class="mt1">Personal Information</h3>
+        <hr/>
+    <form id="personal_info">		
+                <table class="basicInfo" cellpadding="0" cellspacing="0">			
+                    <tbody>
+		    <tr>
+                        <td class="line">Short Description</td>
+                        <td><input id="short_desc" class="text" value="" name="short_desc" type="text" placeholder="Description">
+                        </td>
+                    </tr>
+
+		    <tr>
+                        <td class="line">Long Description</td>
+                        <td><textarea name="description" id="description"></textarea> 
+                        </td>
+                    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+                    <tr>
+			<td class="line">Upload photo</td>
+			<td>
+			<input name="uploadPicture" id="uploadPicture" class="textbox" onchange="uploadPhotoSubmit();" type="file">
+			</td>
+                   </tr>
+                    <tr>                    
+                        <td><em font-size=1px>You can upload a JPG, GIF, BMP or PNG file (Maximum size of 10Mb). Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images. Minimum image size is 32x32.</em></td>
+			<td class="line"></td>
+                    </tr>	
+		    <tr>
+                        <td class="line">Website</td>
+                        <td><input id="website" class="text" value="" name="website" type="text" placeholder="http:///<Website link>">
+                        </td>
+                    </tr>
+                    <tr>
+			<td class="line">Join My Networks</td>
+			<td class="line">
+				<input label="Twitter" name="twitter" value="1" type="checkbox">
+				<img src="file:///home/shraddha/Desktop/tweet.jpg" width="20" height="20"/>
+                        </td>
+
+                    </tr>	
+                    <tr>
+			<td class="line"></td>
+			<td class="line">
+				<input label="Facebook" name="FB" value="1" type="checkbox">
+				<img src="file:///home/shraddha/Desktop/fb.jpg" width="20" height="20"/></td>
+                    </tr>	
+                    <tr>
+			<td class="line"></td>
+			<td class="line">
+				<input label="Digg" name="digg" value="1" type="checkbox">
+				<img src="file:///home/shraddha/Desktop/digg.jpg" width="20" height="20"/></td>
+		    </tr>
+
+  </tbody></table>	
+  <input id="submit_personal_info" value="Update" type="button">
+  </form>
+    </div>
+    <div class="ml25 pl2 pr2 dp20 rc box-shadow">
+        <h3>Shraddha More</h3>
+        <hr/>
+	
+		<img src="file:///home/shraddha/Desktop/extra/Jpegs/chhan pics from net/muhhaaa.jpg" width="200" height="200" alt="Shraddha More" />
+		<br/><br/>
+    </div>
+</div>
+
+{% endblock %}
