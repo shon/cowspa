@@ -1,6 +1,6 @@
-{% macro tabs(links=[]) %}
+{% macro tabs(pubroot, links=[]) %}
     {% for label, link in links %}
-        <a class="tab-closed" href="{{ link }}">{{ label }}</a>
+        <a class="tab-closed" href="{{ pubroot }}{{ link }}">{{ label }}</a>
     {% endfor %}
     <script type="text/javascript">
         {% include 'js/tabs.js' %}

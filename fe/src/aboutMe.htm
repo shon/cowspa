@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block tabs %}
-    {{ macros.tabs([('About Me', '/aboutMe'), ('Account', '/account'), ('Membership Information', '/membership_info'),('Contact Details','/contact'),('Billing','/billing'),('Preferences','/preferences'),('Security/Privacy','/security')]) }}
+    {{ macros.tabs(pubroot, [('About Me', '/aboutMe'), ('Account', '/account'), ('Membership Information', '/membership_info'),('Contact Details','/contact'),('Billing','/billing'),('Preferences','/preferences'),('Security/Privacy','/security')]) }}
 {% endblock %}
 
 {% block content %}

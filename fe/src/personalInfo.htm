@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block tabs %}
-    {{ macros.tabs([('Add Member', '/addMember'), ('Personal Information', '/personal_info'), ('Membership Information', '/membership_info')]) }}
+    {{ macros.tabs(pubroot, [('Add Member', '/addMember'), ('Personal Information', '/personal_info'), ('Membership Information', '/membership_info')]) }}
 {% endblock %}
 
 {% block content %}
@@ -52,7 +52,7 @@
 			<td class="line"></td>
 			<td class="line">
 				<input label="Facebook" name="FB" value="1" type="checkbox">
-				<img src="file:///home/shraddha/Desktop/fb.jpg" width="20" height="20"/></td>
+				<img src="{{ pubroot }}/images/logos/fb.jpg" width="20" height="20"/></td>
                     </tr>	
                     <tr>
 			<td class="line"></td>

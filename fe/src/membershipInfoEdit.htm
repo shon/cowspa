@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block tabs %}
-    {{ macros.tabs([('Dashboard', '/dashboard'), ('Feeds', '/feeds'), ('Events', '/events')]) }}
+    {{ macros.tabs(pubroot, [('Dashboard', '/dashboard'), ('Feeds', '/feeds'), ('Events', '/events')]) }}
 {% endblock %}
 
 {% block content %}

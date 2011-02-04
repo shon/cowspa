@@ -4,7 +4,7 @@
     <h2 class="b beer">Add Coworking space</h2>
     <hr class="ourgreen"/>
 
-    {{ macros.tabs([('Business Information', '/new'), ('Contact Information', '/PLACEID/contact'), ('Billing Preferences', '/PLACEID/billing')]) }}
+    {{ macros.tabs(pubroot, [('Business Information', '/new'), ('Contact Information', '/PLACEID/contact'), ('Billing Preferences', '/PLACEID/billing')]) }}
 {% endblock %}
 
 {% block content %}
