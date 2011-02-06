@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block tabs %}
+    {{ macros.tabs(pubroot, [('Account', '/members/account')]) }}
+{% endblock %}
+
+{% block content %}
+        <!-- <form id="accounteedit">		 -->
+
+    <div class="pl2 pr2 dp60 rc box-shadow">
+        <h3 class="mt1">Edit section: Account Details </h3>
+        <hr/>
+                <table>
+		    <tr>
+                        <td class="line">Username</td>
+                        <td><input class="text" name="username" type="text" placeholder="Username" /> </td>
+                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+                    <tr>
+                        <td class="line">Password</td>
+                        <td><input class="text" name="pwd" type="password" placeholder="****" /> </td>
+                    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+		    <tr>
+                        <td class="line">Membership Id</td>
+                        <td>6278</td>
+                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+                    <tr>
+			<td class="line">Email Address</td>
+			<td><input name="email_address" type="email" placeholder="Type Email Address" /></td>
+                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+		    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+		    <tr>
+			<td class="line">Secondary Email Address</td>
+			<td><input name="email_address_sec" type="email" placeholder="Type Secondary Email Address" /></td>
+                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+		    </tr>
+        </table>	
+          <hr/>
+          <div class="ml5 pl2 pr2">
+              <button id="submit_myprofileedit" type="submit">Update</button>
+              <button id="reset" type="reset">Reset</button>
+              <button id="cancel" type="button">Cancel</button>
+          </div>
+          <hr/>
+  <!-- </form> -->
+</div>
+
+{% endblock %}

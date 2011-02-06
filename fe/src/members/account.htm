@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block tabs %}
+    {{ macros.tabs(pubroot, [('About Me', '/members/myprofile'), ('Account', '/members/account'), ('Membership Information', '/members/membershipinfo'),('Contact Details','/members/contact'),('Billing','/members/billing'),('Preferences','/members/preferences'),('Security/Privacy','/members/security')]) }}
+{% endblock %}
+
+{% block content %}
+
+<br/>
+<br/>
+
+    <div class="pl2 pr2 dp60 rc box-shadow">
+
+        <h3 class="mt1">Account Details
+        <input class="ml30 pl2 pr2" id="accountedit" value="Edit" type="button">
+        </h3>
+        <hr/>
+                <table>
+		    <tr>
+                        <td class="line">Username</td>
+                        <td>shraddha26</td>
+                    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+                    <tr>
+                        <td class="line">Password</td>
+                        <td>****</td>
+                    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+		    <tr>
+                        <td class="line">Membership Id</td>
+                        <td>6278</td>
+                    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+                    <tr>
+			<td class="line">Email Address</td>
+			<td>shraddha.more@the-hub.net</td>
+		    </tr>
+		    <tr> <td><br/></td> <td><br/></td> </tr>
+		    <tr>
+			<td class="line">Secondary Email Address</td>
+			<td>shraddha.hub@gmail.com</td>
+		    </tr>
+        </table>	
+    </div>
+    <div class="ml25 pl2 pr2 dp20 rc box-shadow">
+        <table>
+	<tr><td>
+        	<h3>Shraddha More</h3>
+        	<hr/>
+		<img src="file:///home/shraddha/Desktop/extra/Jpegs/chhan pics from net/muhhaaa.jpg" width="200" height="200" alt="Shraddha More" />
+		<br/><br/>
+	</td></tr>
+	<tr><td>
+        	<h3>Social Me</h3>
+        	<hr/>
+		<img src="file:///home/shraddha/Desktop/tweet.jpg" width="20" height="20"/>
+		<img src="file:///home/shraddha/Desktop/fb.jpg" width="20" height="20"/>
+		<img src="file:///home/shraddha/Desktop/digg.jpg" width="20" height="20"/>
+	</td></tr>
+	<tr><td>
+		<img src="file:///home/shraddha/Desktop/tweet.jpg" width="20" height="20"/>
+		<img src="file:///home/shraddha/Desktop/tweet.jpg" width="20" height="20"/>
+	</td></tr>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
