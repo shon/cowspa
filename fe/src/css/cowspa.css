@@ -226,20 +226,21 @@ form textarea {
 }
 .comm-status {
     border: 1px solid black;
-    font-size: 1.10em;
+    font-size: 1.20em;
     font-weight: italic;
-    position:absolute;
-    bottom: 2em;
-    right: 1em;
-    background: red;
+    position:fixed;
+    top: 7em;
+    left: 50%;
+    text-align: middle;
+    background: gray;
     text: white;
 }
 .footer {
     border-top: 1px solid gray;
     color: white;
     background: #133300;
-    position:absolute;
     bottom: 0em;
     width: 95%;
+    position: fixed;
 }
 
