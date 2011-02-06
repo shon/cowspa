@@ -73,7 +73,7 @@ form textarea {
 
 /* classes */
 .page { 
-    width: 95em;
+    width: 95%;
 
 }
 .topbar {
@@ -198,24 +198,48 @@ form textarea {
     color: #001200;
     background: gray;
 }
-.tag-1 { 
+.tag {
     padding: 1px;
     font-size: .90em;
     border: 1px solid black;
+    text-shadow: 0px 0px 1px gray;
+}
+.tag-1 { 
     color: white;
     background: blue;
 }
 .tag-2 { 
-    padding: 1px;
-    font-size: .90em;
     color: #001200;
-    border: 1px solid black;
     background: orange;
 }
 .tag-3 { 
-    padding: 1px;
-    font-size: .90em;
     color: #001200;
-    border: 1px solid black;
     background: gray;
 }
+.tag-4 { 
+    color: white;
+    background: #133300;
+}
+.tag-5 { 
+    color: white;
+    background: teal;
+}
+.comm-status {
+    border: 1px solid black;
+    font-size: 1.10em;
+    font-weight: italic;
+    position:absolute;
+    bottom: 2em;
+    right: 1em;
+    background: red;
+    text: white;
+}
+.footer {
+    border-top: 1px solid gray;
+    color: white;
+    background: #133300;
+    position:absolute;
+    bottom: 0em;
+    width: 95%;
+}
+

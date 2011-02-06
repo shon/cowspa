@@ -5,18 +5,19 @@
 {% endblock %}
 
 {% block content %}
-<img src="http://chart.apis.google.com/chart?chf=a,s,000000|bg,s,67676700|c,s,67676700&chxl=0:|2000|2500|3000|3500&chxr=0,-5,100&chxs=0,000000,11.5,0,l,000000&chxt=r&chs=220x75&cht=ls&chco=DA3B15,F7A10A,4582E7&chds=0,3000,-5,3000&chd=t2:1900,2100,2700,3000,2500,2700|1800,2100,2600,3000,2500,2900|24.59,27.869,31.148,29.508,24.59,21.311,26.23,39.344,36.066,27.869,22.951,26.23,31.148,37.705,39.344,27.869,26.23,-1&chdl=Invoiced|Uninvoiced&chls=1|1|1&chma=|5&chtt=Revenue+(Months)&chts=000000,11.5" width="220" height="75" alt="Revenue (Months)" />
-<img src="http://chart.apis.google.com/chart?chf=a,s,000000|bg,s,67676700|c,s,67676700&chxl=0:|2000|2500|3000|3500&chxr=0,-5,100&chxs=0,000000,11.5,0,l,000000&chxt=r&chs=220x75&cht=ls&chco=DA3B15,F7A10A,4582E7&chds=0,3000,-5,3000&chd=t2:1900,2100,2700,3000,2500,2700|1800,2100,2600,3000,2500,2900|24.59,27.869,31.148,29.508,24.59,21.311,26.23,39.344,36.066,27.869,22.951,26.23,31.148,37.705,39.344,27.869,26.23,-1&chdl=Invoiced|Uninvoiced&chls=1|1|1&chma=|5&chtt=Revenue+(Months)&chts=000000,11.5" width="220" height="75" alt="Revenue (Months)" />
+<img src="{{ pubroot }}/images/chart.png" width="220" height="75" alt="Revenue (Months)" />
+<!-- <img src="http://chart.apis.google.com/chart?chf=a,s,000000|bg,s,67676700|c,s,67676700&chxl=0:|2000|2500|3000|3500&chxr=0,-5,100&chxs=0,000000,11.5,0,l,000000&chxt=r&chs=220x75&cht=ls&chco=DA3B15,F7A10A,4582E7&chds=0,3000,-5,3000&chd=t2:1900,2100,2700,3000,2500,2700|1800,2100,2600,3000,2500,2900|24.59,27.869,31.148,29.508,24.59,21.311,26.23,39.344,36.066,27.869,22.951,26.23,31.148,37.705,39.344,27.869,26.23,-1&chdl=Invoiced|Uninvoiced&chls=1|1|1&chma=|5&chtt=Revenue+(Months)&chts=000000,11.5" width="220" height="75" alt="Revenue (Months)" /> -->
 <br/>
 <br/>
 
     <div class="pl2 pr2 dp50 rc box-shadow feeds">
-        <ol class="mt1">
+        <ol id="events-area" class="mt1">
+            <!--
             <div id="item-1">
                 <div class="dp95">
                     <c class="highlight">9.15am-12.30pm</c> <c class="engrave">Ethical music </c>at <a>GlassHouse</a> 13 attending <a>..</a>
                 </div>
-                <div class="dp5 red">x</div>
+                <div class="dp5 red"><a>x</a></div>
                 <div class="feed-item hp tr">
                     <c class="tag-1">Today</c> <c class="tag-2">GlassHouse</c> <c class="tag-3">@Shammi Kapoor</c> <a>details</a> 
                 </div>
@@ -42,9 +43,120 @@
                 </div>
                 <div class="clear"/>
             </div> 
+            -->
+            <span id="mustache-feed"/>
         </ol>
-
     </div>
+
+<script>
+{% raw %}
+var template = '\
+{{#events}} \
+<div> \
+    <div class="dp95"> \
+        <c class="highlight"><c class="event-start"/>{{start}}</c>-<c class="event-end">{{end}}</c></c> <c class="engrave">{{name}}</c> at <a>{{resource_name}}</a> {{attending}} attending <a>..</a> \
+    </div> \
+    <div class="dp5 red"><a>x</a></div> \
+    <div class="feed-item hp tr"> \
+        {{#tags}} \
+        <c class="event-tag tag">{{.}}</c> \
+        {{/tags}} \
+    </div> \
+    <div class="clear"/> \
+</div> \
+{{/events}} \
+';
+{% endraw %}
+
+function show_loading () {
+    $('comm-status').set('text', 'loading..');
+};
+function hide_loading () {
+    $('comm-status').set('text', '');
+};
+function formattime24to12(hhmm) {
+    var hh = hhmm.slice(0,-2).toInt();
+    var mm = hhmm.slice(-2);
+    if (hh <= 12) {
+        var out = hh + '.' +  mm + 'am';
+    } else {
+        var out = hh +  '.' + mm + 'pm';
+    };
+    return out;
+};
+function load_data(data, data_text) {
+    /*
+    var events_area = $('events-area');
+    for (var item_no=0; item_no < data.data.events.length; item_no++) {
+        var event = data.data.events[item_no];
+        var event_container = new Element('div', {
+            id: 'feed-item' + item_no,
+        });
+        var event_info = new Element('div', {
+            class: 'dp95'
+        });
+        var time = new Element('c', {
+            class: 'highlight',
+            text: formattime24to12(event.start) + '-' + formattime24to12(event.end)
+        });
+        var name = new Element('c', {
+            class: 'engrave',
+            text: event.name
+        });
+        var resource_name = new Element('a', {
+            href: event.resource_link,
+            text: event.resource_name
+        });
+        var remove_div = new Element('div', {
+            class: 'dp5'
+        });
+        var remove_link = new Element('c', {
+            text: 'x',
+            class: 'red'
+        });
+        time.inject(event_info);
+        event_info.appendText(' ');
+        name.inject(event_info);
+        event_info.appendText(' at ');
+        resource_name.inject(event_info);
+        remove_link.inject(remove_div);
+
+        event_info.inject(event_container);
+        remove_div.inject(event_container);
+
+        event_container.inject(events_area);
+
+    };
+    */
+
+    html = Mustache.to_html(template, data.data);
+    $('mustache-feed').set('html', html);
+    $$('.event-start').each(function (tag) { tag.set('text', formattime24to12(tag.get('text'))); });
+    $$('.event-end').each(function (tag) { tag.set('text', formattime24to12(tag.get('text'))); });
+    var known_tags = ['bump_index'];
+    $$('.event-tag').each(function (tag) { 
+        var tag_text = tag.get('text');
+        if (! known_tags.contains( tag_text )) {
+            known_tags.push(tag_text);
+        };
+    });
+    $$('.event-tag').each(function (tag) { 
+        var tag_index = known_tags.indexOf(tag.get('text'));
+        tag.set('class', 'event-tag tag tag-' + tag_index);
+    });
+};
+
+
+var req = new Request.JSON({
+    method: "get",
+    url: "http://127.0.0.1:5000/app/dashboard",
+    onRequest: show_loading,
+    onComplete: hide_loading,
+    onSuccess: load_data 
+});
+req.send();
+
+</script>
     <div class="ml5 pl2 pr2 dp20 rc box-shadow">
         <h3 class="mt1">Tomorrow</h3>
         <hr/>
