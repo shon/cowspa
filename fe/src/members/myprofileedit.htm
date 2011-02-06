@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block tabs %}
+    {{ macros.tabs(pubroot, [('About Me', '/members/myprofile')])}}
+{% endblock %}
+
+{% block content %}
+    <div class="pl2 pr2 dp80 rc box-shadow">
+        <h3 class="mt1">Edit section : About me </h3>
+        <hr/>
+        <form id="myprofileedit">		
+                <table>			
+		    <tr>
+                        <td>Short Description</td>
+                        <td><input class="text" name="short_description" type="text" placeholder="Short Description" /> </td>
+                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                    </tr>
+
+		    <tr>
+                        <td>Long Description</td>
+                        <td><textarea rows="2" cols="30" name="long_description" placeholder="Long Description" /></textarea> </td>
+                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                    </tr>
+                    <tr>
+			<td>Upload photo</td>
+			<td><input name="uploadPicture" id="uploadPicture" class="textbox" type="file" /> </td>
+                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                   </tr>
+                    <tr>                    
+                        <td><em>You can upload a JPG, GIF, BMP or PNG file (Maximum size of 10Mb). Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images. Minimum image size is 32x32.</em></td>
+			<td></td>
+			<td></td>
+                    </tr>	
+		    <tr>
+                        <td>Website</td>
+                        <td><input id="website" class="text" name="website" type="url" placeholder="http://Website-link.org" /> </td>
+                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                    </tr>
+                    <tr>
+                        <td>Interests in</td>
+                        <td><input class="text" name="short_description" type="text" placeholder="Networking, Collaboration" /> </td>
+                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                    </tr>
+                    <tr>
+                        <td>Expertise</td>
+                        <td><input class="text" name="short_description" type="text" placeholder="Analyst" /> </td>
+                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                    </tr>
+          </table>	
+          <hr/>
+          <div class="ml25 pl2 pr2">
+              <button id="submit_myprofileedit" type="submit">Update</button>
+              <button id="reset" type="reset">Reset</button>
+              <button id="cancel" type="button">Cancel</button>
+          </div>
+          <hr/>
+  </form>
+</div>
+
+{% endblock %}

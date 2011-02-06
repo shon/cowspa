@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block tabs %}
-    {{ macros.tabs(pubroot, [('About Me', '/aboutMe'), ('Account', '/account'), ('Membership Information', '/membership_info'),('Contact Details','/contact'),('Billing','/billing'),('Preferences','/preferences'),('Security/Privacy','/security')]) }}
+    {{ macros.tabs(pubroot, [('About Me', '/members/myprofile'), ('Account', '/members/account'), ('Membership Information', '/members/membershipinfo'),('Contact Details','/members/contact'),('Billing','/members/billing'),('Preferences','/members/preferences'),('Security/Privacy','/members/security')]) }}
 {% endblock %}
 
 {% block content %}
@@ -11,7 +11,9 @@
 
     <div class="pl2 pr2 dp60 rc box-shadow">
 
-        <h3>Profile</h3>
+        <h3 class="mt1">Account Details
+        <input class="ml30 pl2 pr2" id="accountedit" value="Edit" type="button">
+        </h3>
         <hr/>
                 <table>
 		    <tr>
