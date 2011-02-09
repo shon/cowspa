@@ -1,1 +1,24 @@
 MooTools placeholder: http://github.com/phpinfo/MooTools-Placeholder
+Possible mustache replacement supposed to be faster and has more features: https://github.com/wycats/handlebars.js
+
+http URLs
+
+static directories
+<biztype>/<lang>/<role>/<module>
+eg. thehub/en_UK/host/members/account
+pub -> /members/account
+       /members/social
+       /members/507/social
+
+/dashboard
+/members/<member-id>/account
+/members/<member-id>/account/edit
+
+/profile
+/profile/edit
+
+
+JSON paths
+/dashboard
+/profiles/<username-or-id>
+

@@ -152,8 +152,22 @@ form textarea {
     text-shadow: 1px 0px 0px gray;
 }
 .navheader {
-    color:#ddd;
-    text-shadow: 1px 0px 0px gray;
+    color: white;
+    position:fixed;
+    width:11em;
+    height:1em;
+    padding: 0.5em;
+    margin-top: 9em;
+    margin-left: -7em;
+    -webkit-transform: rotate(-90deg); 
+    -moz-transform: rotate(-90deg);
+    border-left: 0.5px solid gray;
+    border-right: 0.5px solid gray;
+    border-top: 0.5px solid gray;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -moz-border-radius-bottomleft: 0px;
+    -moz-border-radius-bottomright: 0px;
 }
 .tabs2 {
     text-align:left;
@@ -232,15 +246,29 @@ form textarea {
     top: 7em;
     left: 50%;
     text-align: middle;
-    background: gray;
-    text: white;
+    background: orange;
+    color: #001200;
 }
 .footer {
-    border-top: 1px solid gray;
+    border: 1px solid gray;
+    border-bottom: 0px;
     color: white;
     background: #133300;
     bottom: 0em;
     width: 95%;
     position: fixed;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -moz-border-radius-bottomleft: 0px;
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-radius:5px;
+    -webkit-border-bottom-right-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+
 }
 
+.simplebox {
+    color: black;
+    background: white;
+    border: 1px solid black;
+};
