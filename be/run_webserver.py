@@ -3,7 +3,7 @@ import time
 import testdata
 from flask import Flask, jsonify, url_for
 app = Flask(__name__)#, static_path=os.path.abspath("../pub"))
-static_dir = "../pub"
+static_dir = "pub/en/default"
 
 @app.route('/app/<path:path>')
 def default(path):
@@ -24,5 +24,5 @@ def static(path):
     return file(fspath).read(), 200, {'Content-Type': content_type +'; charset=utf-8'}
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run('0.0.0.0',debug=True)
 

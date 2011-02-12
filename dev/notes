@@ -4,8 +4,8 @@ Possible mustache replacement supposed to be faster and has more features: https
 http URLs
 
 static directories
-<biztype>/<lang>/<role>/<module>
-eg. thehub/en_UK/host/members/account
+<biztype>/<lang>/<theme>/<role>/<module>
+eg. thehub/en_UK/sunshine/host/members/account
 pub -> /members/account
        /members/social
        /members/507/social

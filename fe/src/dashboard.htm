@@ -149,7 +149,7 @@ function load_data(data, data_text) {
 
 var req = new Request.JSON({
     method: "get",
-    url: "http://127.0.0.1:5000/app/dashboard",
+    url: "/app/dashboard",
     onRequest: show_loading,
     onComplete: hide_loading,
     onSuccess: load_data 

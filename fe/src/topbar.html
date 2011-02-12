@@ -10,12 +10,45 @@
     </div>
     <div>
         <div class="toplinks mt1 tr">
-            <a>Help</a> | <a>Language</a> | <a>Theme</a> | <a>Account</a> | <a>Logout</a>
+            <a>Help</a> | <a id="language_link">Language</a> | <a id="theme_link">Theme</a> | <a>Account</a> | <a>Logout</a>
         </div>
+        <div class="toplink_opts rc tc" id="language_choices">
+        {% for lang in available_langs %}
+            <span><a class="lang">{{ lang }}</a></span>
+        {% endfor %}
+        </div>
+        <div class="toplink_opts rc tc" id="theme_choices">
+        <ul>
+        {% for theme in available_themes %}
+            <li><a class="lang"> {{ theme }} </a></li>
+        {% endfor %}
+        </ul>
+        </div>
+
         <div>
             <div class="dr15 search-box tr p1">
                 <input class="tc rc" placeholder="Search!" type="text"/> 
             </div>
         </div>
+        <script>
+
+        function set_toplink_opts (link_id, opts_id) {
+            var choices = new Fx.Reveal(opts_id, {duration: 500, mode: 'vertical'});
+            choices.toggle();
+            $(link_id).addEvent('click', function() {
+                var position = this.getPosition();
+                $(opts_id).setStyle('left', (position.x/13.5) + 'em');
+                $(opts_id).setStyle('top', ((position.y/13.5)+2) + 'em');
+                choices.toggle();
+                $(opts_id).addEvent('click', function () {
+                    choices.toggle();
+                });
+            });
+        };
+        set_toplink_opts('language_link','language_choices');
+        set_toplink_opts('theme_link','theme_choices');
+
+
+        </script>
     </div>
 </div>
