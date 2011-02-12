@@ -2,7 +2,7 @@ git clone git@github.com:shon/cowspa.git
 virtualenv cowspa
 cd cowspa
 . ./bin/activate
-pip jinja2 flask
+pip install jinja2 flask
 # test
 rm -rf pub; python  fe/build/compile.py
 python be/run_webserver.py
