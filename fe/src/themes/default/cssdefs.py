@@ -1,0 +1,22 @@
+black = "black"
+white = "white"
+orange = "orange"
+##########################
+page_bg = "#001200"
+page_font_size = "0.81em"
+topbar_bg = page_bg
+main_bg_start = "#133300"
+main_bg_end = "#fffff0"
+nav_bg_start = page_bg
+nav_bg_end = black
+nav_color = white
+footer_bg = page_bg
+footer_color = white
+loading_bg = orange
+loading_color = page_bg
+tab_closed_color = white
+tab_closed_bg = page_bg
+tab_open_color = black
+textarea_bg = "#ECE9E1"
+slogan_color = white
+toplinks_color = white
