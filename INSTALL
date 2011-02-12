@@ -5,6 +5,5 @@ cd cowspa
 pip jinja2 flask
 # test
 rm -rf pub; python  fe/build/compile.py
-cd be
-python run_webserver.py
+python be/run_webserver.py
 firefox http://127.0.0.1:5000/dashboard
