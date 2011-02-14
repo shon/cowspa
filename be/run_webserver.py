@@ -4,6 +4,7 @@ import testdata
 from flask import Flask, jsonify, url_for
 app = Flask(__name__)#, static_path=os.path.abspath("../pub"))
 static_dir = "pub/en/default"
+static_dir = "pub/en/bw"
 
 @app.route('/app/<path:path>')
 def default(path):

@@ -19,14 +19,12 @@ a{
     text-shadow: 1px 1px 0px gray;
 }
 a:hover {
+    border:1px solid gray;
     text-decoration:none;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
     border-radius:5px;
     text-shadow: 0px 1px 1px #FFFFF0;
-}
-.content a:hover {
-    background: gray;
 }
 .edit-link {
     font: lighter small Verdana, Arial, 'MS Sans Serif';
@@ -298,6 +296,27 @@ form textarea {
     z-index: 100;
     padding: 2em;
     opacity: 0.9;
+    text-align: left;
+}
+.toplink { 
+    width: 5em; 
+    float:right; 
+    z-index:  100; 
+    position: relative;
+    color: {{ footer_color }};
+}
+.toplink-showing {
+    float:right; 
+    width: 12em;
+    background: {{ main_bg_start }};
+}
+.toplink-opts-showing {
+    color: {{ footer_color }};
+    background: {{ main_bg_start }};
+    float:right; 
+    position: absolute; 
+    padding: 1em; 
+    display: block;
 }
 .hidden {
     display: none;

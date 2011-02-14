@@ -9,46 +9,62 @@
         <br/>
     </div>
     <div>
-        <div class="toplinks mt1 tr">
-            <a>Help</a> | <a id="language_link">Language</a> | <a id="theme_link">Theme</a> | <a>Account</a> | <a>Logout</a>
-        </div>
-        <div class="toplink_opts rc tc" id="language_choices">
+    <!-- links on the right goes at the top -->
+    <c class="toplink">
+        <a>Logout</a>
+    </c>
+    <c class="toplink"><a>Language</a>
+        <p class="toplink-opts">
         {% for lang in available_langs %}
-            <span><a class="lang">{{ lang }}</a></span>
+            <a>{{ lang }}</a><br/>
         {% endfor %}
-        </div>
-        <div class="toplink_opts rc tc" id="theme_choices">
-        <ul>
+        </p>
+    </c>
+    <c class="toplink">
+        <a>Themes</a> 
+        <p class="toplink-opts">
         {% for theme in available_themes %}
-            <li><a class="lang"> {{ theme }} </a></li>
+            <a class="lang"> {{ theme }} </a><br/>
         {% endfor %}
-        </ul>
-        </div>
-
-        <div>
-            <div class="dr15 search-box tr p1">
-                <input class="tc rc" placeholder="Search!" type="text"/> 
-            </div>
-        </div>
-        <script>
-
-        function set_toplink_opts (link_id, opts_id) {
-            var choices = new Fx.Reveal(opts_id, {duration: 500, mode: 'vertical'});
-            choices.toggle();
-            $(link_id).addEvent('click', function() {
-                var position = this.getPosition();
-                $(opts_id).setStyle('left', (position.x/13.5) + 'em');
-                $(opts_id).setStyle('top', ((position.y/13.5)+2) + 'em');
-                choices.toggle();
-                $(opts_id).addEvent('click', function () {
-                    choices.toggle();
-                });
-            });
-        };
-        set_toplink_opts('language_link','language_choices');
-        set_toplink_opts('theme_link','theme_choices');
-
-
-        </script>
+        </p>
+    </c>
     </div>
+    <script>
+    function init_toplinks () {
+        $$('.toplink').each( function (toplink) {
+            var opts = toplink.getChildren('.toplink-opts')[0];
+            if (opts) {
+                opts.hide();
+            };
+        });
+    };
+    init_toplinks();
+
+    function show_opts(toplink) {
+        var opts = toplink.getChildren('.toplink-opts')[0];
+        if (opts) {
+            toplink.set('class', 'toplink toplink-showing');
+            opts.set('class', 'toplink-opts toplink-opts-showing');
+            var choices = new Fx.Reveal(opts, {duration: 500, mode: 'vertical'});
+            choices.toggle();
+        };
+    };
+    function hide_opts(toplink) {
+        var opts = toplink.getChildren('.toplink-opts')[0];
+        if (opts) {
+            toplink.set('class', 'toplink');
+            opts.set('class', 'toplink-opts');
+            var choices = new Fx.Reveal(opts, {duration: 500, mode: 'vertical'});
+            choices.toggle();
+        };
+    };
+    $$('.toplink').addEvent('click', function (toplink) {
+        if (this.get('class') == 'toplink') {
+            show_opts(this);
+        }
+        else {
+            hide_opts(this);
+        };
+    });
+    </script>
 </div>
