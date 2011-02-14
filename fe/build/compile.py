@@ -17,7 +17,6 @@ themes_srcdir = "fe/src/themes"
 themes = (('default', 'Green'), ('bw', 'Black and White'))
 langs = (('en', 'English'), ('es', 'Spanish'), ('de', 'German'))
 available_langs = [lang[1] for lang in langs]
-available_themes = [theme[1] for theme in themes]
 contribs = ['css', 'js']
 
 env = Environment(loader=FileSystemLoader(srcdir))
@@ -42,7 +41,7 @@ def compile_template(filename, srcpath, dstdir):
     relpath_to_pubroot = os.path.join(*['..' for i in range(rel_level_to_pubroot)]) if rel_level_to_pubroot else '.'
     relpath = os.path.join(reldir, filename)
     template = env.get_template(relpath)
-    out = template.render(pubroot=relpath_to_pubroot, available_langs=available_langs, available_themes=available_themes)
+    out = template.render(pubroot=relpath_to_pubroot, available_langs=available_langs, available_themes=themes)
     dstdir = os.path.join(dstdir, reldir)
     if not os.path.exists(dstdir):
         os.makedirs(dstdir)

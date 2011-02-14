@@ -1,10 +1,8 @@
 import os
 import time
 import testdata
-from flask import Flask, jsonify, url_for
+from flask import Flask, jsonify, url_for, session, redirect, request
 app = Flask(__name__)#, static_path=os.path.abspath("../pub"))
-static_dir = "pub/en/default"
-static_dir = "pub/en/bw"
 
 @app.route('/app/<path:path>')
 def default(path):
@@ -13,9 +11,17 @@ def default(path):
     print data
     return jsonify(data=data)
 
+@app.route('/set_theme/<theme_name>')
+def set_theme(theme_name):
+    redirect_to_index = redirect('/dashboard')
+    response = app.make_response(redirect_to_index )
+    response.set_cookie('theme',value=theme_name)
+    return response
+
 @app.route('/<path:path>')
 def static(path):
-    print 'req for ', path
+    static_root = "pub/en/"
+    static_dir = static_root + request.cookies.get("theme", "default")
     fspath = os.path.join(static_dir, path)
     filename = os.path.basename(path)
     if '.' in path:
