@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block tabs %}
-    {{ macros.tabs(pubroot, [('About Me', '/members/myprofile')])}}
+    {{ macros.tabs(pubroot, [('About Me', '/members/myprofile'), ('Account', '/members/account'), ('Membership Information', '/members/membershipinfo'),('Contact Details','/members/contact'),('Billing','/members/billing'),('Preferences','/members/preferences'),('Security/Privacy','/members/security')]) }}
 {% endblock %}
 
 {% block content %}
@@ -11,41 +11,90 @@
         <form id="myprofileedit">		
                 <table>			
 		    <tr>
-                        <td>Short Description</td>
+                        <th>Short Description</th>
                         <td><input class="text" name="short_description" type="text" placeholder="Short Description" /> </td>
                         <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                     </tr>
 
 		    <tr>
-                        <td>Long Description</td>
-                        <td><textarea rows="2" cols="30" name="long_description" placeholder="Long Description" /></textarea> </td>
+                        <th>Long Description</th>
+                        <td><textarea name="long_description" id="longdescription" class="dl50 richtext"> </textarea></td>
                         <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                     </tr>
                     <tr>
-			<td>Upload photo</td>
+			<th>Upload photo</th>
 			<td><input name="uploadPicture" id="uploadPicture" class="textbox" type="file" /> </td>
                         <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                    </tr>
                     <tr>                    
-                        <td><em>You can upload a JPG, GIF, BMP or PNG file (Maximum size of 10Mb). Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images. Minimum image size is 32x32.</em></td>
+                        <th><em>You can upload a JPG, GIF, BMP or PNG file (Maximum size of 10Mb). Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images. Minimum image size is 32x32.</em></th>
 			<td></td>
 			<td></td>
                     </tr>	
 		    <tr>
-                        <td>Website</td>
+                        <th>Website</th>
                         <td><input id="website" class="text" name="website" type="url" placeholder="http://Website-link.org" /> </td>
                         <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                     </tr>
                     <tr>
-                        <td>Interests in</td>
-                        <td><input class="text" name="short_description" type="text" placeholder="Networking, Collaboration" /> </td>
+                        <th>Interests in</th>
+                        <td><input class="text" name="interests" type="text" placeholder="Networking, Collaboration" /> </td>
                         <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                     </tr>
                     <tr>
-                        <td>Expertise</td>
-                        <td><input class="text" name="short_description" type="text" placeholder="Analyst" /> </td>
+                        <th>Expertise</th>
+                        <td><input class="text" name="expertise" type="text" placeholder="Analyst" /> </td>
                         <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                     </tr>
+                    <tr>
+                        <th> IM Screen Names </th>
+                        <td>
+                                    <div>
+                                        <input class="inputtext" name="im_screen_name_0" size="24" type="text">
+                                        <select name="imoptions[]" class="">
+                                            <option value="1">AIM</option>
+                                            <option value="4">Google Talk</option>
+                                            <option value="5">Windows Live Messenger</option>
+                                            <option value="6">Skype</option>
+                                            <option value="7">Yahoo! Messenger</option>
+                                            <option value="2">Gadu-Gadu</option>
+                                            <option value="3">ICQ</option>
+                                            <option value="8">Yahoo Japan</option>
+                                            <option value="9">QQ</option>
+                                            <option value="10">NateOn</option>
+                                            <option value="11">Twitter</option>
+                                            <option value="12">Hyves</option>
+                                            <option value="13">Orkut</option>
+                                            <option value="16">Cyworld</option>
+                                            <option value="17">mixi</option>
+                                            <option value="18">QIP</option>
+                                            <option value="19">Rediff Bol</option>
+                                            <option value="20">Vkontakte</option>
+                                        </select>
+                                <input type="hidden" value="0" id="theValue" />
+                                <div><div id="myDiv"> </div></div>
+                                <div><a href="javascript:;" onclick="addMore();">Add More</a></div>
+                            </div>
+                        </td>
+                        <td> </td>
+                    </tr>
+<!--
+                    <tr>
+                        <td>Twitter</td>
+                        <td><input class="text" name="twitter" type="text" placeholder="twittername" /> </td>
+			<td></td>
+                    </tr>
+                    <tr>
+                        <td>Facebook</td>
+                        <td><input class="text" name="facebook" type="text" placeholder="facebookhandler" /> </td>
+			<td></td>
+                    </tr>
+                    <tr>
+                        <td>Twitter</td>
+                        <td><input class="text" name="twitter" type="text" placeholder="twittername" /> </td>
+			<td></td>
+                    </tr>
+-->
           </table>	
           <hr/>
           <div class="ml25 pl2 pr2">
@@ -56,5 +105,19 @@
           <hr/>
   </form>
 </div>
-
+<script>
+    function addMore() { 
+        var ni = document.getElementById('myDiv'); 
+        var numi = document.getElementById('theValue'); 
+        var num = (document.getElementById('theValue').value -1)+ 2; 
+        numi.value = num; 
+        aTextBox=document.createElement('input');
+        var inputidname = 'im_screen_name_'+num;
+        alert(inputidname);
+        aTextBox.setAttribute('id', inputidname);
+        aTextBox.setAttribute('size', '24');
+        aTextBox.setAttribute('type','text');
+        ni.appendChild(aTextBox); 
+    }
+</script>
 {% endblock %}

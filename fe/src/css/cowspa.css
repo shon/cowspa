@@ -28,6 +28,12 @@ a:hover {
 .content a:hover {
     background: gray;
 }
+.edit-link {
+    font: lighter small Verdana, Arial, 'MS Sans Serif';
+    color: #000000;
+    margin-right:10px;
+    float: right;
+ }
 label {
     text-align: right;
 }
@@ -43,12 +49,29 @@ form textarea {
     -webkit-border-radius:5px;
 }
 
+/*table into div */
+
+.leftcol {
+    float: left;
+    margin-left: inherit;
+}
+.middlecol {
+    float: center;
+    text-align: center
+}
+.rightcol {
+    float: right;
+    margin-right: inherit;
+}
+
 
 /* emastic leftover */
 
 .pr1 {padding-right:1em;}
 .pr2 {padding-right:2em;}
 .pr3 {padding-right:3em;}
+.pb2 {padding-bottom:2em;}
+.pb3 {padding-bottom:3em;}
 .ml1{margin-left:1em;}
 .ml2{margin-left:2em;}
 .mt2{margin-top:2em;}
@@ -150,6 +173,35 @@ form textarea {
     border-radius:5px;
     text-shadow: 1px 0px 0px gray;
 }
+
+.rightsidebar {
+    width: 15%;
+    position: absolute;
+    right: 5%;
+
+    display: -webkit-box;
+    -webkit-box-pack: right;
+    -webkit-box-align: right;
+
+    display: -moz-box;
+    -moz-box-pack: right;
+    -moz-box-align: right;
+
+    display: box;
+    box-pack: right;
+    box-align: right;
+}   
+
+.profile-pic {
+    width: 200px;
+    height: 200px;
+}
+
+.socialme-pic {
+    width: 20px;
+    height: 20px;
+}
+
 .navheader {
     color: white;
     position:fixed;

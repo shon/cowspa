@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block tabs %}
-    {{ macros.tabs(pubroot, [('Account', '/members/account')]) }}
+    {{ macros.tabs(pubroot, [('About Me', '/members/myprofile'), ('Account', '/members/account'), ('Membership Information', '/members/membershipinfo'),('Contact Details','/members/contact'),('Billing','/members/billing'),('Preferences','/members/preferences'),('Security/Privacy','/members/security')]) }}
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,6 @@
 		    <tr>
                         <td class="line">Username</td>
                         <td><input class="text" name="username" type="text" placeholder="Username" /> </td>
-                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                     </tr>
 		    <tr> <td><br/></td> <td><br/></td> </tr>
                     <tr>
@@ -25,20 +24,7 @@
 		    <tr>
                         <td class="line">Membership Id</td>
                         <td>6278</td>
-                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                     </tr>
-		    <tr> <td><br/></td> <td><br/></td> </tr>
-                    <tr>
-			<td class="line">Email Address</td>
-			<td><input name="email_address" type="email" placeholder="Type Email Address" /></td>
-                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
-		    </tr>
-		    <tr> <td><br/></td> <td><br/></td> </tr>
-		    <tr>
-			<td class="line">Secondary Email Address</td>
-			<td><input name="email_address_sec" type="email" placeholder="Type Secondary Email Address" /></td>
-                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
-		    </tr>
         </table>	
           <hr/>
           <div class="ml5 pl2 pr2">

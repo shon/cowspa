@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block tabs %}
-    {{ macros.tabs(pubroot, [('Contact Details','/members/contact')]) }}
+    {{ macros.tabs(pubroot, [('About Me', '/members/myprofile'), ('Account', '/members/account'), ('Membership Information', '/members/membershipinfo'),('Contact Details','/members/contact'),('Billing','/members/billing'),('Preferences','/members/preferences'),('Security/Privacy','/members/security')]) }}
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
             <table>
                     <tr>
                         <td>Address</td>
-                        <td><input name="address" type="text"></td>
+                        <td><textarea rows="2" cols="30" name="address" placeholder="address" /></textarea> </td>
                         <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                     </tr>
                     <tr>
@@ -39,20 +39,23 @@
                         <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                     </tr>
                     <tr>
-                        <td>Mobile <em>(please include international dialing code)</em></td>
+                        <td>Mobile</td>
                         <td><input name="mobile" type="text"></td>
                         <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                     </tr>
+                    <tr> <td><em>(please include international dialing code)</em><td></td><td></td> </tr>
                     <tr>
-                        <td>Work Phone <em>(please include international dialing code)</em></td>
+                        <td>Work Phone</td>
                         <td><input name="work" type="text"></td>
                         <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                     </tr>
+                    <tr> <td><em>(please include international dialing code)</em><td></td><td></td> </tr>
                     <tr>
-                        <td>Home Phone <em>(please include international dialing code)</em></td>
+                        <td>Home Phone</td>
                         <td><input name="home" type="text"></td>
                         <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
                     </tr>
+                    <tr> <td><em>(please include international dialing code)</em><td></td><td></td> </tr>
             </table>	
             <hr/>
             <table>
