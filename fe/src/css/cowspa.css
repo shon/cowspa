@@ -62,6 +62,27 @@ form textarea {
     margin-right: inherit;
 }
 
+.leftcol-sp {
+    float: left;
+    margin-left: 30%;
+}
+.middlecol-sp {
+    float: center;
+    text-align: left;
+    width: 40%;
+}
+.rightcol-sp {
+    float: right;
+    margin-right: 10%;
+}
+.specific {
+    word-wrap: break-word;
+    width: 100; 
+    align: left;
+    float: left;
+    margin-left: 25%;
+}
+
 
 /* emastic leftover */
 
