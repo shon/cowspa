@@ -328,13 +328,13 @@ form textarea {
 }
 .toplink-showing {
     float:right; 
-    width: 12em;
     background: {{ main_bg_start }};
 }
 .toplink-opts-showing {
     color: {{ footer_color }};
     background: {{ main_bg_start }};
-    float:right; 
+    float:left; 
+    width: 10em;
     position: absolute; 
     padding: 1em; 
     display: block;
