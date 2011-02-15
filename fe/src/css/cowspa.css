@@ -45,7 +45,9 @@ form textarea {
     border-radius:5px;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
+    width: 90%;
 }
+
 
 /*table into div */
 
@@ -154,7 +156,48 @@ form textarea {
 .search-box {
     font-weight:bold;
     color:#ddd;
-    background: {{ main_bg_start }};
+    background: {{ searchbox_bg }};
+    border-color: {{ main_bg_start }};
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -moz-border-radius-bottomleft: 0px;
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-radius:10px;
+    -webkit-border-bottom-right-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    margin-top: 2em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 0em;
+}
+.search-text {
+    border: 0px;
+    border-color: {{ page_bg }};
+    background: {{ main_bg_end }};
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -moz-border-radius-topright: 0px;
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-radius:10px;
+    -webkit-border-top-right-radius: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+    padding:0.5em;
+    padding-right:0em;
+}
+.search-btn {
+    border: 0px;
+    background: {{ page_bg }};
+    color: {{ main_bg_start }};
+    border-radius:10px;
+    border-color: {{ page_bg }};
+    -moz-border-radius:10px;
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-bottomleft: 0px;
+    -webkit-border-radius:10px;
+    -webkit-border-top-left-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    padding:0.5em;
+    padding-left:0em;
 }
 .tab-open {
     border:1px solid black;
@@ -166,7 +209,6 @@ form textarea {
     padding-bottom: 3px;
     margin-bottom: 2px;
     border-radius:5px;
-    -moz-border-radius:5px;
     -moz-border-radius:5px;
     -moz-border-radius-bottomleft: 0px;
     -moz-border-radius-bottomright: 0px;
@@ -244,6 +286,8 @@ form textarea {
 }
 .richtext {
     height: 20em;
+    width: 40em;
+    padding:0px;
 }
 .engrave { text-shadow: 0px 0px 1px black; }
 .invisible { display: none; }
@@ -311,13 +355,13 @@ form textarea {
     font-weight:bold;
     width: 10em;
     color: {{ footer_color}};
-    background: {{ main_bg_start }};
     border: 2px solid gray;
     position:absolute;
     z-index: 100;
     padding: 2em;
     opacity: 0.9;
     text-align: left;
+    display: none;
 }
 .toplink { 
     width: 5em; 

@@ -14,10 +14,10 @@ dstroot = "pub"
 srcdir = "fe/src"
 contribdir = "fe/contrib"
 themes_srcdir = "fe/src/themes"
-themes = (('default', 'Green'), ('bw', 'Black and White'))
+themes = (('default', 'Green'), ('bw', 'Black and White'), ('fb', 'Facebook'))
 langs = (('en', 'English'), ('es', 'Spanish'), ('de', 'German'))
 available_langs = [lang[1] for lang in langs]
-contribs = ['css', 'js']
+contribs = ['css', 'js', 'Assets']
 
 env = Environment(loader=FileSystemLoader(srcdir))
 

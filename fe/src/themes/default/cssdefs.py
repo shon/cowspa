@@ -20,3 +20,4 @@ tab_open_color = black
 textarea_bg = "#ECE9E1"
 slogan_color = white
 toplinks_color = white
+searchbox_bg = main_bg_start
