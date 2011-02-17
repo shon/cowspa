@@ -386,3 +386,34 @@ form textarea {
 .hidden {
     display: none;
 }
+.datebox-date {
+    color: {{ footer_color }};
+    font-weight:bold;
+    margin: 0;
+    padding: 0;
+}
+.datebox-year {
+    border: 0px;
+    border-bottom: 1px solid {{ footer_color }};
+    margin: 0;
+    padding: 0;
+}
+.datebox {
+    width: 5em;
+    border: 1px solid {{ footer_bg }};
+    color: {{ footer_color }};
+    background : {{ main_bg_start }};
+    -webkit-transform: rotate(-10deg); 
+    -moz-transform: rotate(-10deg);
+    opacity: 0.5;
+    margin: 0px;
+    margin-left: 2em;
+    padding: 0px;
+}
+.feedbox-title {
+    float: right;
+    margin-right: 1em;
+    color: {{ footer_color }};
+    background : {{ main_bg_start }};
+    opacity: 0.5;
+}

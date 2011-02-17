@@ -5,45 +5,14 @@
 {% endblock %}
 
 {% block content %}
-<img src="{{ pubroot }}/images/chart.png" width="220" height="75" alt="Revenue (Months)" />
-<!-- <img src="http://chart.apis.google.com/chart?chf=a,s,000000|bg,s,67676700|c,s,67676700&chxl=0:|2000|2500|3000|3500&chxr=0,-5,100&chxs=0,000000,11.5,0,l,000000&chxt=r&chs=220x75&cht=ls&chco=DA3B15,F7A10A,4582E7&chds=0,3000,-5,3000&chd=t2:1900,2100,2700,3000,2500,2700|1800,2100,2600,3000,2500,2900|24.59,27.869,31.148,29.508,24.59,21.311,26.23,39.344,36.066,27.869,22.951,26.23,31.148,37.705,39.344,27.869,26.23,-1&chdl=Invoiced|Uninvoiced&chls=1|1|1&chma=|5&chtt=Revenue+(Months)&chts=000000,11.5" width="220" height="75" alt="Revenue (Months)" /> -->
+<!--<img src="{{ pubroot }}/images/chart.png" width="220" height="75" alt="Revenue (Months)" />
+ <img src="http://chart.apis.google.com/chart?chf=a,s,000000|bg,s,67676700|c,s,67676700&chxl=0:|2000|2500|3000|3500&chxr=0,-5,100&chxs=0,000000,11.5,0,l,000000&chxt=r&chs=220x75&cht=ls&chco=DA3B15,F7A10A,4582E7&chds=0,3000,-5,3000&chd=t2:1900,2100,2700,3000,2500,2700|1800,2100,2600,3000,2500,2900|24.59,27.869,31.148,29.508,24.59,21.311,26.23,39.344,36.066,27.869,22.951,26.23,31.148,37.705,39.344,27.869,26.23,-1&chdl=Invoiced|Uninvoiced&chls=1|1|1&chma=|5&chtt=Revenue+(Months)&chts=000000,11.5" width="220" height="75" alt="Revenue (Months)" /> 
 <br/>
 <br/>
+ -->
 
     <div class="pr2 dp50 rc box-shadow feeds">
         <ol id="events-area" class="mt1">
-            <!--
-            <div id="item-1">
-                <div class="dp95">
-                    <c class="highlight">9.15am-12.30pm</c> <c class="engrave">Ethical music </c>at <a>GlassHouse</a> 13 attending <a>..</a>
-                </div>
-                <div class="dp5 red"><a>x</a></div>
-                <div class="feed-item hp tr">
-                    <c class="tag-1">Today</c> <c class="tag-2">GlassHouse</c> <c class="tag-3">@Shammi Kapoor</c> <a>details</a> 
-                </div>
-                <div class="clear"/>
-            </div> 
-            <div id="item-2">
-                <div class="dp95">
-                    <c class="highlight">10.00am-1.00pm</c> <c class="engrave">Python hackers meet</c> at <a>WhiteHouse</a> 7 attending <a>..</a>
-                </div>
-                <div class="dp5 red">x</div>
-                <div class="feed-item hp tr">
-                    <c class="tag-1">Today</c> <c class="tag-2">WhiteHouse</c> <c class="tag-3">@BDFL</c> <a>details</a> 
-                </div>
-                <div class="clear"/>
-            </div> 
-            <div id="item-3">
-                <div class="feed-item dp95">
-                    <c class="highlight">5.00pm-9.00pm</c> <c class="engrave">Wine tasting festival</c> at <a>Terrace</a> 79 attending <a>..</a>
-                </div>
-                <div class="dp5 red">x</div>
-                <div class="feed-item hp tr">
-                    <c class="tag-1">Today</c> <c class="tag-2">Terrace</c> <c class="tag-3">@John</c> <a>details</a> 
-                </div>
-                <div class="clear"/>
-            </div> 
-            -->
             <span id="mustache-feed"/>
         </ol>
     </div>
@@ -85,49 +54,6 @@ function formattime24to12(hhmm) {
     return out;
 };
 function load_data(data, data_text) {
-    /*
-    var events_area = $('events-area');
-    for (var item_no=0; item_no < data.data.events.length; item_no++) {
-        var event = data.data.events[item_no];
-        var event_container = new Element('div', {
-            id: 'feed-item' + item_no,
-        });
-        var event_info = new Element('div', {
-            class: 'dp95'
-        });
-        var time = new Element('c', {
-            class: 'highlight',
-            text: formattime24to12(event.start) + '-' + formattime24to12(event.end)
-        });
-        var name = new Element('c', {
-            class: 'engrave',
-            text: event.name
-        });
-        var resource_name = new Element('a', {
-            href: event.resource_link,
-            text: event.resource_name
-        });
-        var remove_div = new Element('div', {
-            class: 'dp5'
-        });
-        var remove_link = new Element('c', {
-            text: 'x',
-            class: 'red'
-        });
-        time.inject(event_info);
-        event_info.appendText(' ');
-        name.inject(event_info);
-        event_info.appendText(' at ');
-        resource_name.inject(event_info);
-        remove_link.inject(remove_div);
-
-        event_info.inject(event_container);
-        remove_div.inject(event_container);
-
-        event_container.inject(events_area);
-
-    };
-    */
 
     html = Mustache.to_html(template, data.data);
     $('mustache-feed').set('html', html);
@@ -157,13 +83,33 @@ var req = new Request.JSON({
 req.send();
 
 </script>
-    <div class="ml5 pl2 pr2 dp20 rc box-shadow">
-        <h3 class="mt1">Tomorrow</h3>
-        <hr/>
-        <ol>
-            <li>event one</li>
-            <li>event two</li>
-        </ol>
+    <div class="pl5 dp30 tc rc box-shadow feeds">
+        <h4 class="tr mt1 feedbox-title engrave">Recent Activities</h3>
+        <br/>
+        <div class="dp30">
+            <div class="datebox"><span class="datebox-year">Mar 2011</span><h2 class="datebox-date">5</h2><small>Friday</small></div>
+        </div>
+        <div class="dp65 engrave">
+            <c class="tl">
+            <ul>
+                <li>New member <a>Nils Toedtmann</a> joined</li>
+                <li>Invoice no. <a>130005977</a> is paid</li>
+            </ul>
+            </span>
+            </c>
+        </div>
+        <div class="dp30">
+            <div class="datebox"><span class="datebox-year">Mar 2011</span><h2 class="datebox-date">1</h2><small>Friday</small></div>
+        </div>
+        <div class="dp65 engrave">
+            <c class="tl">
+            <ul>
+                <li>Invoice <a>130006733</a> and 50 more invoices are generated</li>
+                <li>VAT for resource <a>GlassHouse</a> is changed to 19%</li>
+            </ul>
+            </c>
+        </div>
+
     </div>
 </div>
 

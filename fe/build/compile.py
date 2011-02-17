@@ -25,7 +25,7 @@ def copy_dirs(dirs, srcdir, dstdir):
     if not os.path.exists(dstdir):
         os.mkdir(dstroot)
     for dirname in dirs:
-        cmd = "cp -rv %s/%s %s" % (srcdir, dirname, dstdir)
+        cmd = "cp -r %s/%s %s" % (srcdir, dirname, dstdir)
         os.system(cmd)
 
 def is_template(filename, srcpath):
