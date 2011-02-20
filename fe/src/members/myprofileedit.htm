@@ -11,41 +11,49 @@
         <form id="myprofileedit">		
                 <table>			
 		    <tr>
+                        <td></td>
+                        <td></td>
+                        <th class="rightcol-makepublic" ><c>Make it Public?</c></th>
+                    </tr>
+
+		    <tr>
                         <td class="leftcol-sp">Short Description</td>
                         <td class="middlecol-sp"><input class="text" name="short_description" type="text" placeholder="Short Description" /> </td>
-                        <td class="rightcol-sp"><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
                     </tr>
 
 		    <tr>
                         <td class="leftcol-sp">Long Description</td>
-                        <td class="middlecol-sp"><textarea name="long_description" id="longdescription" class="dl40 richtext"> </textarea></td>
-                        <td class="rightcol-sp"><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                        <td class="middlecol-sp"><textarea name="long_description" id="longdescription" width="20%" class="richtext"></textarea></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
                     </tr>
                     <tr>
 			<td class="leftcol-sp">Upload photo</td>
 			<td class="middlecol-sp"><input name="uploadPicture" id="uploadPicture" class="textbox" type="file" /> </td>
-                        <td class="rightcol-sp"><input name="public_field" value="1" id="public_field" type="checkbox" title="Make it public?" />Make it Public?</td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" type="checkbox" title="Make it public?" /></td>
                    </tr>
                     <tr>                    
 			<td></td>
                         <td class="specific pb3">You can upload a JPG, GIF, BMP or PNG file (Maximum size of 10Mb). Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images. Minimum image size is 32x32.</td> 
-                        <!-- <td style="word-wrap: break-word" width="100" align="left">You can upload a JPG, GIF, BMP or PNG file (Maximum size of 10Mb). Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images. Minimum image size is 32x32.</td> -->
-			<td></td>
+                        <!--
+                        <td class="specific pb3">You can upload a JPG, GIF, BMP or PNG file (Maximum size of 10Mb). Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images. Minimum image size is 32x32.</td> 
+                        <td colspan="2">You can upload a JPG, GIF, BMP or PNG file (Maximum size of 10Mb). Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images. Minimum image size is 32x32.</td> 
+                        -->
                     </tr>	
 		    <tr>
                         <td class="leftcol-sp">Website</td>
                         <td class="middlecol-sp"><input id="website" class="text" name="website" type="url" placeholder="http://Website-link.org" /> </td>
-                        <td class="rightcol-sp"><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
                     </tr>
                     <tr>
                         <td class="leftcol-sp">Interests in</td>
                         <td class="middlecol-sp"><input class="text" name="interests" type="text" placeholder="Networking, Collaboration" /> </td>
-                        <td class="rightcol-sp"><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
                     </tr>
                     <tr>
                         <td class="leftcol-sp">Expertise</td>
                         <td class="middlecol-sp"><input class="text" name="expertise" type="text" placeholder="Analyst" /> </td>
-                        <td class="rightcol-sp"><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
                     </tr>
                     <tr>
                         <td class="leftcol-sp"> IM Screen Names </td>
@@ -77,7 +85,7 @@
                                 <div><a href="javascript:;" onclick="addMore();">Add More</a></div>
                             </div>
                         </td>
-                        <td class="rightcol-sp"> </td>
+                        <td class="rightcol-makepublic"> </td>
                     </tr>
 <!--
                     <tr>
@@ -98,7 +106,7 @@
 -->
           </table>	
           <hr/>
-          <div class="ml25 pl2 pr2">
+          <div class="pb1 ml25 pl2 pr2">
               <button id="submit_myprofileedit" type="submit">Update</button>
               <button id="reset" type="reset">Reset</button>
               <button id="cancel" type="button">Cancel</button>
