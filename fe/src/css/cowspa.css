@@ -70,23 +70,25 @@ div.hideeditdiv  {
 
 .leftcol-sp {
     float: left;
-    margin-left: 30%;
+    margin-left: 10%;
 }
 .middlecol-sp {
     float: center;
     text-align: left;
-    width: 40%;
+    width: 30%;
 }
 .rightcol-sp {
     float: right;
     margin-right: 10%;
+    text-align: center;
+}
+.rightcol-makepublic {
+    margin-right: 10%;
+    text-align: center;
 }
 .specific {
-    word-wrap: break-word;
-    width: 100; 
-    align: left;
     float: left;
-    margin-left: 25%;
+    text-align: left;
 }
 
 
