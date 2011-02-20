@@ -48,6 +48,10 @@ form textarea {
     width: 90%;
 }
 
+div.hideeditdiv  { 
+    visibility:hidden;
+    position:absolute;
+}
 
 /*table into div */
 

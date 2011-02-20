@@ -6,29 +6,46 @@
 
 {% block content %}
 
+<script type="text/javascript">
+    function hideedit(){
+        $('accountdiv').setStyle('visibility', 'visible');
+        $('accountdiv').setStyle('position', 'relative');
+        $('socialmediv').setStyle('visibility', 'visible');
+        $('socialmediv').setStyle('position', 'relative');
+        $('accounteedit').setStyle('visibility', 'hidden');
+        $('accounteedit').setStyle('position', 'absolute');
+    };
+    function showedit(){
+        $('accountdiv').setStyle('visibility', 'hidden');
+        $('accountdiv').setStyle('position', 'absolute');
+        $('socialmediv').setStyle('visibility', 'hidden');
+        $('socialmediv').setStyle('position', 'absolute');
+        $('accounteedit').setStyle('visibility', 'visible');
+        $('accounteedit').setStyle('position', 'relative');
+    };
+</script>
+
 <br/>
 <br/>
-
-    <div class="pl2 pr2 pb2 dp50 rc box-shadow">
-
+    <div id="accountdiv" class="pl2 pr2 pb2 dp50 rc box-shadow">
         <h3 class="mt1">Account Details
-        <span class="edit-link" id="accountedit"><a href ="./accountedit">Edit</a></span>
+            <span class="edit-link"> <a href="#" onclick="showedit()">Edit</a> </span>
         </h3>
         <hr/>
-            <div class="p1">
-                <div class="dp50 leftcol">Username</div>
-                <div class="dp50 rightcol">myusername</div>
-            </div>
-            <div class="p1">
-                <div class="dp50 leftcol">Password</div>
-                <div class="dp50 rightcol">****</div>
-            </div>
-            <div class="p1">
-                <div class="dp50 leftcol">Membership Id</div>
-                <div class="dp50 rightcol">9812</div>
-            </div>
+        <div class="p1">
+            <div class="dp50 leftcol">Username</div>
+            <div class="dp50 rightcol">myusername</div>
+        </div>
+        <div class="p1">
+            <div class="dp50 leftcol">Password</div>
+            <div class="dp50 rightcol">****</div>
+        </div>
+        <div class="p1">
+            <div class="dp50 leftcol">Membership Id</div>
+            <div class="dp50 rightcol">9812</div>
+        </div>
     </div>
-    <div class="mr2 pl2 pr2 dp20 rc box-shadow">
+    <div id="socialmediv" class="mr2 pl2 pr2 dp20 rc box-shadow">
         <div>
             <h3>Firstname Lastname</h3>
             <hr/>
@@ -45,6 +62,31 @@
             <img src="../images/logos/digg.jpg" width="20" height="20"/>
         </div>
     </div>
-</div>
-
+    <div id="accounteedit" class="hideeditdiv pl2 pr2 dp50 rc box-shadow">
+        <form id="accounteeditform">
+            <h3 class="mt1">Edit section: Account Details </h3>
+            <hr/>
+                <table>
+                    <tr>
+                        <td class="line">Username</td>
+                        <td><input class="text" name="username" type="text" placeholder="Username" /> </td>
+                    </tr>
+                    <tr>
+                        <td class="line">Password</td>
+                        <td><input class="text" name="pwd" type="password" placeholder="****" /> </td>
+                    </tr>
+                    <tr>
+                        <td class="line">Membership Id</td>
+                        <td>6278</td>
+                    </tr>
+                </table>	
+            <hr/>
+            <div class="ml5 pl2 pr2">
+              <button id="submit_myprofileedit" type="submit">Update</button>
+              <button id="reset" type="reset">Reset</button>
+              <button id="cancel" type="button" onclick="hideedit()">Cancel</button>
+            </div>
+            <hr/>
+        </form>
+    </div>
 {% endblock %}
