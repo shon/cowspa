@@ -1,4 +1,5 @@
 body { 
+    font-family:verdana,helvetica,arial,sans-serif;
     font-size: {{ page_font_size }};
     background: {{ page_bg }};
 }
@@ -106,6 +107,7 @@ div.hideeditdiv  {
 .mt4{margin-top:4em;}
 .mr1{margin-right:1em;}
 .mr2{margin-right:2em;}
+.mb5{margin-bottom:5em;}
 
 .p2 { 
     padding-right: 2em;
@@ -135,7 +137,10 @@ div.hideeditdiv  {
     background: -moz-linear-gradient(top, {{ nav_bg_start }}, {{ nav_bg_end }});
     background: -webkit-gradient(linear, left top, left bottom, from({{ nav_bg_start }}), to({{ nav_bg_end }}));
 } 
-.slogan { color: {{ slogan_color }}; }
+.slogan { 
+    color: {{ slogan_color }};
+    font-weight: italic;
+}
 .toplinks { color: {{ toplinks_color }}; }
 .main {
     background: -moz-linear-gradient(top, {{ main_bg_start }}, {{ main_bg_end }}); 
@@ -375,6 +380,7 @@ div.hideeditdiv  {
     z-index:  100; 
     position: relative;
     color: {{ footer_color }};
+    margin: 0.3em;
 }
 .toplink-showing {
     float:right; 
@@ -422,4 +428,46 @@ div.hideeditdiv  {
     color: {{ footer_color }};
     background : {{ main_bg_start }};
     opacity: 0.5;
+}
+.login-main {
+    align: center;
+    color: {{ main_bg_end }};
+    height: 20em;
+    margin-top: 10%;
+    margin-left: 10%
+}
+.about-box {
+}
+.login-box { 
+    border: 0.4em solid {{ main_bg_end }};
+    color: {{ main_bg_end }};
+    background: {{ main_bg_start }};
+    opacity: 0.8;
+    margin-top: 15em;
+    margin-left: 3em;
+}
+.login-form { 
+    margin: 2em;
+    padding: 1em;
+    margin-bottom: 5em;
+}
+.login-field {
+    margin-bottom: 2em;
+    color: black;
+}
+.login-btn {
+    background: {{ main_bg_end }};
+    padding: 0.7em;
+    padding-left: 2em;
+    padding-right: 2em;
+    border: 0px;
+    border-radius: 0.7em;
+    -moz-border-radius: 0.7em;
+    -webkit-border-radius:1.2em;
+    color: {{ main_bg_start }};
+    font-weight:bold;
+}
+.login-error {
+    color: red;
+    margin: 1em;
 }

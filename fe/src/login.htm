@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {% include 'js.essential.html' %}
+    {% include 'style.html' %}
+    <div id="style">{% block style %}{% endblock %}</div>
+</head>
+<body>
+
+{% import 'macros.html' as macros %}
+
+<!-- <div class="page hp tl box-1 p2"> -->
+<div class="page tl ml2 fluid">
+    <div class="dl40 mt2 tr p2 about-box ">
+    <img src="{{ pubroot }}/images/cow_bath.png"/>
+    </div>
+    <div class="dl40 login-box rc box-shadow">
+        <div class="login-form tc mt5 mb5 p2 tl">
+            <form method="post" action="/auth">
+                <div class="login-error"><strong id="msg"/></div>
+                <script>
+                    var msg = Cookie.read('msg');
+                    $('msg').set('text', msg);
+                </script>
+                <input class="login-field" type="text" name="username" placeholder="Username" />
+                <input class="login-field" type="password" name="password" placeholder="password"/>
+                <div>
+                    <div class="dp45"> <a>Reset password</a> </div>
+                    <div class="dp45 tr"> <input class="login-btn box-shadow" type="submit" value="Log In"/> </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% include 'footer.html' %}
+</div>
+
+</body>
+</html>
