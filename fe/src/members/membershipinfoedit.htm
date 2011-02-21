@@ -5,109 +5,103 @@
 {% endblock %}
 
 {% block content %}
-    <div class="pl2 pr2 dp60 rc box-shadow">
-        <h3 class="mt1">Edit section: Membership Information</h3>
+<div class="pl2 pr2 dp60 rc box-shadow">
+    <h3 class="mt1">Edit section: Membership Information</h3>
+    <hr/>
+    <form id="membershipinfoedit">		
+        <table>			
+            <tr>
+                <td>Current Memberships</td>
+                <td></td>
+                <ol>
+                    <td> <li>Amsterdam</li> </td>
+            </tr>
+            <tr>
+                    <td></td>
+                    <td></td>
+                    <td> <li>Madrid</li> </td>
+                </ol>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <select name="chooseloc">
+                        <option value="">Requst Membership to...</option>
+                        <option value="1">Brussels</option>
+                        <option value="2">King Cross</option>
+                    </select>
+                </td>
+            </tr>				
+        </table>	
         <hr/>
-            <form id="membershipinfoedit">		
-                <table>			
-		    <tr>
-                        <td>Current Memberships</td>
-                        <td></td>
-                        <ol>
-                            <td> <li>Amsterdam (AMS)</li> </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td> <li>Madrid (MAD)</li> </td>
-                        </ol>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <select name="chooseloc">
-                                    <option value="">Requst Membership to...</option>
-                                    <option value="1">Brussels(BRU)</option>
-                                    <option value="2">King Cross(KX)</option>
-                                </select>
-                            </td>
-                        </tr>				
-              </table>	
-              <table>
-	            <tr>				
-			<td> Location </td>
-                        <td> Tariff </td>
-                        <td> Role </td>                 
-		    </tr>			
-
-	            <tr>				
-			<td> AMS </td>
-                        <td> Start 50 </td>
-                        <td>
-                            <select name="current_role">
-                                <option value="">Member</option>
-                                <option value="1">Host</option>
-                                <option value="2">Director</option>
-                            </select> 
-			</td>                 
-		    </tr>				
-
-	            <tr>				
-			<td> MAD </td>
-                        <td> Unlimited </td>
-                        <td>
-                            <select name="current_role">
-                                <option value="">Host</option>
-                                <option value="1">Member</option>
-                                <option value="2">Director</option>
-                            </select> 
-			</td>                 
-		    </tr>			
-              </table>	
-              <hr/>
+        <table>
+            <tr>				
+                <td> Location </td>
+                <td> Tariff </td>
+                <td> Role </td>                 
+            </tr>			
+            <tr>				
+                <td> Amsterdam </td>
+                <td> Start 50 </td>
+                <td>
+                    <select name="current_role">
+                        <option value="">Member</option>
+                        <option value="1">Host</option>
+                        <option value="2">Director</option>
+                    </select> 
+                </td>                 
+            </tr>				
+            <tr>				
+                <td> Madrid </td>
+                <td> Unlimited </td>
+                <td>
+                    <select name="current_role">
+                        <option value="">Host</option>
+                        <option value="1">Member</option>
+                        <option value="2">Director</option>
+                    </select> 
+                </td>                 
+            </tr>			
+        </table>	
+        <hr/>
         <div>
-                <table>
-                    <tr>
-			<td class="line">Phone handset number</td>
-			<td><input id="handset" name="handset" value="" class="text" type="text" /></td>
-                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
-                    </tr>
-                    <tr>
-			<td class="line">Extension number</td>
-			<td><input id="ext" name="ext" value="" class="text" type="text" /></td>
-                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
-                    </tr>
-                    <tr>
-			<td class="line">Franking machine pin</td>
-			<td><input id="frank_pin" name="frank_pin" value="" class="text" type="text" /></td>
-                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
-                    </tr>
-                    <tr>
-			<td class="line">Storage allocation on hub server (GB)</td>
-			<td><input id="gb_storage" name="gb_storage" value="" class="text" type="text" /></td>
-                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
-                    </tr>
-                    <tr>
-			<td class="line">Type of computer</td>
-			<td><input id="os" name="os" value="" class="text" type="text" /></td>
-                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
-                    </tr>
-                    <tr>
-			<td class="line">Location of storage</td>
-			<td><input id="storage_loc" name="storage_loc" value="" class="text" type="text" /></td>
-                        <td><input name="public_field" value="1" id="public_field" type="checkbox" />Make it Public?</td>
-                    </tr>
-                </table>
+            <table>
+                <tr>
+                    <td class="line">Phone handset number</td>
+                    <td><input id="handset" name="handset" value="" class="text" type="text" /></td>
+                    <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" type="checkbox" /></td>
+                </tr>
+                <tr>
+                    <td class="line">Extension number</td>
+                    <td><input id="ext" name="ext" value="" class="text" type="text" /></td>
+                    <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" type="checkbox" /></td>
+                </tr>
+                <tr>
+                    <td class="line">Franking machine pin</td>
+                    <td><input id="frank_pin" name="frank_pin" value="" class="text" type="text" /></td>
+                </tr>
+                <tr>
+                    <td class="line">Storage allocation on hub server (GB)</td>
+                    <td><input id="gb_storage" name="gb_storage" value="" class="text" type="text" /></td>
+                </tr>
+                <tr>
+                    <td class="line">Type of computer</td>
+                    <td><input id="os" name="os" value="" class="text" type="text" /></td>
+                </tr>
+                <tr>
+                    <td class="line">Location of storage</td>
+                    <td><input id="storage_loc" name="storage_loc" value="" class="text" type="text" /></td>
+                </tr>
+            </table>
         </div>
         <hr/>
-          <div class="ml15 pl2 pr2">
-              <button id="submit_contactedit" type="submit">Update</button>
-              <button id="reset" type="reset">Reset</button>
-              <button id="cancel" type="button">Cancel</button>
-          </div>
-          <hr/>
-  </form>
+        <div class="ml15 pl2 pr2">
+            <button id="submit_contactedit" type="submit">Update</button>
+            <button id="reset" type="reset">Reset</button>
+            <button id="cancel" type="button">Cancel</button>
+        </div>
+        <hr/>
+    </form>
 </div>
-
 {% endblock %}
