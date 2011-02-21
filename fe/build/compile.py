@@ -29,7 +29,7 @@ def copy_dirs(dirs, srcdir, dstdir):
         os.system(cmd)
 
 def is_template(filename, srcpath):
-    return filename.endswith('.htm') and 'extends' in file(srcpath).read()
+    return filename.endswith('.htm')
 
 def compile_template(filename, srcpath, dstdir):
     print "compiling", srcpath
