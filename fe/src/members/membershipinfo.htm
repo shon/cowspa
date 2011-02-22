@@ -4,12 +4,29 @@
     {{ macros.tabs(pubroot, [('About Me', '/members/myprofile'), ('Account', '/members/account'), ('Membership Information', '/members/membershipinfo'),('Contact Details','/members/contact'),('Billing','/members/billing'),('Preferences','/members/preferences'),('Security/Privacy','/members/security')]) }}
 {% endblock %}
 {% block content %}
-<br/>
-<br/>
 
-<div class="pl2 pr2 pb2 dp50 rc box-shadow">
+<script type="text/javascript">
+    function hideedit(){
+        $('membershipinfodiv').setStyle('visibility', 'visible');
+        $('membershipinfodiv').setStyle('position', 'relative');
+        $('socialmediv').setStyle('visibility', 'visible');
+        $('socialmediv').setStyle('position', 'relative');
+        $('membershipinfoedit').setStyle('visibility', 'hidden');
+        $('membershipinfoedit').setStyle('position', 'absolute');
+    };
+    function showedit(){
+        $('membershipinfodiv').setStyle('visibility', 'hidden');
+        $('membershipinfodiv').setStyle('position', 'absolute');
+        $('socialmediv').setStyle('visibility', 'hidden');
+        $('socialmediv').setStyle('position', 'absolute');
+        $('membershipinfoedit').setStyle('visibility', 'visible');
+        $('membershipinfoedit').setStyle('position', 'relative');
+    };
+</script>
+
+<div id="membershipinfodiv" class="pl2 pr2 pb2 dp50 rc box-shadow">
     <h3 class="mt1">Membership Information
-        <span class="edit-link" id="membershipinfoedit"><a href ="./membershipinfoedit">Edit</a></span>
+        <span class="edit-link"> <a href="#" onclick="showedit()">Edit</a> </span>
     </h3>
     <hr/>
     <div class="p1">	
@@ -19,12 +36,12 @@
             <div class="dp30 rightcol"> Role </div>                 
         </div>			
         <div class="p1">				
-            <div class="dp30 leftcol"> AMS </div>
+            <div class="dp30 leftcol"> Amsterdam </div>
             <div class="dp30 middlecol"> Start 50 </div>
             <div class="dp30 rightcol"> Member </div>                 
         </div>			
         <div class="p1">				
-            <div class="dp30 leftcol"> MAD </div>
+            <div class="dp30 leftcol"> Madrid </div>
             <div class="dp30 middlecol"> Unlimited </div>
             <div class="dp30 rightcol"> Host </div>                 
         </div>			
@@ -57,8 +74,7 @@
         </div>
     </div>
 </div>
-</div>
-<div class="mr2 pl2 pr2 dp20 rc box-shadow">
+<div id="socialmediv" class="mr2 pl2 pr2 dp20 rc box-shadow">
     <div>
         <h3>Firstname Lastname</h3>
         <hr/>
@@ -74,5 +90,104 @@
         <img src="../images/logos/fb.jpg" width="20" height="20"/>
         <img src="../images/logos/digg.jpg" width="20" height="20"/>
     </div>
+</div>
+<div id="membershipinfoedit" class="hideeditdiv pl2 pr2 dp60 rc box-shadow">
+    <h3 class="mt1">Edit section: Membership Information</h3>
+    <hr/>
+    <form id="membershipinfoeditform">		
+        <table>			
+            <tr>
+                <td>Current Memberships</td>
+                <td></td>
+                <ol>
+                    <td> <li>Amsterdam</li> </td>
+            </tr>
+            <tr>
+                    <td></td>
+                    <td></td>
+                    <td> <li>Madrid</li> </td>
+                </ol>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <select name="chooseloc">
+                        <option value="">Requst Membership to...</option>
+                        <option value="1">Brussels</option>
+                        <option value="2">King Cross</option>
+                    </select>
+                </td>
+            </tr>				
+        </table>	
+        <hr/>
+        <table>
+            <tr>				
+                <td> Location </td>
+                <td> Tariff </td>
+                <td> Role </td>                 
+            </tr>			
+            <tr>				
+                <td> Amsterdam </td>
+                <td> Start 50 </td>
+                <td>
+                    <select name="current_role">
+                        <option value="">Member</option>
+                        <option value="1">Host</option>
+                        <option value="2">Director</option>
+                    </select> 
+                </td>                 
+            </tr>				
+            <tr>				
+                <td> Madrid </td>
+                <td> Unlimited </td>
+                <td>
+                    <select name="current_role">
+                        <option value="">Host</option>
+                        <option value="1">Member</option>
+                        <option value="2">Director</option>
+                    </select> 
+                </td>                 
+            </tr>			
+        </table>	
+        <hr/>
+        <div>
+            <table>
+                <tr>
+                    <td>Phone handset number</td>
+                    <td><input id="handset" name="handset" value="" class="text" type="text" /></td>
+                    <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" type="checkbox" />Make it public?</td>
+                </tr>
+                <tr>
+                    <td>Extension number</td>
+                    <td><input id="ext" name="ext" value="" class="text" type="text" /></td>
+                    <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" type="checkbox" />Make it public?</td>
+                </tr>
+                <tr>
+                    <td>Franking machine pin</td>
+                    <td><input id="frank_pin" name="frank_pin" value="" class="text" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>Storage allocation on hub server (GB)</td>
+                    <td><input id="gb_storage" name="gb_storage" value="" class="text" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>Type of computer</td>
+                    <td><input id="os" name="os" value="" class="text" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>Location of storage</td>
+                    <td><input id="storage_loc" name="storage_loc" value="" class="text" type="text" /></td>
+                </tr>
+            </table>
+        </div>
+        <hr/>
+        <div class="ml15 pl2 pr2">
+            <button id="submit_contactedit" type="submit">Update</button>
+            <button id="reset" type="reset">Reset</button>
+            <button id="cancel" type="button" onclick="hideedit()">Cancel</button>
+        </div>
+        <hr/>
+    </form>
 </div>
 {% endblock %}

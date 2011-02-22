@@ -6,99 +6,138 @@
 
 {% block content %}
 <div class="pl2 pr2 dp50 rc box-shadow">
-        <h3 class="mt1">Billing Details</h3>
-        <hr/>
-        <form id="billingdetailsedit">
+    <h3 class="mt1">Billing Details</h3>
+    <hr/>
+    <form id="billingdetailsedit">
+        <input checked="checked" name="billing_mode" value="0" type="radio" onClick="take_action('0')">Bill to Individual<br>
+        <input name="billing_mode" value="1" type="radio" onClick="take_action('1')">Bill to Company<br>
+
+        <div id="bill_to_individual" class="p1 pb2">
+            <input name="choose_individual_option" value="0" type="radio" onClick="choose_details('profile')">Use Profile Details<br>
+            <input name="choose_individual_option" value="1" type="radio" onClick="choose_details('custom')">Use Details Below<br>
+        </div>
+
+        <div id="profile_details" class="mt1">
+            <div class="p1">				
+                <div class="dp50 leftcol"> Company name </div>
+                <div class="dp50 rightcol"> Hamara Parivaar Corp </div>                 
+            </div>			
+            <div class="p1">				
+                <div class="dp50 leftcol"> Company Number </div>	
+                <div class="dp50 rightcol"> 123 456 7890 </div>                 
+            </div>			
+            <div class="p1">				
+                <div class="dp50 leftcol"> Company address </div>
+                <div class="dp50 rightcol"> roop mahal, prem gali, kholi no. 420 </div>                 
+            </div>			
+            <div class="p1">				
+                <div class="dp50 leftcol"> Phone number </div>
+                <div class="dp50 rightcol">  123 456 7890 </div>                 
+            </div>			
+            <div class="p1">				
+                <div class="dp50 leftcol"> Fax number </div>
+                <div class="dp50 rightcol">  123 456 7890 </div>                 
+            </div>			
+            <div class="p1">				
+                <div class="dp50 leftcol"> Email contact </div>
+                <div class="dp50 rightcol"> excuse.me@please.com </div>                 
+            </div>			
+        </div>
+
+        <div id="details_as_below" class="mt1">
             <table>
-		<tr>
-                    <td>
-                        <input checked="checked" name="billing_mode" value="0" type="radio" onClick="take_action('0')">Use Contact Information<br>
-                        <input name="billing_mode" value="1" type="radio" onClick="take_action('1')">Use Company Information<br>
-                        <input name="billing_mode" value="2" type="radio" onClick="take_action('2')">Use Information below<br>
-                    </td>
-		</tr>
+                <tr>
+                    <td>Company name</td>
+                    <td><input name="company_name" type="text" placeholder="Type company name here" /></td>
+                </tr>
+                <tr>
+                    <td>Company address</td>
+                    <td><textarea name="companyaddress" placeholder="Type company address here" /></textarea></td>
+                </tr>
+                <tr>
+                    <td>Phone number</td>
+                    <td><input name="companyphone" type="text" placeholder="001 123 456 7890" /></td>
+                </tr>
+                <tr>
+                    <td>Fax number</td>
+                    <td><input name="companyfax" type="text" placeholder="001 123 456 7890" /></td>
+                </tr>
+                <tr>
+                    <td>Email contact</td>
+                    <td><input name="companyemail" type="email" placeholder="Type company email here" /></td>
+                </tr>
             </table>
-                <div id="billingdetails" class="pb2">
-                    <div class="p1">				
-                        <div class="dp50 leftcol"> Company name </div>
-                        <div class="dp50 rightcol"> Hamara Parivaar Corp </div>                 
-                    </div>			
-                    <div class="p1">				
-                        <div class="dp50 leftcol"> Company Number </div>	
-                        <div class="dp50 rightcol"> 123 456 7890 </div>                 
-                    </div>			
-                    <div class="p1">				
-                        <div class="dp50 leftcol"> Company address </div>
-                        <div class="dp50 rightcol"> roop mahal, prem gali, kholi no. 420 </div>                 
-                    </div>			
-                    <div class="p1">				
-                        <div class="dp50 leftcol"> Phone number </div>
-                        <div class="dp50 rightcol">  123 456 7890 </div>                 
-                    </div>			
-                    <div class="p1">				
-                        <div class="dp50 leftcol"> Fax number </div>
-                        <div class="dp50 rightcol">  123 456 7890 </div>                 
-                    </div>			
-                    <div class="p1">				
-                        <div class="dp50 leftcol"> Email contact </div>
-                        <div class="dp50 rightcol"> excuse.me@please.com </div>                 
-                    </div>			
-                </div>
-                <div id="custom_information" class="mt1">
-                <table>
-                    <tr>
-                            <td>Company name</td>
-                            <td><input name="company_name" type="text" placeholder="Type company name here" /></td>
-                    </tr>
-                    <tr>
-                            <td>Company address</td>
-                            <td><textarea name="companyaddress" placeholder="Type company address here" /></textarea></td>
-                    <tr>
-                            <td>Phone number</td>
-                            <td><input name="companyphone" type="text" placeholder="001 123 456 7890" /></td>
-                    </tr>
-                    <tr>
-                            <td>Fax number</td>
-                            <td><input name="companyfax" type="text" placeholder="001 123 456 7890" /></td>
-                    </tr>
-                    <tr>
-                            <td>Email contact</td>
-                            <td><input name="companyemail" type="email" placeholder="Type company email here" /></td>
-                    </tr>
-                </table>
-                </div>
-      <hr/>
-      <div class="ml15 pl2 pr2">
-          <button id="submit_billingdetailsedit" type="submit">Update</button>
-          <button id="reset" type="reset">Reset</button>
-          <button id="cancel" type="button">Cancel</button>
-      </div>
-      <hr/>
-  </form>
+        </div>
+
+        <div id="bill_to_company" class="mt1">
+            <table>
+                <tr>
+                    <td>Company name</td>
+                    <td><input name="company_name" type="text" placeholder="Type company name here" /></td>
+                </tr>
+                <tr>
+                    <td>Company address</td>
+                    <td><textarea name="companyaddress" placeholder="Type company address here" /></textarea></td>
+                </tr>
+                <tr>
+                    <td>Phone number</td>
+                    <td><input name="companyphone" type="text" placeholder="001 123 456 7890" /></td>
+                </tr>
+                <tr>
+                    <td>Fax number</td>
+                    <td><input name="companyfax" type="text" placeholder="001 123 456 7890" /></td>
+                </tr>
+                <tr>
+                    <td>Email contact</td>
+                    <td><input name="companyemail" type="email" placeholder="Type company email here" /></td>
+                </tr>
+            </table>
+        </div>
+        <hr/>
+        <div class="ml15 pl2 pr2">
+            <button id="submit_billingdetailsedit" type="submit">Update</button>
+            <button id="reset" type="reset">Reset</button>
+            <button id="cancel" type="button">Cancel</button>
+        </div>
+        <hr/>
+    </form>
 </div>
 
 <script type="text/javascript">
-    function take_action(input) {
-        check_and_display(input);
-    };
-
-    function check_and_display(select_option) {
-        if (select_option == '0') {
-            $('custom_information').hide();
-            $('billingdetails').hide();
+    function choose_details(chosen) {
+        if (chosen == 'profile') {
+            $('bill_to_company').hide();
+            $('profile_details').show();
+            $('details_as_below').hide();
+            $('bill_to_individual').show();
         }
-        else if (select_option == '1') {
-            $('billingdetails').show();
-            $('custom_information').hide();
+        else if (chosen == 'custom') {
+            $('bill_to_company').hide();
+            $('profile_details').hide();
+            $('details_as_below').show();
+            $('bill_to_individual').show();
+        }
+    }; 
+    function take_action(input) {
+        if (input == '0') {
+            choose_details('profile');
+            $('bill_to_company').hide();
+            $('profile_details').hide();
+            $('details_as_below').hide();
+            $('bill_to_individual').show();
+        }
+        else if (input == '1') {
+            $('bill_to_company').show();
+            $('bill_to_individual').hide();
+            $('profile_details').hide();
+            $('details_as_below').hide();
         } 
-        else if (select_option == '2') {
-            $('custom_information').show();
-            $('billingdetails').hide();
-        }; 
     }; 
 
     var default_value = $$('input[name=billing_mode]:checked').map(function(e) { return e.value; })[0];
-    check_and_display(default_value);
+    take_action(default_value);
+    //$('input[name=choose_individual_option]:checked').value = '0';
+    choose_details('profile');
 </script> 
 
 <div class="mr2 pl2 pr2 dp20 rc box-shadow">
