@@ -16,6 +16,9 @@ cd src
 ./redis-server
 
 # STEP 3 # Frontend
+=======
+pip install jinja2 flask redisco redis
+# test
 rm -rf pub; python  fe/build/compile.py
 python be/run_webserver.py
 firefox http://127.0.0.1:5000/dashboard

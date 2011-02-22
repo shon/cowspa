@@ -8,20 +8,26 @@
 
 <script type="text/javascript">
     function hideedit(){
-        $('accountdiv').setStyle('visibility', 'visible');
-        $('accountdiv').setStyle('position', 'relative');
-        $('socialmediv').setStyle('visibility', 'visible');
-        $('socialmediv').setStyle('position', 'relative');
-        $('accounteedit').setStyle('visibility', 'hidden');
-        $('accounteedit').setStyle('position', 'absolute');
+        $('accountdiv').show();
+        $('socialmediv').show();
+        $('accounteedit').hide();
+        //$('accountdiv').setStyle('visibility', 'visible');
+        //$('accountdiv').setStyle('position', 'relative');
+        //$('socialmediv').setStyle('visibility', 'visible');
+        //$('socialmediv').setStyle('position', 'relative');
+        //$('accounteedit').setStyle('visibility', 'hidden');
+        //$('accounteedit').setStyle('position', 'absolute');
     };
     function showedit(){
-        $('accountdiv').setStyle('visibility', 'hidden');
-        $('accountdiv').setStyle('position', 'absolute');
-        $('socialmediv').setStyle('visibility', 'hidden');
-        $('socialmediv').setStyle('position', 'absolute');
-        $('accounteedit').setStyle('visibility', 'visible');
-        $('accounteedit').setStyle('position', 'relative');
+        $('accountdiv').hide();
+        $('socialmediv').hide();
+        $('accounteedit').show();
+        //$('accountdiv').setStyle('visibility', 'hidden');
+        //$('accountdiv').setStyle('position', 'absolute');
+        //$('socialmediv').setStyle('visibility', 'hidden');
+        //$('socialmediv').setStyle('position', 'absolute');
+        //$('accounteedit').setStyle('visibility', 'visible');
+        //$('accounteedit').setStyle('position', 'relative');
     };
 </script>
 
