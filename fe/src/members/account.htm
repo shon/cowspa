@@ -7,92 +7,87 @@
 {% block content %}
 
 <script type="text/javascript">
-    function hideedit(){
-        $('accountdiv').show();
-        $('socialmediv').show();
-        $('accounteedit').hide();
-        //$('accountdiv').setStyle('visibility', 'visible');
-        //$('accountdiv').setStyle('position', 'relative');
-        //$('socialmediv').setStyle('visibility', 'visible');
-        //$('socialmediv').setStyle('position', 'relative');
-        //$('accounteedit').setStyle('visibility', 'hidden');
-        //$('accounteedit').setStyle('position', 'absolute');
+    function hideeditpage(){
+        $('accounteedit').set('class', 'hidediv');
+        $('accountdiv').set('class', 'showdiv');
+        $('socialmediv').set('class', 'showdiv');
     };
-    function showedit(){
-        $('accountdiv').hide();
-        $('socialmediv').hide();
-        $('accounteedit').show();
-        //$('accountdiv').setStyle('visibility', 'hidden');
-        //$('accountdiv').setStyle('position', 'absolute');
-        //$('socialmediv').setStyle('visibility', 'hidden');
-        //$('socialmediv').setStyle('position', 'absolute');
-        //$('accounteedit').setStyle('visibility', 'visible');
-        //$('accounteedit').setStyle('position', 'relative');
+    function showeditpage(){
+        $('accounteedit').set('class', 'showdiv');
+        $('accountdiv').set('class', 'hidediv');
+        $('socialmediv').set('class', 'hidediv');
     };
 </script>
 
 <br/>
 <br/>
-    <div id="accountdiv" class="pl2 pr2 pb2 dp50 rc box-shadow">
-        <h3 class="mt1">Account Details
-            <span class="edit-link"> <a href="#" onclick="showedit()">Edit</a> </span>
-        </h3>
-        <hr/>
-        <div class="p1">
-            <div class="dp50 leftcol">Username</div>
-            <div class="dp50 rightcol">myusername</div>
-        </div>
-        <div class="p1">
-            <div class="dp50 leftcol">Password</div>
-            <div class="dp50 rightcol">****</div>
-        </div>
-        <div class="p1">
-            <div class="dp50 leftcol">Membership Id</div>
-            <div class="dp50 rightcol">9812</div>
+    <div id="accountdiv" class="showdiv">
+        <div class="pl2 pr2 pb2 dp50 rc box-shadow">
+            <h3 class="mt1">Account Details
+                <span class="edit-link"> <a href="#accountedit" onclick="showeditpage()">Edit</a> </span>
+            </h3>
+            <hr/>
+            <div class="p1">
+                <div class="dp50 leftcol">Username</div>
+                <div class="dp50 rightcol">myusername</div>
+            </div>
+            <div class="p1">
+                <div class="dp50 leftcol">Password</div>
+                <div class="dp50 rightcol">****</div>
+            </div>
+            <div class="p1">
+                <div class="dp50 leftcol">Membership Id</div>
+                <div class="dp50 rightcol">9812</div>
+            </div>
         </div>
     </div>
-    <div id="socialmediv" class="mr2 pl2 pr2 dp20 rc box-shadow">
-        <div>
-            <h3>Firstname Lastname</h3>
-            <hr/>
-            <img src="../images/logos/muhhaaa.jpg" width="200" height="200" alt="Firstname Lastname" />
-            <br/><br/>
-        </div>
-        <div>
-            <h3>Social Me</h3>
-        </div>
-        <hr/>
-        <div>
-            <img src="../images/logos/tweet.jpg" width="20" height="20"/>
-            <img src="../images/logos/fb.jpg" width="20" height="20"/>
-            <img src="../images/logos/digg.jpg" width="20" height="20"/>
-        </div>
-    </div>
-    <div id="accounteedit" class="hideeditdiv pl2 pr2 dp50 rc box-shadow">
-        <form id="accounteeditform">
-            <h3 class="mt1">Edit section: Account Details </h3>
-            <hr/>
-                <table>
-                    <tr>
-                        <td class="line">Username</td>
-                        <td><input class="text" name="username" type="text" placeholder="Username" /> </td>
-                    </tr>
-                    <tr>
-                        <td class="line">Password</td>
-                        <td><input class="text" name="pwd" type="password" placeholder="****" /> </td>
-                    </tr>
-                    <tr>
-                        <td class="line">Membership Id</td>
-                        <td>6278</td>
-                    </tr>
-                </table>	
-            <hr/>
-            <div class="ml5 pl2 pr2">
-              <button id="submit_myprofileedit" type="submit">Update</button>
-              <button id="reset" type="reset">Reset</button>
-              <button id="cancel" type="button" onclick="hideedit()">Cancel</button>
+    <div id="socialmediv" class="showdiv">
+        <div class="mr2 pl2 pr2 dp20 rc box-shadow">
+            <div>
+                <h3>Firstname Lastname</h3>
+                <hr/>
+                <img src="../images/logos/profile_pic.jpg" width="200" height="200" alt="Firstname Lastname" />
+                <br/><br/>
+            </div>
+            <div>
+                <h3>Social Me</h3>
             </div>
             <hr/>
-        </form>
+            <div>
+                <img src="../images/logos/tweet.jpg" width="20" height="20"/>
+                <img src="../images/logos/fb.jpg" width="20" height="20"/>
+                <img src="../images/logos/digg.jpg" width="20" height="20"/>
+            </div>
+        </div>
+    </div>
+    <div id="accounteedit" class="hidediv">
+        <div class="pl2 pr2 dp50 rc box-shadow">
+            <form id="accounteeditform">
+                <h3 class="mt1">Edit section: Account Details </h3>
+                <hr/>
+                    <table>
+                        <tr class="p1">
+                            <td class="left-col">Username</td>
+                            <td class="right-col"><input class="text" name="username" type="text" placeholder="Username" /> </td>
+                            <td><a href="check_username_exists">Check Availability</a></td>
+                        </tr>
+                        <tr class="p1">
+                            <td class="left-col">Password</td>
+                            <td class="right-col"><input class="text" name="pwd" type="password" placeholder="Type your password here" /> </td>
+                        </tr>
+                        <tr class="p1">
+                            <td class="left-col">Confirm Password</td>
+                            <td class="right-col"><input class="text" name="confirmpwd" type="password" placeholder="Type your password here" /> </td>
+                        </tr>
+                    </table>	
+                <hr/>
+                <div class="ml5 pl2 pr2">
+                  <button id="submit_myprofileedit" type="submit">Update</button>
+                  <button id="reset" type="reset">Reset</button>
+                  <button id="cancel" type="button" onclick="hideeditpage()">Cancel</button>
+                </div>
+                <hr/>
+            </form>
+        </div>
     </div>
 {% endblock %}

@@ -49,7 +49,12 @@ form textarea {
     width: 90%;
 }
 
-div.hideeditdiv  { 
+div.showdiv  { 
+    visibility:visible;
+    position:relative;
+}
+
+div.hidediv  { 
     visibility:hidden;
     position:absolute;
 }
