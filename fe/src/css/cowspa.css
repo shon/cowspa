@@ -115,6 +115,7 @@ div.hidediv  {
 .mr1{margin-right:1em;}
 .mr2{margin-right:2em;}
 .mb5{margin-bottom:5em;}
+.dl11{float:left; width:11em;}
 
 .p2 { 
     padding-right: 2em;
@@ -433,8 +434,13 @@ div.hidediv  {
     float: right;
     margin-right: 1em;
     color: {{ footer_color }};
-    background : {{ main_bg_start }};
-    opacity: 0.5;
+    background : {{ page_bg }};
+    opacity: 0.8;
+    padding: 0.4em;
+    border-radius: 0.7em;
+    -moz-border-radius: 0.7em;
+    -webkit-border-radius: 0.7em;
+    text-shadow: 0px 1px 0px #FFFFFF;
 }
 .login-main {
     align: center;
