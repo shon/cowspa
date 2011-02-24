@@ -8,12 +8,12 @@
 
 <script type="text/javascript">
     function hideeditpage(){
-        $('accounteedit').set('class', 'hidediv');
+        $('accountedit').set('class', 'hidediv');
         $('accountdiv').set('class', 'showdiv');
         $('socialmediv').set('class', 'showdiv');
     };
     function showeditpage(){
-        $('accounteedit').set('class', 'showdiv');
+        $('accountedit').set('class', 'showdiv');
         $('accountdiv').set('class', 'hidediv');
         $('socialmediv').set('class', 'hidediv');
     };
@@ -44,23 +44,23 @@
     <div id="socialmediv" class="showdiv">
         <div class="mr2 pl2 pr2 dp20 rc box-shadow">
             <div>
-                <h3>Firstname Lastname</h3>
+                <h3>Tom Hanks</h3>
                 <hr/>
-                <img src="../images/logos/profile_pic.jpg" width="200" height="200" alt="Firstname Lastname" />
-                <br/><br/>
+                <img class="profilepic" src="../images/logos/profile_pic.png"/>
             </div>
+            <hr/>
             <div>
                 <h3>Social Me</h3>
             </div>
             <hr/>
             <div>
-                <img src="../images/logos/tweet.jpg" width="20" height="20"/>
+                <img class="socialme-logo" src="../images/logos/tweeter.png"/>
                 <img src="../images/logos/fb.jpg" width="20" height="20"/>
                 <img src="../images/logos/digg.jpg" width="20" height="20"/>
             </div>
         </div>
     </div>
-    <div id="accounteedit" class="hidediv">
+    <div id="accountedit" class="hidediv">
         <div class="pl2 pr2 dp50 rc box-shadow">
             <form id="accounteeditform">
                 <h3 class="mt1">Edit section: Account Details </h3>
@@ -69,11 +69,12 @@
                         <tr class="p1">
                             <td class="left-col">Username</td>
                             <td class="right-col"><input class="text" name="username" type="text" placeholder="Username" /> </td>
-                            <td><a href="check_username_exists">Check Availability</a></td>
+                            <!-- <td><a href="check_username_exists">Check Availability</a></td> To be implemented later -->
                         </tr>
                         <tr class="p1">
                             <td class="left-col">Password</td>
                             <td class="right-col"><input class="text" name="pwd" type="password" placeholder="Type your password here" /> </td>
+                            <!-- Password strength meter - To be implemented later -->
                         </tr>
                         <tr class="p1">
                             <td class="left-col">Confirm Password</td>
@@ -81,8 +82,8 @@
                         </tr>
                     </table>	
                 <hr/>
-                <div class="ml5 pl2 pr2">
-                  <button id="submit_myprofileedit" type="submit">Update</button>
+                <div class="middlecol">
+                  <button id="submit_myprofileedit">Update</button>
                   <button id="reset" type="reset">Reset</button>
                   <button id="cancel" type="button" onclick="hideeditpage()">Cancel</button>
                 </div>

@@ -3,26 +3,59 @@
 {% block tabs %}
     {{ macros.tabs(pubroot, [('About Me', '/members/myprofile'), ('Account', '/members/account'), ('Membership Information', '/members/membershipinfo'),('Contact Details','/members/contact'),('Billing','/members/billing'),('Preferences','/members/preferences'),('Security/Privacy','/members/security')]) }}
 {% endblock %}
+
 {% block content %}
+
+<script>
+    
+    function addMore() { 
+        var ni = document.getElementById('myDiv'); 
+        var numi = document.getElementById('theValue'); 
+        var num = (document.getElementById('theValue').value -1)+ 2; 
+        numi.value = num; 
+        aTextBox=document.createElement('input');
+        var inputidname = 'im_screen_name_'+num;
+        //alert(inputidname);
+        aTextBox.setAttribute('id', inputidname);
+        aTextBox.setAttribute('size', '24');
+        aTextBox.setAttribute('type','text');
+        ni.appendChild(aTextBox); 
+    };
+
+    function hideeditpage(){
+        $('myprofileedit').set('class', 'hidediv');
+        $('myprofilediv').set('class', 'showdiv');
+        $('socialmediv').set('class', 'showdiv');
+    };
+
+    function showeditpage(){
+        $('myprofileedit').set('class', 'showdiv');
+        $('myprofilediv').set('class', 'hidediv');
+        $('socialmediv').set('class', 'hidediv');
+    };
+
+</script>
+
 <br/>
 <br/>
-<div class="pl2 pr2 pb2 dp50 rc box-shadow">
+    <div id="myprofilediv" class="showdiv">
+        <div class="pl2 pr2 pb2 dp50 rc box-shadow">
             <h3 class="mt1">About me
-                <span class="edit-link" id="myprofileedit"><a href ="./myprofileedit">Edit</a></span>
+                <span class="edit-link"> <a href="#myprofileedit" onclick="showeditpage()">Edit</a> </span>
             </h3>
             <hr/>
             <div class="p1">
-                    I am a collaborative systems architect and Internet technologist. I develop Free and Open Source software tools for trade, collaboration and knowledge sharing. The tools I work on are focussed on empowering social innovators and engendering ethical business practices.
+                    <p>I am a <b>collaborative systems architect</b> and Internet technologist. I develop Free and Open Source software tools for trade, collaboration and knowledge sharing. The tools I work on are focussed on empowering social innovators and engendering ethical business practices.</p>
 
-I currently work for the Hub improving this system and making newer better ones. Over the coming year we plan to build tools to enable virtual organisation and create a global network for social innovation rooted in the physical communities provided by Hubs. Coincidentally, I did a Masters thesis on "Virtual Open Organisational Platforms".
-
+<p>I currently work for the Hub improving this system and making newer better ones. Over the coming year we plan to build tools to enable virtual organisation and create a global network for social innovation rooted in the physical communities provided by Hubs. Coincidentally, I did a Masters thesis on "Virtual Open Organisational Platforms".</p>
+<p>
 I have studied Philosophy, Economics & Computing at University and worked as a consultant on new paradigms in economics, organisation and technology. I also co-founded http://uniteddiversity.com and http://open.coop. The Open Co-op is currently working on OpenCoin an anonymous digital cash system for Internet payments.
 
 During 2002, at the New Economics Foundation, I began an in depth study of monetary systems and realized that the world needs new monetary systems if we are to achieve democracy, or sustainability, or eradicate poverty. Soon after I realised that the Internet is the best hope of a platform for free and democratic money. And so began my unexpected diversion into Internet technology...
 
 I recently saw this 50 minute film which summarized very well a few years of my thinking on what is wrong with the world's monetary system. http://video.google.com/videoplay?docid=-9050474362583451279 Of course it doesn't cover in any detail the possible solutions but you can't learn everything in 50mins.
 
-I am very concerned about the general level of ignorance (and media indoctrination) most people still seem to display about the ethical aspects of intellectual property and copyright. Many people still seem to think that the laws are there to help small business and inventors. I can't understand why it is not obvious that a society in which all knowledge is privately owned cannot be free or democratic. A society in which a thought can be "owned before you thought it". One of my favourite presentations is "free culture" by Laurence Lessig since it makes this really clear. I also love the style of the presentation http://randomfoo.net/oscon/2002/lessig/free.html
+I am very concerned about the general level of ignorance (and media indoctrination) most people still seem to display about the ethical aspects of intellectual property and copyright. Many people still seem to think that the laws are there to help small business and inventors. I can't understand why it is not obvious that a society in which all knowledge is privately owned cannot be free or democratic. A society in which a thought can be "owned before you thought it". One of my favourite presentations is "free culture" by Laurence Lessig since it makes this really clear. I also love the style of the presentation <a href="http://randomfoo.net/oscon/2002/lessig/free.html"> here</a> </p>
             </div>
             <hr/>
             <div class="p1">
@@ -33,22 +66,103 @@ I am very concerned about the general level of ignorance (and media indoctrinati
                     <div class="dp50 leftcol">Expertise</div>
                     <div class="dp50 rightcol">Python Developer</div>
             </div>
+    </div>
 </div>
-<div class="mr2 pl2 pr2 dp20 rc box-shadow">
-    <div>
-        <h3>Firstname Lastname</h3>
+<div id="socialmediv" class="showdiv">
+    <div class="mr2 pl2 pr2 dp20 rc box-shadow">
+        <div>
+            <h3>Tom Hanks</h3>
+            <hr/>
+            <img class="profilepic" src="../images/logos/profile_pic.png"/>
+        </div>
         <hr/>
-        <img src="../images/logos/muhhaaa.jpg" width="200" height="200" alt="Firstname Lastname" />
-        <br/><br/>
+        <div>
+            <h3>Social Me</h3>
+        </div>
+        <hr/>
+        <div>
+            <img class="socialme-logo" src="../images/logos/tweeter.png"/>
+            <img src="../images/logos/fb.jpg" width="20" height="20"/>
+            <img src="../images/logos/digg.jpg" width="20" height="20"/>
+        </div>
     </div>
-    <div>
-        <h3>Social Me</h3>
-    </div>
-    <hr/>
-    <div>
-        <img src="../images/logos/tweet.jpg" width="20" height="20"/>
-        <img src="../images/logos/fb.jpg" width="20" height="20"/>
-        <img src="../images/logos/digg.jpg" width="20" height="20"/>
+</div>
+<div id="myprofileedit" class="hidediv">
+    <div class="pl2 pr2 dp80 rc box-shadow">
+        <h3 class="mt1">Edit section : About me </h3>
+        <hr/>
+        <form id="myprofileeditform" method="post">
+                <table>			
+		    <tr>
+                        <td></td>
+                        <td></td>
+                        <th class="rightcol-makepublic" ><c>Make it Public?</c></th>
+                    </tr>
+		    <tr>
+                        <td class="leftcol-sp">Short Description</td>
+                        <td class="middlecol-sp"><input class="text" name="short_description" type="text" placeholder="Short Description" /> </td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+		    <tr>
+                        <td class="leftcol-sp">Long Description</td>
+                        <!-- <td class="middlecol-sp"><textarea name="description" id="description" class="richtext"> </textarea></td> -->
+                        <td><textarea name="description" id="description" class="richtext"> </textarea></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr>
+			<td class="leftcol-sp">Upload photo</td>
+			<td class="middlecol-sp"><input name="uploadPicture" id="uploadPicture" class="textbox" type="file" /> </td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" type="checkbox" title="Make it public?" /></td>
+                   </tr>
+                    <tr>                    
+			<td></td>
+                        <td class="specific pb3">You can upload a JPG, GIF, BMP or PNG file (Maximum size of 10Mb). Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images. Minimum image size is 32x32.</td> 
+                    </tr>	
+		    <tr>
+                        <td class="leftcol-sp">Website</td>
+                        <td class="middlecol-sp"><input id="website" class="text" name="website" type="url" placeholder="http://Website-link.org" /> </td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Interests in</td>
+                        <td class="middlecol-sp"><input class="text" name="interests" type="text" placeholder="Networking, Collaboration" /> </td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Expertise</td>
+                        <td class="middlecol-sp"><input class="text" name="expertise" type="text" placeholder="Analyst" /> </td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp"> IM Screen Names </td>
+                        <td class="middlecol">
+                            <input name="im_screen_name_0" type="text">
+                            <select name="imoptions[]" class="" width="10%" >
+                                <option value="1">Twitter</option>
+                                <option value="2">Facebook</option>
+                                <option value="3">LinkedIn</option>
+                                <option value="4">Google Profile</option>
+                                <option value="5">Flickr</option>
+                                <option value="6">Skype</option>
+                            </select>
+                        </td>
+                    </tr>
+              </table>	
+            <script>
+
+                $('description').mooEditable({
+                    actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview'
+                });
+
+            </script>
+            <hr/>
+            <div class="middlecol">
+                  <button id="submit_myprofileedit">Update</button>
+                  <button id="reset" type="reset">Reset</button>
+                  <button id="cancel" type="button" onclick="hideeditpage()">Cancel</button>
+              </div>
+              <hr/>
+          </form>
     </div>
 </div>
 {% endblock %}

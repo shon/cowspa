@@ -4,96 +4,243 @@
     {{ macros.tabs(pubroot, [('About Me', '/members/myprofile'), ('Account', '/members/account'), ('Membership Information', '/members/membershipinfo'),('Contact Details','/members/contact'),('Billing','/members/billing'),('Preferences','/members/preferences'),('Security/Privacy','/members/security')]) }}
 {% endblock %}
 {% block content %}
+
+<script type="text/javascript">
+    function hideeditpage(){
+        $('contacteditdiv').set('class', 'hidediv');
+        $('contactdiv').set('class', 'showdiv');
+        $('socialmediv').set('class', 'showdiv');
+    };
+    function showeditpage(){
+        $('contacteditdiv').set('class', 'showdiv');
+        $('contactdiv').set('class', 'hidediv');
+        $('socialmediv').set('class', 'hidediv');
+    };
+</script>
+
 <br/>
 <br/>
-
-    <div class="pl2 pr2 dp50 rc box-shadow">
-        <h3 class="mt1">Contact Information
-        <span class="edit-link" id="contactedit"><a href ="./contactedit">Edit</a></span>
-        </h3>
-        <hr/>
-            <div class="pb2">
-                <div class="p1">
-                    <div class="dp50 leftcol"> Address </div>
-                    <div class="dp50 rightcol">893, Ligon St</div>
-                </div>
-                <div class="p1">
-                    <div class="dp50 leftcol"> City </div>
-                    <div class="dp50 rightcol">London</div>
-                </div>
-                <div class="p1">
-                    <div class="dp50 leftcol"> Country </div>
-                    <div class="dp50 rightcol">Britain</div>
-                </div>
-                <div class="p1">
-                    <div class="dp50 leftcol"> Postcode </div>
-                    <div class="dp50 rightcol">422010</div>
-                </div>
-            </div>
+    <div id="contactdiv" class="showdiv">
+        <div class="pl2 pr2 dp50 rc box-shadow">
+            <h3 class="mt1">Contact Information
+                <span class="edit-link"> <a href="#contacteedit" onclick="showeditpage()">Edit</a> </span>
+            </h3>
             <hr/>
-            <div class="pb2">
-                <div class="p1">                  
-                    <div class="dp50 leftcol"> Fax </div>
-                    <div class="dp50 rightcol">001 891 651 7823</div>
+                <div class="pb2">
+                    <div class="p1">
+                        <div class="dp50 leftcol"> Address </div>
+                        <div class="dp50 rightcol">893, Ligon St</div>
+                    </div>
+                    <div class="p1">
+                        <div class="dp50 leftcol"> City </div>
+                        <div class="dp50 rightcol">London</div>
+                    </div>
+                    <div class="p1">
+                        <div class="dp50 leftcol"> Country </div>
+                        <div class="dp50 rightcol">Britain</div>
+                    </div>
+                    <div class="p1">
+                        <div class="dp50 leftcol"> Postcode </div>
+                        <div class="dp50 rightcol">422010</div>
+                    </div>
                 </div>
-                <div class="p1">                  
-                    <div class="dp50 leftcol"> Mobile </div>
-                    <div class="dp50 rightcol">001 919 985 6782</div>
+                <hr/>
+                <div class="pb2">
+                    <div class="p1">                  
+                        <div class="dp50 leftcol"> Fax </div>
+                        <div class="dp50 rightcol">001 891 651 7823</div>
+                    </div>
+                    <div class="p1">                  
+                        <div class="dp50 leftcol"> Mobile </div>
+                        <div class="dp50 rightcol">001 919 985 6782</div>
+                    </div>
+                    <div class="p1">                  
+                        <div class="dp50 leftcol"> Work Phone </div>
+                        <div class="dp50 rightcol">001 781 629 4236</div>
+                    </div>
+                    <div class="p1">                  
+                        <div class="dp50 leftcol"> Home Phone </div>
+                        <div class="dp50 rightcol">001 919 672 8123</div>
+                    </div>
                 </div>
-                <div class="p1">                  
-                    <div class="dp50 leftcol"> Work Phone </div>
-                    <div class="dp50 rightcol">001 781 629 4236</div>
+                <hr/>
+                <div class="pb2">
+                    <div class="p1">                  
+                        <div class="dp50 leftcol"> Primary Email </div>
+                        <div class="dp50 rightcol">myemailid@first.com</div>
+                    </div>
+                    <div class="p1">                  
+                        <div class="dp50 leftcol"> Secondary Email </div>
+                        <div class="dp50 rightcol">myemailid@second.com</div>
+                    </div>
+                    <div class="p1">                  
+                        <div class="dp50 leftcol"> Additional Email </div>
+                        <div class="dp50 rightcol">myemailid@third.com</div>
+                    </div>
+                    <div class="p1">                  
+                        <div class="dp50 leftcol"> Website </div>
+                        <div class="dp50 rightcol">www.mywebsite.ext</div>
+                    </div>
+                    <div class="p1">                  
+                        <div class="dp50 leftcol">	Internet Phone (SIP id) </div>
+                        <div class="dp50 rightcol">001 723 382 4239</div>
+                    </div>
+                    <div class="p1">                  
+                        <div class="dp50 leftcol">	Skype name </div>
+                        <div class="dp50 rightcol">skypename</div>
+                    </div>
                 </div>
-                <div class="p1">                  
-                    <div class="dp50 leftcol"> Home Phone </div>
-                    <div class="dp50 rightcol">001 919 672 8123</div>
-                </div>
-            </div>
-            <hr/>
-            <div class="pb2">
-                <div class="p1">                  
-                    <div class="dp50 leftcol"> Primary Email </div>
-                    <div class="dp50 rightcol">myemailid@first.com</div>
-                </div>
-                <div class="p1">                  
-                    <div class="dp50 leftcol"> Secondary Email </div>
-                    <div class="dp50 rightcol">myemailid@second.com</div>
-                </div>
-                <div class="p1">                  
-                    <div class="dp50 leftcol"> Additional Email </div>
-                    <div class="dp50 rightcol">myemailid@third.com</div>
-                </div>
-                <div class="p1">                  
-                    <div class="dp50 leftcol"> Website </div>
-                    <div class="dp50 rightcol">www.mywebsite.ext</div>
-                </div>
-                <div class="p1">                  
-                    <div class="dp50 leftcol">	Internet Phone (SIP id) </div>
-                    <div class="dp50 rightcol">001 723 382 4239</div>
-                </div>
-                <div class="p1">                  
-                    <div class="dp50 leftcol">	Skype name </div>
-                    <div class="dp50 rightcol">skypename</div>
-                </div>
-            </div>
-    </div>
-
-    <div class="mr2 pl2 pr2 dp20 rc box-shadow">
-        <div>
-            <h3>Firstname Lastname</h3>
-            <hr/>
-            <img src="../images/logos/muhhaaa.jpg" width="200" height="200" alt="Firstname Lastname" />
-            <br/><br/>
-        </div>
-        <div>
-            <h3>Social Me</h3>
-        </div>
-        <hr/>
-        <div>
-            <img src="../images/logos/tweet.jpg" width="20" height="20"/>
-            <img src="../images/logos/fb.jpg" width="20" height="20"/>
-            <img src="../images/logos/digg.jpg" width="20" height="20"/>
         </div>
     </div>
-
+    <div id="socialmediv" class="showdiv">
+        <div class="mr2 pl2 pr2 dp20 rc box-shadow">
+            <div>
+                <h3>Tom Hanks</h3>
+                <hr/>
+                <img class="profilepic" src="../images/logos/profile_pic.png"/>
+            </div>
+            <hr/>
+            <div>
+                <h3>Social Me</h3>
+            </div>
+            <hr/>
+            <div>
+                <img class="socialme-logo" src="../images/logos/tweeter.png"/>
+                <img src="../images/logos/fb.jpg" width="20" height="20"/>
+                <img src="../images/logos/digg.jpg" width="20" height="20"/>
+            </div>
+        </div>
+    </div>
+    <div id="contacteditdiv" class="hidediv">
+        <div class="pl2 pr2 dp65 rc box-shadow">
+            <h3 class="mt1">Edit section: Contact Details</h3>
+            <hr/>
+            <form id="contacteeditform">		
+                <table>
+		    <tr>
+                        <td></td>
+                        <td></td>
+                        <th class="rightcol-makepublic" ><c>Make it Public?</c></th>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Address</td>
+                        <td class="middlecol-sp"><textarea rows="2" cols="30" name="address" placeholder="address" /></textarea> </td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">City</td>
+                        <td class="middlecol-sp"><input name="city" type="text"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Country</td>
+                        <td class="middlecol-sp"><input name="country" type="text"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Postcode</td>
+                        <td class="middlecol-sp"><input name="postcode" type="text"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                </table>	
+                <hr/>
+                <table>
+		    <tr>
+                        <td></td>
+                        <td></td>
+                        <th class="rightcol-makepublic" ><c>Make it Public?</c></th>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Fax</td>
+                        <td class="middlecol-sp"><input name="fax" type="text"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Mobile</td>
+                        <td class="middlecol-sp"><input name="mobile" type="text"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr> 
+                        <td class="leftcol-sp">(please include international dialing code)</td>
+                        <td class="middlecol-sp"></td>
+                        <td class="rightcol-sp"></td> 
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Work Phone</td>
+                        <td class="middlecol-sp"><input name="work" type="text"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr> 
+                        <td class="leftcol-sp">(please include international dialing code)</td>
+                        <td class="middlecol-sp"></td>
+                        <td class="rightcol-sp"></td> 
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Home Phone</td>
+                        <td class="middlecol-sp"><input name="home" type="text"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr> 
+                        <td class="leftcol-sp">(please include international dialing code)</td>
+                        <td class="middlecol-sp"></td>
+                        <td class="rightcol-sp"></td> 
+                    </tr>
+                </table>	
+                <hr/>
+                <table>
+		    <tr>
+                        <td></td>
+                        <td></td>
+                        <th class="rightcol-makepublic" ><c>Make it Public?</c></th>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Primary Email</td>
+                        <td class="middlecol-sp"><input name="email1" type="email"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Secondary Email</td>
+                        <td class="middlecol-sp"><input name="email2" type="email"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Additional Email</td>
+                        <td class="middlecol-sp"><input name="email3" type="email"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                </table>	
+                <hr/>
+                <table>
+		    <tr>
+                        <td></td>
+                        <td></td>
+                        <th class="rightcol-makepublic" ><c>Make it Public?</c></th>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp">Website</td>
+                        <td class="middlecol-sp"><input name="website" type="url"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr>	
+                        <td class="leftcol-sp">Internet Phone (SIP id)</td>
+                        <td class="middlecol-sp"><input name="sip_id" type="text"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                    <tr>	
+                        <td class="leftcol-sp">Skype name</td>
+                        <td class="middlecol-sp"><input name="skype_id" type="text"></td>
+                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
+                    </tr>
+                </table>	
+                <hr/>
+                <div class="middlecol">
+                    <button id="submit_contactedit">Update</button>
+                    <button id="reset" type="reset">Reset</button>
+                    <button id="cancel" type="button" onclick="hideeditpage()">Cancel</button>
+                </div>
+                <br/>
+                <hr/>
+            </form>
+        </div>
+    </div>
 {% endblock %}

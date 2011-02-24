@@ -31,9 +31,9 @@
     <hr/>
     <div class="p1">	
         <div class="p1">				
-            <div class="dp30 leftcol"> Location </div>
-            <div class="dp30 middlecol"> Tariff </div>
-            <div class="dp30 rightcol"> Role </div>                 
+            <div class="dp30 leftcol boldtitle"> Location </div>
+            <div class="dp30 middlecol boldtitle"> Tariff </div>
+            <div class="dp30 rightcol boldtitle"> Role </div>                 
         </div>			
         <div class="p1">				
             <div class="dp30 leftcol"> Amsterdam </div>
@@ -76,22 +76,23 @@
 </div>
 <div id="socialmediv" class="mr2 pl2 pr2 dp20 rc box-shadow">
     <div>
-        <h3>Firstname Lastname</h3>
+        <h3>Tom Hanks</h3>
         <hr/>
-        <img src="../images/logos/muhhaaa.jpg" width="200" height="200" alt="Firstname Lastname" />
-        <br/><br/>
+        <img class="profilepic" src="../images/logos/profile_pic.png"/>
     </div>
+    <hr/>
     <div>
         <h3>Social Me</h3>
     </div>
     <hr/>
     <div>
-        <img src="../images/logos/tweet.jpg" width="20" height="20"/>
+        <img class="socialme-logo" src="../images/logos/tweeter.png"/>
         <img src="../images/logos/fb.jpg" width="20" height="20"/>
         <img src="../images/logos/digg.jpg" width="20" height="20"/>
     </div>
 </div>
-<div id="membershipinfoedit" class="hideeditdiv pl2 pr2 dp60 rc box-shadow">
+<div id="membershipinfoedit" class="hidediv">
+<div class="pl2 pr2 dp60 rc box-shadow">
     <h3 class="mt1">Edit section: Membership Information</h3>
     <hr/>
     <form id="membershipinfoeditform">		
@@ -123,9 +124,9 @@
         <hr/>
         <table>
             <tr>				
-                <td> Location </td>
-                <td> Tariff </td>
-                <td> Role </td>                 
+                <th> Location </th>
+                <th> Tariff </th>
+                <th> Role </th>                 
             </tr>			
             <tr>				
                 <td> Amsterdam </td>
@@ -182,12 +183,13 @@
             </table>
         </div>
         <hr/>
-        <div class="ml15 pl2 pr2">
-            <button id="submit_contactedit" type="submit">Update</button>
+        <div class="middlecol">
+            <button id="submit_contactedit">Update</button>
             <button id="reset" type="reset">Reset</button>
             <button id="cancel" type="button" onclick="hideedit()">Cancel</button>
         </div>
         <hr/>
     </form>
+</div>
 </div>
 {% endblock %}
