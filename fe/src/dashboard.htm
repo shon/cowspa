@@ -12,9 +12,15 @@
  -->
 
     <div class="pr2 dp40 rc box-shadow feeds">
-        <ol id="events-area" class="mt1">
-            <span id="mustache-feed"/>
-        </ol>
+        <div class="fluid">
+            <p id="events-area">
+                <span class="datebox box-shadow">
+                    <span class="datebox-year">Mar 2011</span><h2 class="datebox-date">1</h2><small>Friday</small>
+                </span>
+                <br/>
+                <c id="mustache-feed"/>
+            </p>
+        </div>
     </div>
 
 <script>
@@ -33,6 +39,18 @@ var template = '\
     </div> \
     <div class="clear"/> \
 </div> \
+{{/events}} \
+';
+var template = '\
+{{#events}} \
+<p> \
+<c class="highlight"><c class="event-start"/>{{start}}</c>-<c class="event-end">{{end}}</c></c> <c class="engrave">{{name}}</c> at <a>{{resource_name}}</a> {{attending}} attending <a>..</a> <br/>\
+<span class="tr"> \
+{{#tags}} \
+<c class="event-tag tag">{{.}}</c> \
+{{/tags}} \
+</span> \
+</p> \
 {{/events}} \
 ';
 {% endraw %}
@@ -86,10 +104,15 @@ req.send();
     <div class="pl1 dp40 tc rc box-shadow feeds">
         <h5 class="tc mt1 feedbox-title">Recent Activities</h5>
         <br/>
-        <div class="dp30">
+        <!-- 
+        <div class="dp25">
             <div class="datebox"><span class="datebox-year">Mar 2011</span><h2 class="datebox-date">5</h2><small>Friday</small></div>
         </div>
-        <div class="dp65 engrave">
+        -->
+        <div class="feed-date"> Friday, March 5 </div>
+        <br/>
+        <br/>
+        <div class="engrave">
             <c class="tl">
             <ul>
                 <li>New member <a>Nils Toedtmann</a> joined</li>
@@ -98,11 +121,25 @@ req.send();
             </span>
             </c>
         </div>
-        <div class="clear"/>
-        <div class="dp30">
-            <div class="datebox"><span class="datebox-year">Mar 2011</span><h2 class="datebox-date">1</h2><small>Friday</small></div>
+        <div class="feed-date"> Tuesday, March 2 </div>
+        <br/>
+        <br/>
+        <div class="engrave">
+            <c class="tl">
+            <ul>
+                <li>Invoice <a>130006733</a> and 50 more invoices are generated</li>
+                <li>New member <a>Nils Toedtmann</a> joined</li>
+                <li>Invoice no. <a>130005977</a> is paid</li>
+            </ul>
+            </span>
+            </c>
         </div>
-        <div class="dp65 engrave">
+        <div class="clear"/>
+       
+        <div class="feed-date"> Monday, March 1 </div>
+        <br/>
+        <br/>
+        <div class="engrave">
             <c class="tl">
             <ul>
                 <li>Invoice <a>130006733</a> and 50 more invoices are generated</li>

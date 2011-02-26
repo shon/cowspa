@@ -1,13 +1,17 @@
 body { 
-    font-family:verdana,helvetica,arial,sans-serif;
+    font-family: verdana,helvetica,arial,sans-serif;
     font-size: {{ page_font_size }};
     background: {{ page_bg }};
 }
 h1 { text-shadow: 0px 1px 1px #FFFFFF; }
-h2 { font-family: "Museo-bold"; text-shadow: 1px 1px 1px ; }
+h2 { text-shadow: 1px 1px 1px ; }
 h3 { color:#F0C030; }
-p { color:#ddd; }
-hr {color:black;}
+h1, h2, h3, h4, h5 { font-family: verdana,helvetica,arial,sans-serif; }
+hr { 
+    border: 1px solid {{ page_bg }};
+    margin-left: 1em;
+    margin-right: 1em;
+}
 a{
     color: inherit;
     text-decoration:underline;
@@ -420,15 +424,20 @@ div.hidediv  {
 }
 .datebox {
     width: 5em;
-    border: 1px solid {{ footer_bg }};
+    border: 1px dashed {{ footer_bg }};
     color: {{ footer_color }};
     background : {{ main_bg_start }};
+    /*
     -webkit-transform: rotate(-10deg); 
     -moz-transform: rotate(-10deg);
+    */
     opacity: 0.5;
-    margin: 0px;
-    margin-left: 2em;
+    margin: 1em;
     padding: 0px;
+    text-align: center;
+    top: 1em;
+    float: right;
+    width: 6em;
 }
 .feedbox-title {
     float: right;
@@ -483,4 +492,27 @@ div.hidediv  {
 .login-error {
     color: red;
     margin: 1em;
+}
+.member-name {
+    font-size: 2.5em;
+    padding: 0.5em;
+    text-shadow: 1px 1px 1px black;
+}
+.feed-date {
+    opacity: 0.5;
+    background: {{ page_bg }};
+    color: {{ footer_color }};
+    padding-left: 1em;
+    font-weight:bold;
+    float: left;
+    width: 28%;
+    text-align: left;
+    text-shadow: 0px 0px 1px black;
+    margin: 0.5em;
+    box-shadow:10px 10px 20px #000000;
+    -moz-box-shadow:10px 10px 20px #000000; 
+    -webkit-box-shadow:10px 10px 20px #000000; 
+    border: 1px;
+    display: inline;
+    width: 10em;
 }
