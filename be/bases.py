@@ -51,6 +51,9 @@ wrappers = ( ('validator', wrapperslib.validator),
              ('console_debug', wrapperslib.console_debugger),
         )
 
+complete_retcode = 0
+exception_retcode = 4
+
 class Command(object):
     def __init__(self, f):
         update_wrapper(self, f)
@@ -61,8 +64,13 @@ class Command(object):
                 update_wrapper(f, f_orig)
         self.f = f
     def __call__(self, *args, **kw):
-        res = self.f(*args, **kw)
-        return res
+        retcode = complete_retcode
+        try:
+            res = self.f(*args, **kw)
+        except Exception, err:
+            retcode = getattr(err, 'suggested_retcode', exception_retcode)
+            res = getattr(err, 'suggested_result', str(err))
+        return retcode, res
 
 class APINode(object):
     def __init__(self):

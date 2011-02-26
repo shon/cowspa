@@ -84,4 +84,4 @@ for lang_code, lang_label in langs:
         src_walk(srcdir, dstdir, lang_code=lang_code, theme_dir=theme_dir)
         make_theme(srcdir, theme_dir, dstdir)
         copy_dirs(contribs, contribdir, dstdir)
-        copy_dirs(('js', 'images'), srcdir, dstdir)
+        copy_dirs(('js', 'images', 'favicon.ico'), srcdir, dstdir)

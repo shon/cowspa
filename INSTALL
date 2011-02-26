@@ -3,7 +3,7 @@ git clone git@github.com:shon/cowspa.git
 virtualenv cowspa
 cd cowspa
 . ./bin/activate
-pip install jinja2 flask redis redisco
+pip install jinja2 flask redis redisco pycerberus
 
 # STEP 2 # Backend # Optional for now if you only want to test FE
 mkdir data
@@ -17,7 +17,6 @@ cd src
 
 # STEP 3 # Frontend
 =======
-pip install jinja2 flask redisco redis
 # test
 rm -rf pub; python  fe/build/compile.py
 python be/run_webserver.py

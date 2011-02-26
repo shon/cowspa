@@ -25,4 +25,14 @@ JSON paths
 http://cowspa.net/en_US/host/nature/members/account
 http://cowspa.net/de/director/sunrise/reports/trends/bookings
 
-
+{
+    retcode: int, # 0: complete,
+                  # 1: no such api,
+                  # 2: auth failure,
+                  # 3: validation failure,
+                  # 4: failed with exception
+    result: any jsonable obj,
+                # retcode is 3 result would be { more: [msg1, ..], parameter1: [msg, msg2, ..], parameter2: [msg1, ..] }
+                # more holds the messages that does not belong to any parameter passed
+}
+    

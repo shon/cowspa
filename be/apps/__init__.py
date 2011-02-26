@@ -5,11 +5,12 @@ APINode = bases.APINode
 Application = bases.Application
 
 import apis
-import apis.users
+import apis.members
 
 cowapp = APINode()
 
-users = APINode()
-users.add_api(Command(apis.users.add))
-users.add_api(Command(apis.users.authenticate))
-cowapp.add_node('users', users)
+members = APINode()
+members.add_api(Command(apis.members.add))
+members.add_api(Command(apis.members.get))
+#members.add_api(Command(apis.members.authenticate))
+cowapp.add_node('members', members)
