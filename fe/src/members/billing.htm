@@ -140,21 +140,5 @@
     choose_details('profile');
 </script> 
 
-<div class="mr2 pl2 pr2 dp20 rc box-shadow">
-    <div>
-        <h3>Tom Hanks</h3>
-        <hr/>
-        <img class="profilepic" src="../images/logos/profile_pic.png"/>
-    </div>
-    <div>
-        <h3>Social Me</h3>
-    </div>
-    <hr/>
-    <div>
-        <img class="socialme-logo" src="../images/logos/tweeter.png"/>
-        <img src="../images/logos/fb.jpg" width="20" height="20"/>
-        <img src="../images/logos/digg.jpg" width="20" height="20"/>
-    </div>
-</div>
-
+{% include 'socialme.html' %}
 {% endblock %}

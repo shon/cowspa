@@ -36,27 +36,19 @@
 
 </script>
 
-<br/>
-<br/>
     <div id="myprofilediv" class="showdiv">
         <div class="pl2 pr2 pb2 dp50 rc box-shadow">
             <h3 class="mt1">About me
                 <span class="edit-link"> <a href="#myprofileedit" onclick="showeditpage()">Edit</a> </span>
             </h3>
             <hr/>
-            <div class="p1">
-                    <p>I am a <b>collaborative systems architect</b> and Internet technologist. I develop Free and Open Source software tools for trade, collaboration and knowledge sharing. The tools I work on are focussed on empowering social innovators and engendering ethical business practices.</p>
-
-<p>I currently work for the Hub improving this system and making newer better ones. Over the coming year we plan to build tools to enable virtual organisation and create a global network for social innovation rooted in the physical communities provided by Hubs. Coincidentally, I did a Masters thesis on "Virtual Open Organisational Platforms".</p>
-<p>
-I have studied Philosophy, Economics & Computing at University and worked as a consultant on new paradigms in economics, organisation and technology. I also co-founded http://uniteddiversity.com and http://open.coop. The Open Co-op is currently working on OpenCoin an anonymous digital cash system for Internet payments.
-
-During 2002, at the New Economics Foundation, I began an in depth study of monetary systems and realized that the world needs new monetary systems if we are to achieve democracy, or sustainability, or eradicate poverty. Soon after I realised that the Internet is the best hope of a platform for free and democratic money. And so began my unexpected diversion into Internet technology...
-
-I recently saw this 50 minute film which summarized very well a few years of my thinking on what is wrong with the world's monetary system. http://video.google.com/videoplay?docid=-9050474362583451279 Of course it doesn't cover in any detail the possible solutions but you can't learn everything in 50mins.
-
-I am very concerned about the general level of ignorance (and media indoctrination) most people still seem to display about the ethical aspects of intellectual property and copyright. Many people still seem to think that the laws are there to help small business and inventors. I can't understand why it is not obvious that a society in which all knowledge is privately owned cannot be free or democratic. A society in which a thought can be "owned before you thought it". One of my favourite presentations is "free culture" by Laurence Lessig since it makes this really clear. I also love the style of the presentation <a href="http://randomfoo.net/oscon/2002/lessig/free.html"> here</a> </p>
+            <div id="ldescription">
             </div>
+            <script>
+                //get rich text editor input from user object
+                html_string = "<p color='black'>I am a <b>collaborative systems architect</b> and Internet technologist. I develop Free and Open Source software tools for trade, collaboration and knowledge sharing. The tools I work on are focussed on empowering social innovators and engendering ethical business practices.<br/> I currently work for the Hub improving this system and making newer better ones. Over the coming year we plan to build tools to enable virtual organisation and create a global network for social innovation rooted in the physical communities provided by Hubs. Coincidentally, I did a Masters thesis on 'Virtual Open Organisational Platforms'.<br/> I have studied Philosophy, Economics & Computing at University and worked as a consultant on new paradigms in economics, organisation and technology. I also co-founded http://uniteddiversity.com and http://open.coop. The Open Co-op is currently working on OpenCoin an anonymous digital cash system for Internet payments.<br/> During 2002, at the New Economics Foundation, I began an in depth study of monetary systems and realized that the world needs new monetary systems if we are to achieve democracy, or sustainability, or eradicate poverty. Soon after I realised that the Internet is the best hope of a platform for free and democratic money. And so began my unexpected diversion into Internet technology...<br/> I recently saw this 50 minute film which summarized very well a few years of my thinking on what is wrong with the world's monetary system. http://video.google.com/videoplay?docid=-9050474362583451279 Of course it doesn't cover in any detail the possible solutions but you can't learn everything in 50mins.<br/> I am very concerned about the general level of ignorance (and media indoctrination) most people still seem to display about the ethical aspects of intellectual property and copyright. Many people still seem to think that the laws are there to help small business and inventors. I can't understand why it is not obvious that a society in which all knowledge is privately owned cannot be free or democratic. A society in which a thought can be 'owned before you thought it'. One of my favourite presentations is 'free culture' by Laurence Lessig since it makes this really clear. I also love the style of the presentation <a href='http://randomfoo.net/oscon/2002/lessig/free.html'> here</a></p>"
+                $('ldescription').set('html', html_string); 
+            </script>
             <hr/>
             <div class="p1">
                     <div class="dp50 leftcol">Interests in</div>
@@ -68,25 +60,7 @@ I am very concerned about the general level of ignorance (and media indoctrinati
             </div>
     </div>
 </div>
-<div id="socialmediv" class="showdiv">
-    <div class="mr2 pl2 pr2 dp20 rc box-shadow">
-        <div>
-            <div class="member-name beer">Tom Hanks</div>
-            <hr/>
-            <img class="profilepic" src="../images/logos/profile_pic.png"/>
-        </div>
-        <hr/>
-        <div>
-            <h3>Social Me</h3>
-        </div>
-        <hr/>
-        <div>
-            <img class="socialme-logo" src="../images/logos/tweeter.png"/>
-            <img src="../images/logos/fb.jpg" width="20" height="20"/>
-            <img src="../images/logos/digg.jpg" width="20" height="20"/>
-        </div>
-    </div>
-</div>
+{% include 'socialme.html' %}
 <div id="myprofileedit" class="hidediv">
     <div class="pl2 pr2 dp80 rc box-shadow">
         <h3 class="mt1">Edit section : About me </h3>
