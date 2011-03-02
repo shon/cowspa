@@ -58,11 +58,11 @@
                     <div class="dp50 leftcol">Expertise</div>
                     <div class="dp50 rightcol">Python Developer</div>
             </div>
+        </div>
     </div>
-</div>
-{% include 'socialme.html' %}
-<div id="myprofileedit" class="hidediv">
-    <div class="pl2 pr2 dp80 rc box-shadow">
+    {% include 'socialme.html' %}
+    <div id="myprofileedit" class="hidediv">
+        <div class="pl2 pr2 dp80 rc box-shadow">
         <h3 class="mt1">Edit section : About me </h3>
         <hr/>
         <form id="myprofileeditform" method="post">
@@ -121,22 +121,22 @@
                             </select>
                         </td>
                     </tr>
-              </table>	
-            <script>
+                </table>	
+                <script>
 
-                $('description').mooEditable({
-                    actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview'
-                });
+                    $('description').mooEditable({
+                        actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview'
+                    });
 
-            </script>
-            <hr/>
-            <div class="middlecol">
-                  <button id="submit_myprofileedit">Update</button>
-                  <button id="reset" type="reset">Reset</button>
-                  <button id="cancel" type="button" onclick="hideeditpage()">Cancel</button>
-              </div>
-              <hr/>
-          </form>
-    </div>
-</div>
+                </script>
+                <hr/>
+                <div class="middlecol">
+                      <button id="submit_myprofileedit">Update</button>
+                      <button id="reset" type="reset">Reset</button>
+                      <button id="cancel" type="button" onclick="hideeditpage()">Cancel</button>
+                </div>
+                <hr/>
+                </form>
+            </div>
+        </div>
 {% endblock %}

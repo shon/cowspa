@@ -80,7 +80,6 @@ div.hidediv  {
     float: right;
     margin-right: inherit;
 }
-
 .leftcol-sp {
     float: left;
     margin-left: 10%;
@@ -88,7 +87,7 @@ div.hidediv  {
 .middlecol-sp {
     float: center;
     text-align: left;
-    width: 30%;
+    width: 35%;
 }
 .rightcol-sp {
     float: right;
@@ -103,7 +102,6 @@ div.hidediv  {
     float: left;
     text-align: left;
 }
-
 /* emastic leftover */
 
 .pr1 {padding-right:1em;}

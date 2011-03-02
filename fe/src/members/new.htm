@@ -8,43 +8,40 @@
 {% block content %}
     <div class="dl60 rc box-shadow">
         <form action="/members/new" method="post">		
-                <table>
-		    <tr>
-                        <td class="line">First Name</td>
-                        <td><input id="first_name" class="text" value="" name="first_name" type="text" placeholder="First Name">
-                        </td>
-                    </tr>
-		    <tr>
-                        <td class="line">Last name</td>
-                        <td><input id="last_name" class="text" value="" name="last_name" type="text" placeholder="Last Name">
-                        </td>
-                    </tr>
-		    <tr>
-                        <td class="line">Username</td>
-                        <td><input id="user_name" class="text" value="" name="user_name" type="text" placeholder="Choose a username"></td>
-                        <td><a href="check_username_exists">Check Availability</a></td>
-                    </tr>
-                    <tr>
-                        <td class="line">Password</td>
-                        <td><input class="text" name="password" id="password" type="password" placeholder="Choose password for the user"</td>
-                    </tr>
-                    <tr>
-                        <td class="line">Confirm Password</td>
-
-                        <td><input class="text" name="password2" id="password2" type="password" placeholder="Confirm the password"></td>
-                    </tr>
-                    <tr>
-			<td class="line">Email Address</td>
-			<td><input name="email_address" type="email" placeholder="Type Email Address"></td>
-                        <td><input name="public_field" value="1" id="public_field" type="checkbox">Make it Public?</td>
-                    </tr>
-		    <tr>
-			<td class="line">Secondary Email Address</td>
-			<td><input name="email_address_sec" type="email" placeholder="Type Secondary Email Address"></td>
-                        <td><input name="public_field" value="1" id="public_field" type="checkbox">Make it Public?</td>
-                    </tr>
-      </table>
-          <hr/>
+            <table>
+                <tr>
+                    <td class="line">First Name</td>
+                    <td><input id="first_name" class="text" value="" name="first_name" type="text" placeholder="First Name"> </td>
+                </tr>
+                <tr>
+                    <td class="line">Last name</td>
+                    <td><input id="last_name" class="text" value="" name="last_name" type="text" placeholder="Last Name"> </td>
+                </tr>
+                <tr>
+                    <td class="line">Username</td>
+                    <td><input id="user_name" class="text" value="" name="user_name" type="text" placeholder="Choose a username"></td>
+                    <td><a href="check_username_exists">Check Availability</a></td>
+                </tr>
+                <tr>
+                    <td class="line">Password</td>
+                    <td><input class="text" name="password" id="password" type="password" placeholder="Choose password for the user"</td>
+                </tr>
+                <tr>
+                    <td class="line">Confirm Password</td>
+                    <td><input class="text" name="password2" id="password2" type="password" placeholder="Confirm the password"></td>
+                </tr>
+                <tr>
+                    <td class="line">Email Address</td>
+                    <td><input name="email_address" type="email" placeholder="Type Email Address"></td>
+                    <td><input name="public_field" value="1" id="public_field" type="checkbox">Make it Public?</td>
+                </tr>
+                <tr>
+                    <td class="line">Secondary Email Address</td>
+                    <td><input name="email_address_sec" type="email" placeholder="Type Secondary Email Address"></td>
+                    <td><input name="public_field" value="1" id="public_field" type="checkbox">Make it Public?</td>
+                </tr>
+            </table>
+            <hr/>
             <div class="middlecol">
               <button id="submit_add_member">Add</button>
               <button id="cancel" type="button">Cancel</button>
