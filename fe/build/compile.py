@@ -17,6 +17,7 @@ themes_srcdir = "fe/src/themes"
 themes = (('default', 'Green'), ('bw', 'Black and White'), ('fb', 'Facebook'))
 langs = (('en', 'English'), ('es', 'Spanish'), ('de', 'German'))
 available_langs = [lang[1] for lang in langs]
+security_levels = ['Myself', 'Location-wide', 'All Hubs', 'Public']
 contribs = ['css', 'js', 'Assets']
 
 env = Environment(loader=FileSystemLoader(srcdir))
@@ -41,7 +42,7 @@ def compile_template(filename, srcpath, dstdir):
     relpath_to_pubroot = os.path.join(*['..' for i in range(rel_level_to_pubroot)]) if rel_level_to_pubroot else '.'
     relpath = os.path.join(reldir, filename)
     template = env.get_template(relpath)
-    out = template.render(pubroot=relpath_to_pubroot, available_langs=available_langs, available_themes=themes)
+    out = template.render(pubroot=relpath_to_pubroot, available_langs=available_langs, available_themes=themes, security_levels=security_levels)
     dstdir = os.path.join(dstdir, reldir)
     if not os.path.exists(dstdir):
         os.makedirs(dstdir)

@@ -14,17 +14,16 @@
                 <td class="leftcol-sp">Hub Provided Languages</td>
                 <td class="middlecol-sp">
                     <select>
-                        <option value ="lang1">English</option>
-                        <option value ="lang2">Spanish</option>
-                        <option value ="lang3">Germany</option>
-                    </select>
+                        {% for lang in available_langs %}
+                            <option value="hub_lang">{{ lang }}</option><br/>
+                        {% endfor %}
+                    </select> 
                 </td>
-                <td class="rightcol"> <!-- Have to convert this entire td into one common shared piece -->
+                <td class="rightcol">
                     <select>
-                        <option value ="myself" title="Shared with only you">Myself</option>
-                        <option value ="locationwide" title="Shared among all members of your location(s)">Location-wide</option>
-                        <option value ="allhubs" title="Shared among all members of all Hubs">All hubs</option>
-                        <option value ="public" title="Shared on your Hub website.">Public</option>
+                        {% for level in security_levels %}
+                            <option value="choose_level_hub_lang">{{ level }}</option><br/>
+                        {% endfor %}
                     </select> 
                 </td>
             </tr>
@@ -32,17 +31,16 @@
                 <td class="leftcol-sp">Other Provided Languages</td>
                 <td class="middlecol-sp">
                     <select>
-                        <option value ="lang1">French</option>
-                        <option value ="lang2">Russian</option>
-                        <option value ="lang3">Hindi</option>
+                        <option value ="other_lang">French</option>
+                        <option value ="other_lang">Russian</option>
+                        <option value ="other_lang">Hindi</option>
                     </select>
                 </td>
-                <td class="rightcol"> <!-- Have to convert this entire td into one common shared piece -->
+                <td class="rightcol">
                     <select>
-                        <option value ="myself" title="Shared with only you">Myself</option>
-                        <option value ="locationwide" title="Shared among all members of your location(s)">Location-wide</option>
-                        <option value ="allhubs" title="Shared among all members of all Hubs">All hubs</option>
-                        <option value ="public" title="Shared on your Hub website.">Public</option>
+                        {% for level in security_levels %}
+                            <option value="choose_level_other_lang">{{ level }}</option><br/>
+                        {% endfor %}
                     </select> 
                 </td>
             </tr>
@@ -50,17 +48,16 @@
                 <td class="leftcol-sp">Themes</td>
                 <td class="middlecol-sp">
                     <select>
-                        <option value ="theme1">Green</option>
-                        <option value ="theme2">Black and White</option>
-                        <option value ="theme3">Facebook</option>
-                    </select>
+                        {% for theme in available_themes %}
+                            <option value="theme">{{ theme[1] }}</option><br/>
+                        {% endfor %}
+                    </select> 
                 </td>
-                <td class="rightcol"> <!-- Have to convert this entire td into one common shared piece -->
+                <td class="rightcol">
                     <select>
-                        <option value ="myself" title="Shared with only you">Myself</option>
-                        <option value ="locationwide" title="Shared among all members of your location(s)">Location-wide</option>
-                        <option value ="allhubs" title="Shared among all members of all Hubs">All hubs</option>
-                        <option value ="public" title="Shared on your Hub website.">Public</option>
+                        {% for level in security_levels %}
+                            <option value="choose_level_theme">{{ level }}</option><br/>
+                        {% endfor %}
                     </select> 
                 </td>
             </tr>
