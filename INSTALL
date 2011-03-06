@@ -1,9 +1,10 @@
 # STEP 1 # Code and packages
+sudo apt-get install libevent-dev
 git clone git@github.com:shon/cowspa.git
 virtualenv cowspa
 cd cowspa
 . ./bin/activate
-pip install jinja2 flask redis redisco pycerberus
+pip install -r requirements.txt
 
 # STEP 2 # Backend # Optional for now if you only want to test FE
 mkdir data
