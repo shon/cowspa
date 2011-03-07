@@ -60,3 +60,10 @@ class Member(models.Model):
 class Business(models.Model):
     profile = models.ReferenceField(Profile, default=None)
     contact = models.ReferenceField(Contact, default=None)
+
+class Registered(models.Model):
+    activation_key = models.Attribute(required=True)
+    first_name = models.Attribute(required=True)
+    last_name = models.Attribute(default='')
+    email = models.Attribute(required=True)
+    ipaddr = models.Attribute(default='')

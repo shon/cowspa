@@ -1,0 +1,11 @@
+to = "to.shon@gmail.com"
+author = "to.shon@gmail.com"
+subject = "Spaces | Activation Key"
+plain = """Dear {{ first_name }},
+
+We received request for account registration. Registration request contains this email address.
+To confirm and activate your account by clicking {{ activation_url }}.
+
+Please ignore this mail if you have not sent the registration request.
+
+Thank you."""

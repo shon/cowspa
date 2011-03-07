@@ -36,6 +36,11 @@ class RedisStore(bases.BaseStore):
         obj = self.model.objects.filter(id=oid)[0]
         return obj.delete()
 
+    @classmethod
+    def obj2dict(self, obj):
+        return obj.attributes_dict
+
+
 class UserStore(RedisStore):
     model = schemas.User
     def connect(self):
@@ -74,7 +79,18 @@ class ProfileStore(RedisStore):
         profile = self.model(first_name=first_name, last_name=last_name, short_description=short_description, long_description=long_description, twitter_handle=twitter_handle, facebook_name=facebook_name, blog=blog, linkedin_contact=linkedin_contact, use_gravtar=use_gravtar)
         return profile
 
+class RegisteredStore(RedisStore):
+    model = schemas.Registered
+    def add(self, activation_key, first_name, last_name, email, ipaddr):
+        registered = self.model(activation_key=activation_key, first_name=first_name, last_name=last_name, email=email, ipaddr=ipaddr)
+        if not registered.is_valid():
+            print registered.errors # fail here
+        else:
+            registered.save()
+            return registered
+
 userstore = UserStore()
 contactstore = ContactStore()
 memberstore = MemberStore()
 profilestore = ProfileStore()
+registered_store = RegisteredStore()

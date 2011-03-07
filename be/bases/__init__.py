@@ -1,6 +1,7 @@
+import abc
 from functools import wraps, update_wrapper
 import wrappers as wrapperslib
-import abc
+import errors
 
 class BaseStore(object):
     __metaclass__ = abc.ABCMeta
@@ -40,6 +41,11 @@ class BaseStore(object):
     def fetch_one_by(self, **crit):
         """
         """
+    @abc.abstractmethod
+    def obj2dict(self, obj):
+        """
+        returns dictionary created with attribute names and values
+        """
 
 class BaseDispatcher(object):
     pass
@@ -51,9 +57,6 @@ wrappers = ( ('validator', wrapperslib.validator),
              ('console_debug', wrapperslib.console_debugger),
         )
 
-complete_retcode = 0
-exception_retcode = 4
-
 class Command(object):
     def __init__(self, f):
         update_wrapper(self, f)
@@ -64,11 +67,14 @@ class Command(object):
                 update_wrapper(f, f_orig)
         self.f = f
     def __call__(self, *args, **kw):
-        retcode = complete_retcode
+        retcode = errors.complete_retcode
         try:
             res = self.f(*args, **kw)
+        except errors.APIExecutionError, err:
+            retcode = errors.execution_error
+            res = err.msgs
         except Exception, err:
-            retcode = getattr(err, 'suggested_retcode', exception_retcode)
+            retcode = getattr(err, 'suggested_retcode', errors.exception_retcode)
             res = getattr(err, 'suggested_result', str(err))
         return retcode, res
 

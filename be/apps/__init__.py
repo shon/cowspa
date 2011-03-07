@@ -10,6 +10,7 @@ import apis.members
 cowapp = APINode()
 
 members = APINode()
+members.add_api(Command(apis.members.register))
 members.add_api(Command(apis.members.add))
 members.add_api(Command(apis.members.get))
 #members.add_api(Command(apis.members.authenticate))

@@ -5,3 +5,4 @@ redisco
 pycerberus
 gevent
 turbomail
+html2text
