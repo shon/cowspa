@@ -17,6 +17,5 @@ def parse_config():
     except Exception, err:
         print err
         pass
-    print config
     return config
 

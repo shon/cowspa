@@ -23,12 +23,6 @@ def default(path):
     print data
     return jsonify(data=data)
 
-@app.route('/set_theme/<theme_name>')
-def set_theme(theme_name):
-    response = app.make_response(redirect_to_index )
-    response.set_cookie('theme',value=theme_name)
-    return response
-
 @app.route('/auth', methods=['POST'])
 def auth():
     username = request.form['username']
@@ -47,9 +41,8 @@ def auth():
 
 @app.route('/<path:path>')
 def static(path):
-    static_root = "pub/en/"
-    static_dir = static_root + request.cookies.get("theme", "default")
-    fspath = os.path.join(static_dir, path)
+    static_root = "pub/"
+    fspath = os.path.join(static_root, path)
     filename = os.path.basename(path)
     if '.' in path:
         content_type = "text/" + path.split('.')[-1]
