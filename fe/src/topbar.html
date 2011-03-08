@@ -30,7 +30,14 @@
         <a>Themes</a> 
         <p class="toplink-opts">
         {% for theme in available_themes %}
-            <a href="/set_theme/{{ theme[0] }}"> {{ theme[1] }} </a><br/>
+            <a id="theme_{{ theme[0] }}"> {{ theme[1] }} </a><br/>
+            <script>
+                var cur_uri = new URI();
+                var cur_uri_parts = cur_uri.toString().split('/');
+                cur_uri_parts[5] = '{{ theme[0] }}';
+                var new_uri = cur_uri_parts.join('/');
+                $('theme_{{ theme[0] }}').set('href', new_uri);
+            </script>
         {% endfor %}
         </p>
     </c>

@@ -17,7 +17,7 @@ themes_srcdir = "fe/src/themes"
 themes = (('default', 'Green'), ('bw', 'Black and White'), ('fb', 'Facebook'))
 langs = (('en', 'English'), ('es', 'Spanish'), ('de', 'German'))
 available_langs = [lang[1] for lang in langs]
-security_levels = ['Myself', 'Location-wide', 'All Hubs', 'Public']
+roles = ('member', 'host', 'director', 'board', 'admin')
 contribs = ['css', 'js', 'Assets']
 
 env = Environment(loader=FileSystemLoader(srcdir))
@@ -42,7 +42,7 @@ def compile_template(filename, srcpath, dstdir):
     relpath_to_pubroot = os.path.join(*['..' for i in range(rel_level_to_pubroot)]) if rel_level_to_pubroot else '.'
     relpath = os.path.join(reldir, filename)
     template = env.get_template(relpath)
-    out = template.render(pubroot=relpath_to_pubroot, available_langs=available_langs, available_themes=themes, security_levels=security_levels)
+    out = template.render(pubroot=relpath_to_pubroot, available_langs=available_langs, available_themes=themes)
     dstdir = os.path.join(dstdir, reldir)
     if not os.path.exists(dstdir):
         os.makedirs(dstdir)
@@ -78,11 +78,12 @@ def src_walk(srcdir, dstdir, **data):
 # pub/en/sunsine/
 
 for lang_code, lang_label in langs:
-    for theme_dir, theme_label in themes:
-        print lang_code, theme_dir
-        print "============\n"
-        dstdir = os.path.join(dstroot, lang_code, theme_dir)
-        src_walk(srcdir, dstdir, lang_code=lang_code, theme_dir=theme_dir)
-        make_theme(srcdir, theme_dir, dstdir)
-        copy_dirs(contribs, contribdir, dstdir)
-        copy_dirs(('js', 'images', 'favicon.ico'), srcdir, dstdir)
+    for role in roles:
+        for theme_dir, theme_label in themes:
+            print role, lang_code, theme_dir
+            print "============\n"
+            dstdir = os.path.join(dstroot, lang_code, role, theme_dir)
+            src_walk(srcdir, dstdir, lang_code=lang_code, current_role=role, theme_dir=theme_dir)
+            make_theme(srcdir, theme_dir, dstdir)
+            copy_dirs(contribs, contribdir, dstdir)
+            copy_dirs(('js', 'images', 'favicon.ico'), srcdir, dstdir)
