@@ -16,9 +16,13 @@ def test_get(member_id):
 def test_register(data):
     return app.members.register(data['first_name'], data['last_name'], data['email'], '127.0.0.1')
 
+def test_activate(activation_key):
+    return app.members.activate(activation_key, **data)
 
 import common
-print test_register(data)
+retcode, activation_key = test_register(data)
+print activation_key
+print test_activate(activation_key)
 #print common.timer(test_add, [data], 1)
 #print common.timer(test_get, [1])
 #print common.timer(test_add, [data], 10000)

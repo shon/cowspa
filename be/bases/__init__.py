@@ -74,6 +74,7 @@ class Command(object):
             retcode = errors.execution_error
             res = err.msgs
         except Exception, err:
+            print err
             retcode = getattr(err, 'suggested_retcode', errors.exception_retcode)
             res = getattr(err, 'suggested_result', str(err))
         return retcode, res
@@ -95,6 +96,13 @@ class APINode(object):
             s += (name + '\n')
             s += (str(node) + '\n')
         return s
+    def __getattr__(self, attr):
+        if not attr in self.nodes and not attr in self.apis:
+            retcode = errors.invalid_api
+            res = "Invalid API"
+            def blackhole(*args, **kw):
+                return retcode, res
+            return blackhole
 
 class Application:
     def __init__(self):
