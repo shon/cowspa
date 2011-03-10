@@ -9,17 +9,17 @@
 <script>
     
     function addMore() { 
-        var ni = document.getElementById('myDiv'); 
-        var numi = document.getElementById('theValue'); 
-        var num = (document.getElementById('theValue').value -1)+ 2; 
-        numi.value = num; 
-        aTextBox=document.createElement('input');
-        var inputidname = 'im_screen_name_'+num;
+        var extra_div_element = document.getElementById('extra_div');
+        aTextBox = document.createElement('input');
+        var inputidname = 'socialnw_choice_'+ socialnw_count;
         //alert(inputidname);
         aTextBox.setAttribute('id', inputidname);
-        aTextBox.setAttribute('size', '24');
+        aTextBox.setAttribute('class', 'socialnw-input');
         aTextBox.setAttribute('type','text');
-        ni.appendChild(aTextBox); 
+        extra_div_element.appendChild(aTextBox); 
+        var extra_select_element = document.getElementById('social_nw_div_select');
+        var clone = extra_select_element.clone().inject(inputidname,'after');
+        socialnw_count = socialnw_count + 1;
     };
 
     function hideeditpage(){
@@ -34,6 +34,7 @@
         $('socialmediv').set('class', 'hidediv');
     };
 
+    socialnw_count = 0;
 </script>
 
     <div id="myprofilediv" class="showdiv">
@@ -63,7 +64,7 @@
     {% include 'socialme.html' %}
     <div id="myprofileedit" class="hidediv">
         <div class="pl2 pr2 dp80 rc box-shadow">
-        <h3 class="mt1">Edit section : About me </h3>
+        <h3 class="mt1">Edit: About me </h3>
         <hr/>
         <form id="myprofileeditform" method="post">
                 <table>			
@@ -90,11 +91,11 @@
                    </tr>
                     <tr>                    
 			<td></td>
-                        <td class="specific pb3">You can upload a JPG, GIF, BMP or PNG file (Maximum size of 10Mb). Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images. Minimum image size is 32x32.</td> 
+                        <td class="specific pb3"><em>Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images.</em></td> 
                     </tr>	
 		    <tr>
                         <td class="leftcol-sp">Website</td>
-                        <td class="middlecol-sp"><input id="website" class="text" name="website" type="url" placeholder="http://Website-link.org" /> </td>
+                        <td class="middlecol-sp"><input id="website" class="text" name="website" type="url" placeholder="http://my-website-link.org" /> </td>
                         <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
                     </tr>
                     <tr>
@@ -110,15 +111,31 @@
                     <tr>
                         <td class="leftcol-sp"> IM Screen Names </td>
                         <td class="middlecol">
-                            <input name="im_screen_name_0" type="text">
-                            <select name="imoptions[]" class="" width="10%" >
-                                <option value="1">Twitter</option>
-                                <option value="2">Facebook</option>
-                                <option value="3">LinkedIn</option>
-                                <option value="4">Google Profile</option>
-                                <option value="5">Flickr</option>
-                                <option value="6">Skype</option>
-                            </select>
+                            <div id="social_nw_div">
+                                <input name="socialnw_choice_0" class="socialnw-input" type="text">
+                                <select id="social_nw_div_select" name="socialnw_options[]" class="socialnw-select">
+                                    <option value="1">Twitter</option>
+                                    <option value="2">Facebook</option>
+                                    <option value="3">LinkedIn</option>
+                                    <option value="4">Google Profile</option>
+                                    <option value="5">Flickr</option>
+                                    <option value="6">Skype</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp"> </td>
+                        <td class="middlecol">
+                            <div id="extra_div"> </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="leftcol-sp"> </td>
+                        <td>
+                            <div>
+                                <a href="javascript:;" onclick='addMore();'>Add more</a>
+                            </div>
                         </td>
                     </tr>
                 </table>	

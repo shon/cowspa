@@ -102,6 +102,14 @@ div.hidediv  {
     float: left;
     text-align: left;
 }
+.socialnw-input {
+    width: 50%;
+    float: left;
+}
+.socialnw-select {
+    width: 40%;
+    float: right;
+}
 /* emastic leftover */
 
 .pr1 {padding-right:1em;}

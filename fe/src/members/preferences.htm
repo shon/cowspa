@@ -21,26 +21,10 @@
                 </td>
                 <td class="rightcol">
                     <select>
-                        {% for level in security_levels %}
-                            <option value="choose_level_hub_lang">{{ level }}</option><br/>
-                        {% endfor %}
-                    </select> 
-                </td>
-            </tr>
-            <tr>
-                <td class="leftcol-sp">Other Provided Languages</td>
-                <td class="middlecol-sp">
-                    <select>
-                        <option value ="other_lang">French</option>
-                        <option value ="other_lang">Russian</option>
-                        <option value ="other_lang">Hindi</option>
-                    </select>
-                </td>
-                <td class="rightcol">
-                    <select>
-                        {% for level in security_levels %}
-                            <option value="choose_level_other_lang">{{ level }}</option><br/>
-                        {% endfor %}
+                        <option value ="myself">Myself</option>
+                        <option value ="locationwide">Location-wide</option>
+                        <option value ="allhubs">All hubs</option>
+                        <option value ="public">Public</option>
                     </select> 
                 </td>
             </tr>
@@ -50,13 +34,6 @@
                     <select>
                         {% for theme in available_themes %}
                             <option value="theme">{{ theme[1] }}</option><br/>
-                        {% endfor %}
-                    </select> 
-                </td>
-                <td class="rightcol">
-                    <select>
-                        {% for level in security_levels %}
-                            <option value="choose_level_theme">{{ level }}</option><br/>
                         {% endfor %}
                     </select> 
                 </td>
