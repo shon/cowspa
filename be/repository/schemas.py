@@ -67,3 +67,9 @@ class Registered(models.Model):
     last_name = models.Attribute(default='')
     email = models.Attribute(required=True)
     ipaddr = models.Attribute(default='')
+
+class Session(models.Model):
+    token = models.Attribute(required=True)
+    user_id = models.Attribute(required=True)
+    created = models.DateTimeField(auto_now_add=True)
+    last_seen = models.DateTimeField()

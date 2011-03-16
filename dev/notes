@@ -36,3 +36,22 @@ http://cowspa.net/de/director/sunrise/reports/trends/bookings
                 # more holds the messages that does not belong to any parameter passed
 }
     
+
+validation libraries
+
+validictory
+- jsonschema based
+- http://pypi.python.org/pypi/validictory
+- not friendly error messages
+
+jsonwidget
+- https://bitbucket.org/robla/jsonwidget-python/
+- has python and javascript implementation
+- dependency on urwid, untested
+
+Colander
+- http://docs.pylonsproject.org/projects/colander/
+- No JSON schema, need manual if decide to expose schema
+- friendly error messages, well documented
+
+

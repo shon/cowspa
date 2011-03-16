@@ -1,4 +1,5 @@
 config = {
+    'random_str': 'PLEASE_CHANGE',
     'mail': {
         'mail.on': True,
         'mail.transport': 'smtp',

@@ -1,7 +1,7 @@
 import be.bootstrap
 import be.apps
 
-app = be.apps.cowapp
+app = be.apps.cowapp['0.1']
 
 data = dict(username='shon0', password='secret', enabled=True, email='who@example.net', address='Pune', city='Pune', country='IND', pincode='411000', organization='pydevers', home_no=None, mobile_no=None, first_name="Shekhar", last_name="Tiwatne", short_description="Programmer", long_description="<i>Programmer</i>", twitter_handle="shon_", facebook_name=None, blog=None, linkedin_contact=None, use_gravtar=None)
 
@@ -19,10 +19,15 @@ def test_register(data):
 def test_activate(activation_key):
     return app.members.activate(activation_key, **data)
 
+def test_auth(data):
+    return app.login('shon0', 'secret')
+
 import common
-retcode, activation_key = test_register(data)
+print test_register(data)
+activation_key = test_register(data)['result']
 print activation_key
 print test_activate(activation_key)
+print test_auth(data) == test_auth(data)
 #print common.timer(test_add, [data], 1)
 #print common.timer(test_get, [1])
 #print common.timer(test_add, [data], 10000)

@@ -2,7 +2,8 @@ jinja2
 flask
 redis
 redisco
-pycerberus
+colander
 gevent
 turbomail
 html2text
+csstyle

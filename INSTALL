@@ -19,6 +19,7 @@ cd src
 # STEP 3 # Frontend
 =======
 # test
+vi conf_local.py # Refer conf/default.py
 rm -rf pub; python  fe/build/compile.py
-python be/run_webserver.py
+python fe/run_webserver.py
 firefox http://127.0.0.1:5000/en/admin/default/dashboard

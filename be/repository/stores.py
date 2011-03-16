@@ -1,3 +1,5 @@
+import datetime
+
 import be.bases as bases
 import schemas
 
@@ -38,7 +40,12 @@ class RedisStore(bases.BaseStore):
 
     @classmethod
     def obj2dict(self, obj):
-        return obj.attributes_dict
+        d = {}
+        for k, v in obj.attributes_dict.items():
+            if isinstance(v, datetime.datetime):
+                v = v.isoformat()
+            d[k] = v
+        return d
 
 
 class UserStore(RedisStore):
@@ -68,7 +75,6 @@ class MemberStore(RedisStore):
         profile = profilestore.add(first_name, last_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar)
         user.save()
         contact.save()
-        profile.save()
         member = self.model(user=user, contact=contact, profile=profile)
         member.save()
         return member
@@ -77,6 +83,7 @@ class ProfileStore(RedisStore):
     model = schemas.Profile
     def add(self, first_name, last_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar):
         profile = self.model(first_name=first_name, last_name=last_name, short_description=short_description, long_description=long_description, twitter_handle=twitter_handle, facebook_name=facebook_name, blog=blog, linkedin_contact=linkedin_contact, use_gravtar=use_gravtar)
+        profile.save()
         return profile
 
 class RegisteredStore(RedisStore):
@@ -89,8 +96,16 @@ class RegisteredStore(RedisStore):
             registered.save()
             return registered
 
+class SessionStore(RedisStore):
+    model = schemas.Session
+    def add(self, token, user_id):
+        session = self.model(token=token, user_id=user_id)
+        session.save()
+        return session
+
 userstore = UserStore()
 contactstore = ContactStore()
 memberstore = MemberStore()
 profilestore = ProfileStore()
 registered_store = RegisteredStore()
+session_store = SessionStore()

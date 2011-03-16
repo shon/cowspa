@@ -20,7 +20,7 @@ def validator(f):
         f_args = inspect.getargspec(f).args
         inp_flat = straighten_args(f_args, args, kw)
         try:
-            f.validator.process(inp_flat)
+            f.validator().process(inp_flat)
             res = f(*args, **kw)
         except pycerberus.errors.InvalidDataError, err:
             retcode = errors.validation_failed_retcode
