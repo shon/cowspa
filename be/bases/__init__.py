@@ -79,12 +79,16 @@ class APIExecutor(object):
             print err
             retcode = getattr(err, 'suggested_retcode', errors.exception_retcode)
             res = getattr(err, 'suggested_result', str(err))
-        return retcode, res
+        #return retcode, res
         return {'retcode': retcode, 'result': res}
 
 sep = '/'
 
 # Would TreeDict help? http://www.stat.washington.edu/~hoytak/code/treedict/api.html
+
+class odict(odict):
+    def __call__(self, *args, **kw):
+        return self['target'](*args, **kw)
 
 class Application(odict):
     def add_api(self, api):
@@ -141,4 +145,4 @@ def navigate_slashed_path(app, path, *args, **kw):
                 raise Exception('Unable to find path component: ' + comp)
         else:
             this = next_
-    return next_['target'](*args, **kw)
+    return next_(*args, **kw)

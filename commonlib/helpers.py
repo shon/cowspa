@@ -5,8 +5,6 @@ random_key_gen = None
 class odict(dict):
     def __getattr__(self, attr):
         return self[attr]
-    def __call__(self, *args, **kw):
-        return self['target'](*args, **kw)
 
 class RandomKeyFactory(object):
     def __init__(self, s):

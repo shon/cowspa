@@ -17,18 +17,39 @@
     </div>
     <div class="dl40 login-box rc box-shadow">
         <div class="login-form tc mt5 mb5 p2 tl">
-            <form method="post" action="/login">
+            <form id="login_form">
                 <div class="login-error"><strong id="msg"/></div>
-                <script>
-                    var msg = Cookie.read('msg');
-                    $('msg').set('text', msg);
-                </script>
                 <input class="login-field" type="text" name="username" placeholder="Username" />
                 <input class="login-field" type="password" name="password" placeholder="password"/>
+                <div> <input type="checkbox" name="remember" checked="True" value="1"/>Remember </div>
                 <div>
-                    <div class="dp45"> <a>Reset password</a> </div>
-                    <div class="dp45 tr"> <input class="login-btn box-shadow" type="submit" value="Log In"/> </div>
+                    <div class="tr">
+                        <button type="button" id="login" class="dp45 login-btn box-shadow tc">Log In</button>
+                    </div>
+                    <div class="dp45 tr"> <br/> <a>Reset password</a> </div>
                 </div>
+                <script>
+                    var msgbox = $('msg');
+                    var request = new Request.JSON({
+                        url: '/login',
+                        urlEncoded: false,
+                        method: 'post',
+                        headers: {'Content-Type': 'application/json'},
+                        onRequest: function(){
+                            msgbox.set('text', 'Logging in ...');
+                        },
+                        onComplete: function(data) {
+                            msgbox.empty();
+                        }
+                    });
+                    $('login').addEvent('click', function(e) {
+                        console.log($('login_form').toQueryString());
+                        var data = JSON.encode($('login_form').toQueryString().parseQueryString());
+                        console.log(data);
+                        request.setHeader('Content-Type', 'application/json');
+                        request.post(data);
+                    });
+                </script>
             </form>
         </div>
     </div>

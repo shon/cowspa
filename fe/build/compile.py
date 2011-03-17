@@ -10,6 +10,7 @@ from jinja2 import Environment, FileSystemLoader
 
 pathjoin = os.path.join
 
+api_version = "0.1"
 dstroot = "pub"
 srcdir = "fe/src"
 contribdir = "fe/contrib"
@@ -42,7 +43,8 @@ def compile_template(filename, srcpath, dstdir):
     relpath_to_pubroot = os.path.join(*['..' for i in range(rel_level_to_pubroot)]) if rel_level_to_pubroot else '.'
     relpath = os.path.join(reldir, filename)
     template = env.get_template(relpath)
-    out = template.render(pubroot=relpath_to_pubroot, available_langs=available_langs, available_themes=themes)
+    data = dict(pubroot=relpath_to_pubroot, available_langs=available_langs, available_themes=themes, api_version=api_version)
+    out = template.render(**data)
     dstdir = os.path.join(dstdir, reldir)
     if not os.path.exists(dstdir):
         os.makedirs(dstdir)

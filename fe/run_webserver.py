@@ -18,10 +18,15 @@ app.secret_key = os.urandom(24)
 
 redirect_to_index = redirect('/dashboard')
 
-@app.route('/api/<path:apireq>')
+@app.route('/api/<path:apireq>', methods=['GET', 'POST'])
 def api_dispatch(apireq):
     root = be.apps.cowapp
-    res = be.bases.navigate_slashed_path(root, apireq, **request.form)
+    # **request.form unpacking listifys all arguments
+    # eg. json data {username: me, password: secret} POSTed to http://URL/ 
+    # results in {username: [me], password: [secret]} 
+    # so we recreated from form.items()
+    data = dict(request.form.items())
+    res = be.bases.navigate_slashed_path(root, apireq, **data)
     resp = jsonify(res)
     resp.mimetype='text/plain'
     return resp
@@ -32,23 +37,27 @@ def default(path):
     data = getattr(testdata, path, {'error':'no donuts for you'})
     return jsonify(data=data)
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    username = request.form['username']
-    password = request.form['password']
-    retcode, auth_token = cowapp['0.1'].login(username, password)
-    if retcode == 0:
-        where = redirect('/en/member/default/dashboard')
-        response = app.make_response(where)
-        session['authcookie'] = auth_token
-        #response.set_cookie('authenticated', '1')
-        #response.set_cookie('msg',value='')
-    else:
-        where = redirect('/login')
-        response = app.make_response(where)
-        msg = "Authentication failed. Try again."
-        response.set_cookie('msg',value=msg)
-    return response
+    if request.method == 'POST':
+        username = request.json.get('username')
+        password = request.json.get('password')
+        remember = bool(request.json.get('remember'))
+        res = cowapp['0.1'].login(username, password) #TODO remove version hard coding
+        retcode, auth_token = res['retcode'], res['result']
+        if retcode == 0:
+            where = redirect('/en/member/default/dashboard')
+            response = app.make_response(where)
+            session['authcookie'] = auth_token
+            session.permanent = remember
+            #response.set_cookie('authenticated', '1')
+            #response.set_cookie('msg',value='')
+        else:
+            print 'login failed`'
+        resp = jsonify({'retcode': retcode, 'result': None})
+    elif request.method == 'GET':
+        resp = static('/en/member/default/login')
+    return resp
 
 @app.route('/<path:path>')
 def static(path):
