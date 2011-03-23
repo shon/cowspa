@@ -22,12 +22,24 @@ def test_activate(activation_key):
 def test_auth(data):
     return app.login('shon0', 'secret')
 
+def test_add_biz():
+    data = dict(name="My New Biz")
+    return app.biz.new(**data)
+
+def test_role_assign():
+    data = dict(biz_id='1', user_id='1', role_names='member')
+    import be.apps.apis.users
+    return be.apps.apis.users.assign_roles(**data)
+
 import common
 print test_register(data)
 activation_key = test_register(data)['result']
 print activation_key
 print test_activate(activation_key)
 print test_auth(data) == test_auth(data)
+print test_add_biz()
+print test_role_assign()
+
 #print common.timer(test_add, [data], 1)
 #print common.timer(test_get, [1])
 #print common.timer(test_add, [data], 10000)

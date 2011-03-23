@@ -1,5 +1,6 @@
 import datetime
 
+import commonlib.helpers
 import be.bases as bases
 import schemas
 
@@ -103,9 +104,53 @@ class SessionStore(RedisStore):
         session.save()
         return session
 
+class BizStore(RedisStore):
+    model = schemas.Biz
+    def add(self, name):
+        biz = self.model(name=name)
+        biz.save()
+        return biz
+
+class RoleStore(RedisStore):
+    model = schemas.Role
+    def add(self, name, label, description, permissions):
+        role = self.model(name=name, label=label, description=description, permissions=permissions)
+        role.save()
+        return role
+
+class PermissionStore(RedisStore):
+    model = schemas.Permission
+    def add(self, name, label, description):
+        perm = self.model(name=name, label=label, description=description)
+        perm.save()
+        return perm
+
+class UserRoles(RedisStore):
+    model = schemas.UserRoles
+    def add(self, user, context, roles):
+        ctx_ref = self.ref(context)
+        ctx_roles = [(ctx_ref + '::' + str(r.id)) for r in roles]
+        user_roles  = self.model(user_id=user.id, role_ids=ctx_roles)
+        user_roles.save()
+        return user_roles
+
+class UserPermissions(RedisStore):
+    model = schemas.UserPermissions
+    def add(self, user, context, permissions):
+        ctx_ref = self.ref(context)
+        ctx_permissions = [(ctx_ref + '::' + str(p.id)) for p in permissions]
+        user_perms = self.model(user_id=user.id, permission_ids=ctx_permissions)
+        user_perms.save()
+        return user_perms
+
 userstore = UserStore()
 contactstore = ContactStore()
 memberstore = MemberStore()
 profilestore = ProfileStore()
 registered_store = RegisteredStore()
 session_store = SessionStore()
+role_store = bases.CachedStore(RoleStore())
+permission_store = bases.CachedStore(PermissionStore())
+user_perms_store = UserPermissions()
+user_roles_store = UserRoles()
+biz_store = BizStore()

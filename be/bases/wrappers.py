@@ -1,5 +1,5 @@
 import inspect
-import pycerberus
+#import pycerberus
 import errors
 
 def console_debugger(f):

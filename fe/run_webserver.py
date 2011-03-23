@@ -45,18 +45,18 @@ def login():
         remember = bool(request.json.get('remember'))
         res = cowapp['0.1'].login(username, password) #TODO remove version hard coding
         retcode, auth_token = res['retcode'], res['result']
-        if retcode == 0:
-            where = redirect('/en/member/default/dashboard')
-            response = app.make_response(where)
+        if retcode == 0 and auth_token:
+            info = be.bases.navigate_slashed_path(be.apps.cowapp, '0.1/users/%s/info' % username)['result']
+            result = '/en/%(role)s/default/dashboard' % info
             session['authcookie'] = auth_token
             session.permanent = remember
-            #response.set_cookie('authenticated', '1')
-            #response.set_cookie('msg',value='')
+            print 'login success'
         else:
-            print 'login failed`'
-        resp = jsonify({'retcode': retcode, 'result': None})
+            result = None
+            print 'login failed'
+        resp = jsonify({'retcode': retcode, 'result': result})
     elif request.method == 'GET':
-        resp = static('/en/member/default/login')
+        resp = static('en/member/default/login')
     return resp
 
 @app.route('/<path:path>')

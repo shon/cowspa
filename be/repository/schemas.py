@@ -73,3 +73,25 @@ class Session(models.Model):
     user_id = models.Attribute(required=True)
     created = models.DateTimeField(auto_now_add=True)
     last_seen = models.DateTimeField()
+
+class Permission(models.Model):
+    name = models.Attribute(required=True)
+    label = models.Attribute(required=True)
+    description = models.Attribute(default='')
+
+class Role(models.Model):
+    name = models.Attribute(required=True)
+    label = models.Attribute(required=True)
+    description = models.Attribute(default='')
+    permissions = models.ListField(Permission, required=True)
+
+class UserRoles(models.Model):
+    user_id = models.Attribute(required=True)
+    role_ids = models.ListField(str, default=[], required=True)
+
+class UserPermissions(models.Model):
+    user_id = models.Attribute(required=True)
+    permission_ids = models.ListField(str, default=[], required=True)
+
+class Biz(models.Model):
+    name = models.Attribute(required=True)

@@ -18,11 +18,12 @@
     <div class="dl40 login-box rc box-shadow">
         <div class="login-form tc mt5 mb5 p2 tl">
             <form id="login_form">
-                <div class="login-error"><strong id="msg"/></div>
                 <input class="login-field" type="text" name="username" placeholder="Username" />
                 <input class="login-field" type="password" name="password" placeholder="password"/>
-                <div> <input type="checkbox" name="remember" checked="True" value="1"/>Remember </div>
+                <br/>
+                <div class="dl2"> <input type="checkbox" name="remember" checked="True" value="1"/> </div> Remember
                 <div>
+                    <div class="login-error"><strong id="msg"/></div>
                     <div class="tr">
                         <button type="button" id="login" class="dp45 login-btn box-shadow tc">Log In</button>
                     </div>
@@ -38,14 +39,22 @@
                         onRequest: function(){
                             msgbox.set('text', 'Logging in ...');
                         },
+                        onSuccess: function(responseJSON, responseText) {
+                            var cur_uri = new URI();
+                            if (responseJSON['retcode'] == 0) {
+                                cur_uri.set('directory', '');
+                                cur_uri.set('file', responseJSON['result']);
+                                cur_uri.go();
+                            } else {
+                                msgbox.set('text', "Try again..");
+                            };
+                        },
                         onComplete: function(data) {
                             msgbox.empty();
                         }
                     });
                     $('login').addEvent('click', function(e) {
-                        console.log($('login_form').toQueryString());
                         var data = JSON.encode($('login_form').toQueryString().parseQueryString());
-                        console.log(data);
                         request.setHeader('Content-Type', 'application/json');
                         request.post(data);
                     });
