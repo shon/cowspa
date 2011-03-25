@@ -6,4 +6,5 @@ colander
 gevent
 turbomail
 html2text
-csstyle
+cssutils
+cssprefixer
