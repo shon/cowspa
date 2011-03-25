@@ -51,22 +51,22 @@ def add(username, password, enabled=True):
     user = userstore.add(username, password, enabled)
     return user.id
 
-def assign_roles(user_id, biz_id, role_names):
+def assign_roles(username, biz_id, role_names):
     if isinstance(role_names, basestring):
         role_names = [role_names]
     # to ensure user and biz exist
-    user = userstore.fetch_by_id(user_id)
+    user = userstore.fetch_one_by(username=username)
     biz = biz_store.fetch_by_id(biz_id)
     roles = [role_store.fetch_one_by(name=name) for name in role_names]
     role_ids = list(r.id for r in roles)
-    user_roles = user_roles_store.soft_fetch_one_by(user_id=user_id)
+    user_roles = user_roles_store.soft_fetch_one_by(user_id=user.id)
     if not user_roles:
         user_roles_store.add(user, biz, roles)
     else:
         user_roles.role_ids.extend(role_ids)
         user_perms.save()
 
-    user_perms = user_perms_store.soft_fetch_one_by(user_id=user_id)
+    user_perms = user_perms_store.soft_fetch_one_by(user_id=user.id)
 
     permissions = list(itertools.chain(*[role.permissions for role in roles]))
 

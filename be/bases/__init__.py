@@ -104,12 +104,14 @@ wrappers = ( ('validator', wrapperslib.validator),
              ('console_debug', wrapperslib.console_debugger),
         )
 
-class APIExecutor(object):
-    def __init__(self, target, api_proxy):
+# Would TreeDict help? http://www.stat.washington.edu/~hoytak/code/treedict/api.html
+
+class API(object):
+    def __init__(self, target):
         update_wrapper(self, target)
         f = target
         for prop, wrapper in wrappers:
-            if getattr(api_proxy, prop, None):
+            if getattr(target, prop, None):
                 f = wrapper(f)
                 update_wrapper(f, target)
         self.f = f
@@ -121,75 +123,96 @@ class APIExecutor(object):
             retcode = errors.execution_error
             res = err.msgs
         except Exception, err:
+            raise
             retcode = getattr(err, 'suggested_retcode', errors.exception_retcode)
             res = getattr(err, 'suggested_result', str(err))
-        #return retcode, res
         return {'retcode': retcode, 'result': res}
 
-sep = '/'
+def dummy_handler(*args, **kw):
+    return None
 
-# Would TreeDict help? http://www.stat.washington.edu/~hoytak/code/treedict/api.html
+sep = '.'
 
-class odict(odict):
-    def __call__(self, *args, **kw):
-        return self['target'](*args, **kw)
-
-class Application(odict):
-    def add_api(self, api):
-        path_comps = api.path.split(sep)
-        current = self
-        path_len = len(path_comps)
-        for idx, comp in enumerate(path_comps, 1):
-            reached_end = idx == path_len
-            if not reached_end:
-                current.setdefault(comp, odict())
-                current = current[comp]
-            else:
-                current[comp] = odict()
-                current[comp]['target'] = api
-                if api.validator:
-                    current[comp]['validator'] = odict()
-                    current[comp]['validator']['target'] = api.validator
-
-class APISpec(object):
-    path = ''
-    validator = None
-    def __init__(self, target):
-        self.target = APIExecutor(target, self)
-    def __call__(self, *args, **kw):
-        res = self.target(*args, **kw)
-        return res
-
-def guess_type(s):
-    if s.isdigit():
-        return 'int'
-    elif s.isalnum():
-        return 'str'
-    else:
-        raise Exception('Unknown format: ' + s)
-
-def navigate_slashed_path(app, path, *args, **kw):
-    comps = path.split(sep)
-    this = app
-    for comp in comps:
-        next_ = this.get(comp)
-        if not next_:
-            comp_type = guess_type(comp)
-            keys = [k for k in this.keys() if k.startswith('<' + comp_type + ':')]
-            if keys:
-                for key in keys:
-                    if comp_type in key: break
-                else:
-                    raise Exception('No handler for format: ' + comp_type)
-                this = this[key]
-                next_ = this
-                varname = key.split(':')[-1][:-1]
-                if comp_type == 'int':
-                    kw[varname] = int(comp)
-                elif comp_type == 'str':
-                    kw[varname] = comp
-            else:
-                raise Exception('Unable to find path component: ' + comp)
+class Tree(dict):
+    def __init__(self, path, *args, **kw):
+        self.path = path
+        self['parent'] = None
+        dict.__init__(self, *args, **kw)
+    def add_branch(self, handler=dummy_handler, name=''):
+        if not name:
+            name = handler.__name__
+        path = sep.join((self.path, name))
+        branch = Tree(path)
+        branch['handler'] = API(handler)
+        branch['parent'] = self
+        if name.startswith('int:'):
+            self['int_handler'] = branch
+            branch['varname'] = name.split(':')[-1]
+        elif name.startswith('str:'):
+            self['str_handler'] = branch
+            branch['varname'] = name.split(':')[-1]
         else:
-            this = next_
-    return next_(*args, **kw)
+            self[name] = branch
+        return branch
+    def __getattr__(self, name):
+        return self[name]
+    def __getitem__(self, name):
+        if not isinstance(name, basestring):
+            name = str(name)
+        try:
+            f = dict.__getitem__(self, name)
+        except KeyError:
+            f = None
+        return f
+    def __call__(self, *args, **kw):
+        return self.handler(*args, **kw)
+
+class Traverser(object):
+    def __init__(self, app):
+        self.path = []
+        self.app = app
+        self.args = []
+        self.kw = {}
+    def process_slashed_path(self, path):
+        comps = (comp for comp in path.split('/') if comp)
+        for comp in comps:
+            ret = self[comp]
+        return ret()
+    def __getattr__(self, name):
+        self.path.append(name)
+        return self
+    def __getitem__(self, name):
+        if not isinstance(name, basestring):
+            name = str(name)
+        self.path.append(name)
+        return self
+    def __call__(self, *args, **kw):
+        self.args.extend(args)
+        self.kw.update(kw)
+        cur_branch = self.app
+        for comp in self.path:
+            branch = getattr(cur_branch, comp, None)
+            if not branch:
+                if comp.isdigit():
+                    branch = getattr(cur_branch, 'int_handler', None)
+                    if branch:
+                        self.kw[branch.varname] = comp
+                else:
+                    branch = getattr(cur_branch, 'str_handler', None)
+                    if branch:
+                        self.kw[branch.varname] = comp
+            if branch:
+                cur_branch = branch
+            else:
+                raise Exception("Handler for %s not found" % comp)
+        return cur_branch(*self.args, **self.kw)
+    def __str__(self):
+        return str((self.path, self.args, self.kw))
+
+class TraverserFactory(object):
+    def __init__(self, tree):
+        self._tree = tree
+    def __getattr__(self, name):
+        return Traverser(self._tree)
+    def __getitem__(self, name):
+        return Traverser(self._tree)
