@@ -18,16 +18,12 @@ a{
     padding:3px;
     cursor: pointer;
     text-decoration: none;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
     border-radius:5px;
     text-shadow: 1px 1px 0px gray;
 }
 a:hover {
     border:1px solid gray;
     text-decoration:none;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
     border-radius:5px;
     text-shadow: 0px 1px 1px #FFFFF0;
 }
@@ -48,8 +44,6 @@ form textarea {
     padding: 0.5em;
     background: {{ textarea_bg }};
     border-radius:5px;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
     width: 90%;
 }
 
@@ -152,6 +146,7 @@ div.hidediv  {
 .around {
     color:#ddd;
     background: {{ nav_bg_start }};
+    background: linear-gradient(top, {{ nav_bg_start }}, {{ nav_bg_end }});
     background: -moz-linear-gradient(top, {{ nav_bg_start }}, {{ nav_bg_end }});
     background: -webkit-gradient(linear, left top, left bottom, from({{ nav_bg_start }}), to({{ nav_bg_end }}));
 } 
@@ -161,24 +156,18 @@ div.hidediv  {
 }
 .toplinks { color: {{ toplinks_color }}; }
 .main {
+    background: linear-gradient(top, {{ main_bg_start }}, {{ main_bg_end }}); 
     background: -moz-linear-gradient(top, {{ main_bg_start }}, {{ main_bg_end }}); 
     background: -webkit-gradient(linear, left top, left bottom, from({{ main_bg_start }}), to({{ main_bg_end }}));
     border: none;
     border-radius:5px;
-    -moz-border-radius:5px;
-    -moz-border-radius:5px;
-    -moz-border-radius-bottomleft: 0px;
-    -moz-border-radius-bottomright: 0px;
-    -webkit-border-radius:5px;
-    -webkit-border-bottom-right-radius: 0px;
-    -webkit-border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 
 .box-shadow { 
     margin: 0.5em;
     box-shadow:10px 10px 20px #000000;
-    -moz-box-shadow:10px 10px 20px #000000; 
-    -webkit-box-shadow:10px 10px 20px #000000; 
     border: 1px;
 }
 
@@ -188,12 +177,8 @@ div.hidediv  {
     background: {{ searchbox_bg }};
     border-color: {{ main_bg_start }};
     border-radius:10px;
-    -moz-border-radius:10px;
-    -moz-border-radius-bottomleft: 0px;
-    -moz-border-radius-bottomright: 0px;
-    -webkit-border-radius:10px;
-    -webkit-border-bottom-right-radius: 0px;
-    -webkit-border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
     margin-top: 2em;
     margin-left: 1em;
     margin-right: 1em;
@@ -204,12 +189,8 @@ div.hidediv  {
     border-color: {{ page_bg }};
     background: {{ main_bg_end }};
     border-radius:10px;
-    -moz-border-radius:10px;
-    -moz-border-radius-topright: 0px;
-    -moz-border-radius-bottomright: 0px;
-    -webkit-border-radius:10px;
-    -webkit-border-top-right-radius: 0px;
-    -webkit-border-bottom-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
     padding:0.5em;
     padding-right:0em;
 }
@@ -219,12 +200,9 @@ div.hidediv  {
     color: {{ main_bg_start }};
     border-radius:10px;
     border-color: {{ page_bg }};
-    -moz-border-radius:10px;
-    -moz-border-radius-topleft: 0px;
-    -moz-border-radius-bottomleft: 0px;
-    -webkit-border-radius:10px;
-    -webkit-border-top-left-radius: 0px;
-    -webkit-border-bottom-left-radius: 0px;
+    border-radius:10px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
     padding:0.5em;
     padding-left:0em;
 }
@@ -238,12 +216,8 @@ div.hidediv  {
     padding-bottom: 3px;
     margin-bottom: 2px;
     border-radius:5px;
-    -moz-border-radius:5px;
-    -moz-border-radius-bottomleft: 0px;
-    -moz-border-radius-bottomright: 0px;
-    -webkit-border-radius:5px;
-    -webkit-border-bottom-right-radius: 0px;
-    -webkit-border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 .tab-closed {
     color: {{ tab_closed_color }};
@@ -257,10 +231,9 @@ div.hidediv  {
     padding-right: 10px;
     padding-bottom: 2px;
     margin-left: 1px;
-    -moz-border-radius:5px;
-    -moz-border-radius-bottomleft: 0px;
-    -moz-border-radius-bottomright: 0px;
     border-radius:5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
     text-shadow: 1px 0px 0px gray;
 }
 
@@ -268,14 +241,6 @@ div.hidediv  {
     width: 15%;
     position: absolute;
     right: 5%;
-
-    display: -webkit-box;
-    -webkit-box-pack: right;
-    -webkit-box-align: right;
-
-    display: -moz-box;
-    -moz-box-pack: right;
-    -moz-box-align: right;
 
     display: box;
     box-pack: right;
@@ -300,18 +265,13 @@ div.hidediv  {
     padding: 0.5em;
     margin-top: 9em;
     margin-left: -7em;
-    -webkit-transform: rotate(-90deg); 
-    -moz-transform: rotate(-90deg);
+    transform: rotate(-90deg);
     border: 0.5px solid gray;
     border: 0.5px solid gray;
     border-bottom: 0 solid gray;
     border-radius:5px;
-    -moz-border-radius:5px;
-    -moz-border-radius-bottomleft: 0px;
-    -moz-border-radius-bottomright: 0px;
-    -webkit-border-radius:5px;
-    -webkit-border-bottom-right-radius: 0px;
-    -webkit-border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 .richtext {
     height: 20em;
@@ -372,13 +332,8 @@ div.hidediv  {
     width: 95%;
     position: fixed;
     border-radius:10px;
-    -moz-border-radius:10px;
-    -moz-border-radius-bottomleft: 0px;
-    -moz-border-radius-bottomright: 0px;
-    -webkit-border-radius:5px;
-    -webkit-border-bottom-right-radius: 0px;
-    -webkit-border-bottom-left-radius: 0px;
-
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 .toplink_opts {
     font-weight:bold;
@@ -453,8 +408,7 @@ div.hidediv  {
     opacity: 0.8;
     padding: 0.4em;
     border-radius: 0.7em;
-    -moz-border-radius: 0.7em;
-    -webkit-border-radius: 0.7em;
+    border-radius: 0.7em;
     text-shadow: 0px 1px 0px #FFFFFF;
 }
 .login-main {
@@ -490,8 +444,6 @@ div.hidediv  {
     padding-right: 2em;
     border: 0px;
     border-radius: 0.7em;
-    -moz-border-radius: 0.7em;
-    -webkit-border-radius:1.2em;
     color: {{ main_bg_start }};
     font-weight:bold;
 }
@@ -516,8 +468,6 @@ div.hidediv  {
     text-shadow: 0px 0px 1px black;
     margin: 0.5em;
     box-shadow:10px 10px 20px #000000;
-    -moz-box-shadow:10px 10px 20px #000000; 
-    -webkit-box-shadow:10px 10px 20px #000000; 
     border: 1px;
     display: inline;
     width: 10em;

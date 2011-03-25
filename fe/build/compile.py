@@ -7,6 +7,7 @@ print "default encoding: utf-8"
 
 import os
 from jinja2 import Environment, FileSystemLoader
+import cssprefixer
 
 pathjoin = os.path.join
 
@@ -62,6 +63,7 @@ def make_theme(srcdir, theme_dir, dstdir):
     out = template.render(**data)
     if not os.path.exists(cssdir):
         os.makedirs(cssdir)
+    out = cssprefixer.process(out, debug=False, minify=True)
     outpath = os.path.join(cssdir, 'main.css')
     print "writing ", outpath
     file(outpath, 'w').write(out)
