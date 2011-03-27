@@ -43,10 +43,11 @@ def login():
         username = request.json.get('username')
         password = request.json.get('password')
         remember = bool(request.json.get('remember'))
-        res = cowapp['0.1'].login(username, password) #TODO remove version hard coding
+        res = cowapp.root['0.1'].login(username, password) #TODO remove version hard coding
         retcode, auth_token = res['retcode'], res['result']
         if retcode == 0 and auth_token:
-            info = be.bases.navigate_slashed_path(be.apps.cowapp, '0.1/users/%s/info' % username)['result']
+            info = cowapp.root['0.1'].users[username].info()['result']
+            #info = be.bases.navigate_slashed_path(be.apps.cowapp, '0.1/users/%s/info' % username)['result']
             result = '/en/%(role)s/default/dashboard' % info
             session['authcookie'] = auth_token
             session.permanent = remember

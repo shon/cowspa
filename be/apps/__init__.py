@@ -40,6 +40,7 @@ biz = app.add_branch(name='biz')
 biz.add_branch(add_biz, 'new')
 users = app.add_branch(name='users')
 username = users.add_branch(user_info, 'str:username')
+username.add_branch(user_info, 'info')
 username.add_branch(assign_roles)
 
 cowapp = bases.TraverserFactory(tree)
