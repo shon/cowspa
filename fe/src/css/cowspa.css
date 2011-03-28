@@ -416,9 +416,7 @@ div.hidediv  {
     color: {{ main_bg_end }};
     height: 20em;
     margin-top: 10%;
-    margin-left: 10%
-}
-.about-box {
+    margin-left: 10%;
 }
 .login-box { 
     border: 0.4em solid {{ main_bg_end }};
