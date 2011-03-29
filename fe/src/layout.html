@@ -6,6 +6,11 @@
     {% include 'js.more.html' %}
     {% include 'style.html' %}
     <div id="style">{% block style %}{% endblock %}</div>
+    <title> S P A C E S |
+        {% block title %}
+        Welcome
+        {% endblock %}
+    </title>
 </head>
 <body>
 
@@ -14,21 +19,25 @@
     <div class="comm-status" id="comm-status"></div>
 
     <div class="page tl ml2 fluid">
-        <div class="hp">
-            {% include 'topbar.html' %}
-        </div>
+        {% block topbar %}
+            <div class="hp">
+                {% include 'topbar.html' %}
+            </div>
+        {% endblock %}
         <div class="clear"/>
         <div class="p1 main fluid">
+        {% block nav %}
             <br/>
             <div class="dl11">
                 {% include 'nav.html' %}
             </div>
+        {% endblock %}
             <div class="pt5 pl1 content">
                 <div class="p1">
                     {% block tabs %}
                         macros.tabs()
+                        <br/>
                     {% endblock %}
-                    <br/>
                 </div>
                 <div class="mt1">
                     {% block content %}{% endblock %}

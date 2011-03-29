@@ -34,7 +34,16 @@ theme_root = pathjoin(srcroot, "themes")
 
 template_env = jinja2.Environment(loader=jinja2.FileSystemLoader(srcroot))
 
+
 class Template(object):
+    @classmethod
+    def compute_possible_pathdata(cls, data):
+        data_prefixed = {}
+        for k, v in data.items():
+            v_new = [(k + ':' + x)  for x in v]
+            data_prefixed[k] = v_new
+        path_data_prefixed = itertools.product(*data_prefixed.values())
+        cls.pathdata_combinations = list(dict(y.split(':', 1) for y in x) for x in path_data_prefixed)
     def __init__(self, src, dsts):
         self.src = src
         # self.source = file(src).read()
@@ -52,23 +61,20 @@ class Template(object):
             os.makedirs(dstdir)
         print "writing " ,dstpath
         file(dstpath, 'w').write(content)
-    def process_dst_data(self, data):
-        data_prefixed = {}
-        for k, v in data.items():
-            v_new = [(k + ':' + x)  for x in v]
-            data_prefixed[k] = v_new
-        path_data_prefixed = itertools.product(*data_prefixed.values())
-        path_data = list(dict(y.split(':', 1) for y in x) for x in path_data_prefixed)
-
+    def process_dst_data(self):
         paths_data = []
-        for path_dict in path_data:
+        paths = []
+        for path_dict in self.pathdata_combinations:
             for dst in self.dsts:
                 path = jinja2.Template(dst).render(path_dict)
-                paths_data.append((path, path_dict))
+                if path not in paths: # check to avoid duplicates
+                    paths_data.append((path, path_dict))
+                    paths.append(path)
 
         return paths_data
+
     def build(self, data={}, dst_data={}):
-        final_dst_data = self.process_dst_data(dst_data)
+        final_dst_data = self.process_dst_data()
         for path, dst_data in final_dst_data:
             context = copy.deepcopy(data)
             context.update(dst_data)
@@ -107,10 +113,19 @@ def copydirs(srcs, dst, verbose=False):
 # Start Building
 ############################
 
+data = dict(
+    lang = lang_codes,
+    role = role_codes,
+    theme = theme_codes )
+
+Template.compute_possible_pathdata(data)
+
 templates = [
-    Template('login.html', dsts = ['login', '{{ lang }}/{{ role }}/{{ theme }}/login']),
+    Template('login.html', dsts = ['login']),
     Template('dashboard.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/dashboard']),
-    CSSTemplate('css/cowspa.css', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/css/main.css'])
+    Template('next.html', dsts = ['next']),
+    CSSTemplate('css/cowspa.css', dsts = ['css/main.css', '{{ lang }}/{{ role }}/{{ theme }}/css/main.css']),
+    CSSTemplate('css/moodialog.css', dsts = ['css/moodialog.css', '{{ lang }}/{{ role }}/{{ theme }}/css/moodialog.css'])
     ]
 
 def copy_contribs():

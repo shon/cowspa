@@ -5,6 +5,7 @@
     {% include 'js.essential.html' %}
     {% include 'style.html' %}
     <div id="style">{% block style %}{% endblock %}</div>
+    <title> S P A C E S | Login </title>
 </head>
 <body>
 
@@ -61,6 +62,25 @@
                 </script>
             </form>
         </div>
+    </div>
+    <div class="signup-box dl40 rc tc box-shadow">
+        Signup is quick and easy <button type="button" id="register" class="login-btn box-shadow tc">Sign Up</button>
+        <div class="invisible">
+            <form class="registerform rc p2" id="registerform">
+                <input class="login-field" type="text" name="first_name" placeholder="First Name" />
+                <input class="login-field" type="text" name="last_name" placeholder="Last Name"/>
+                <input class="login-field" type="text" name="email" placeholder="Email Address" />
+                <button type="button" id="signup" class="dp70 signup-btn tc">Sign Up</button>
+                <br/>
+            </form>
+        </div>
+        <script>
+        var registerform = $('registerform');
+        function popup_registration(e) {
+            registerform.MooDialog();
+        };
+        $('register').addEvent('click', popup_registration);
+        </script>
     </div>
 {% include 'footer.html' %}
 </div>

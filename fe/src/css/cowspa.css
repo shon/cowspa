@@ -423,9 +423,19 @@ div.hidediv  {
     color: {{ main_bg_end }};
     background: {{ main_bg_start }};
     opacity: 0.8;
-    margin-top: 15em;
+    margin-top: 10em;
     margin-left: 3em;
 }
+.signup-box { 
+    border: 0.4em solid {{ main_bg_end }};
+    color: {{ main_bg_end }};
+    background: {{ main_bg_start }};
+    opacity: 0.8;
+    margin-left: 3em;
+    margin-top: 2em;
+    padding: 1em;
+}
+
 .login-form { 
     margin: 2em;
     padding: 1em;
@@ -445,9 +455,40 @@ div.hidediv  {
     color: {{ main_bg_start }};
     font-weight:bold;
 }
+.signup-btn {
+    background: {{ main_bg_start }};
+    padding: 0.7em;
+    padding-left: 2em;
+    padding-right: 2em;
+    border: 1em thick gray;
+    border-radius: 0.7em;
+    color: {{ main_bg_end }};
+    font-weight:bold;
+}
+
 .login-error {
     color: red;
     margin: 1em;
+}
+.big-choice-box {
+    text-shadow: 0px 0px 1px black;
+    border-radius: 0.7em;
+    padding: 2em;
+    margin: 1.5em;
+    box-shadow:10px 10px 20px #000000;
+    border: thick gray;
+}
+.bg-orange {
+    color: black;
+    background: orange;
+}
+.bg-yellow {
+    color: black;
+    background: yellow;
+}
+.bg-green {
+    color: black;
+    background: {{ page_bg }};
 }
 .member-name {
     font-size: 2.5em;
@@ -469,4 +510,10 @@ div.hidediv  {
     border: 1px;
     display: inline;
     width: 10em;
+}
+.registerform {
+    background: {{ page_bg }};
+    height: 20em;
+    width: 40em;
+    opacity: 0.85;
 }

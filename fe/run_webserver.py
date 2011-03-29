@@ -57,7 +57,7 @@ def login():
             print 'login failed'
         resp = jsonify({'retcode': retcode, 'result': result})
     elif request.method == 'GET':
-        resp = static('en/member/default/login')
+        resp = static('login')
     return resp
 
 @app.route('/<path:path>')

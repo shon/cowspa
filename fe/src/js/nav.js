@@ -15,6 +15,9 @@ window.addEvent('domready', function() {
         $$('.toggler').addEvent('mouseenter', function() { this.fireEvent('click'); });
 
         var navbar = new Fx.Reveal($('navbar'), {duration: 500, mode: 'horizontal'});
-        $('shownav').addEvent('click', function() {navbar.toggle()});
+        var shownav = $('shownav');
+        if (shownav) {
+            shownav.addEvent('click', function() {navbar.toggle()});
+        };
 
 });
