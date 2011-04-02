@@ -32,32 +32,23 @@
                 </div>
                 <script>
                     var msgbox = $('msg');
-                    var request = new Request.JSON({
+                    var request = new JSONRequest({
                         url: '/login',
-                        urlEncoded: false,
-                        method: 'post',
-                        headers: {'Content-Type': 'application/json'},
                         onRequest: function(){
                             msgbox.set('text', 'Logging in ...');
                         },
-                        onSuccess: function(responseJSON, responseText) {
+                        on_success: function(result, responseText) {
                             var cur_uri = new URI();
-                            if (responseJSON['retcode'] == 0) {
-                                cur_uri.set('directory', '');
-                                cur_uri.set('file', responseJSON['result']);
-                                cur_uri.go();
-                            } else {
-                                msgbox.set('text', "Try again..");
-                            };
+                            cur_uri.set('directory', '');
+                            cur_uri.set('file', result);
+                            cur_uri.go();
                         },
-                        onComplete: function(data) {
-                            msgbox.empty();
+                        on_fail: function(result) {
+                            msgbox.set('text', "Try again..");
                         }
                     });
                     $('login').addEvent('click', function(e) {
-                        var data = JSON.encode($('login_form').toQueryString().parseQueryString());
-                        request.setHeader('Content-Type', 'application/json');
-                        request.post(data);
+                        request.postform('login_form');
                     });
                 </script>
             </form>
@@ -66,7 +57,7 @@
     <div class="signup-box dl40 rc tc box-shadow">
         Signup is quick and easy <button type="button" id="register" class="login-btn box-shadow tc">Sign Up</button>
         <div class="invisible">
-            <form class="registerform rc p2" id="registerform">
+            <form class="popup-form rc p2" id="registerform">
                 <input class="login-field" type="text" name="first_name" placeholder="First Name" />
                 <input class="login-field" type="text" name="last_name" placeholder="Last Name"/>
                 <input class="login-field" type="text" name="email" placeholder="Email Address" />
@@ -79,7 +70,10 @@
         function popup_registration(e) {
             registerform.MooDialog();
         };
+        function register(e) {
+        };
         $('register').addEvent('click', popup_registration);
+        $('signup').addEvent('click', register);
         </script>
     </div>
 {% include 'footer.html' %}

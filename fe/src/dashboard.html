@@ -91,24 +91,18 @@ function load_data(data, data_text) {
 };
 
 
-var req = new Request.JSON({
-    method: "get",
-    url: "/app/dashboard",
+var req = new JSONRequest({
+    url: "/api/0.1/login", // To be removed
     onRequest: show_loading,
     onComplete: hide_loading,
-    onSuccess: load_data 
+    on_success: load_data 
 });
-req.send();
+req.json_send({username: '', password: ''});
 
 </script>
     <div class="pl1 dp40 tc rc box-shadow feeds">
         <h5 class="tc mt1 feedbox-title">Recent Activities</h5>
         <br/>
-        <!-- 
-        <div class="dp25">
-            <div class="datebox"><span class="datebox-year">Mar 2011</span><h2 class="datebox-date">5</h2><small>Friday</small></div>
-        </div>
-        -->
         <div class="feed-date"> Friday, March 5 </div>
         <br/>
         <br/>

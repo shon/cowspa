@@ -2,6 +2,15 @@ import inspect
 #import pycerberus
 import errors
 
+#import be.repository.stores as stores
+
+#session_store = stores.session_store
+
+def session_maker(f):
+    if cs_context.auth_token:
+        user_id = session_store.fetch_one_by(session=auth_token).user_id
+        cs_context.permissions = pp
+        cs_context.user_id = user_id
 def console_debugger(f):
     def wrapper(*args, **kw):
         print f.__name__, 'called with :', args, kw

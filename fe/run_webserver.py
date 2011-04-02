@@ -21,25 +21,23 @@ redirect_to_index = redirect('/dashboard')
 @app.route('/api/<path:apireq>', methods=['GET', 'POST'])
 def api_dispatch(apireq):
     root = be.apps.cowapp
-    # **request.form unpacking listifys all arguments
-    # eg. json data {username: me, password: secret} POSTed to http://URL/ 
-    # results in {username: [me], password: [secret]} 
-    # so we recreated from form.items()
-    data = dict(request.form.items())
-    res = be.bases.navigate_slashed_path(root, apireq, **data)
+    # if you have nothing in request.json mostly 'Content-type' request header are not set to 'application/json'
+    data = dict(request.json.items())
+    # app.root.process_slashed_path('0.1/members/1')()
+    res = cowapp.root.process_slashed_path(apireq)(**data)
     resp = jsonify(res)
     resp.mimetype='text/plain'
     return resp
 
 @app.route('/app/<path:path>')
 def default(path):
-    time.sleep(2);
     data = getattr(testdata, path, {'error':'no donuts for you'})
     return jsonify(data=data)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        # if you have nothing in request.json mostly 'Content-type' request header are not set to 'application/json'
         username = request.json.get('username')
         password = request.json.get('password')
         remember = bool(request.json.get('remember'))
@@ -47,7 +45,6 @@ def login():
         retcode, auth_token = res['retcode'], res['result']
         if retcode == 0 and auth_token:
             info = cowapp.root['0.1'].users[username].info()['result']
-            #info = be.bases.navigate_slashed_path(be.apps.cowapp, '0.1/users/%s/info' % username)['result']
             result = '/en/%(role)s/default/dashboard' % info
             session['authcookie'] = auth_token
             session.permanent = remember

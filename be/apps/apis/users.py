@@ -31,6 +31,14 @@ def get_or_create_session(username):
         token = create_session(username)
     return token
 
+def session_lookup(token):
+    try:
+        session = session_store.fetch_one_by(token=token)
+        user_id = session.user_id
+    except IndexError:
+        user_id = None
+    return user_id
+
 def authenticate(username, password):
     try:
         user = userstore.fetch_one_by(username=username)
@@ -77,6 +85,9 @@ def assign_roles(username, biz_id, role_names):
         user_perms = user_perms_store.add(user, biz, permissions)
 
     return user_perms.permission_ids
+
+def get_user_permissions(user_id):
+    return user_perms_store.fetch_one_by(user_id=user_id).permission_ids
 
 def get_context_permissions(context, user):
     perms = user_perms_store.fetch_one_by(user_id=user_id)

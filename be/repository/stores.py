@@ -1,10 +1,10 @@
 import datetime
 
 import commonlib.helpers
-import be.bases as bases
+import be.bases.persistence as persistence
 import schemas
 
-class RedisStore(bases.BaseStore):
+class RedisStore(persistence.BaseStore):
     def add(self, **data):
         """
         returns oid
@@ -149,8 +149,8 @@ memberstore = MemberStore()
 profilestore = ProfileStore()
 registered_store = RegisteredStore()
 session_store = SessionStore()
-role_store = bases.CachedStore(RoleStore())
-permission_store = bases.CachedStore(PermissionStore())
+role_store = persistence.CachedStore(RoleStore())
+permission_store = persistence.CachedStore(PermissionStore())
 user_perms_store = UserPermissions()
 user_roles_store = UserRoles()
 biz_store = BizStore()
