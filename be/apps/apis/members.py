@@ -1,6 +1,6 @@
 import colander
 
-import be.bases.constants as constants
+import bases.constants as constants
 import be.repository.stores as stores
 
 import commonlib

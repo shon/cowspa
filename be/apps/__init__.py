@@ -1,4 +1,4 @@
-import be.bases.app as applib
+import bases.app as applib
 
 import wrappers as wrapperslib
 

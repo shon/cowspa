@@ -4,7 +4,7 @@ from pycerberus.schema import SchemaValidator
 from pycerberus.validators import StringValidator
 
 import commonlib
-import be.bases.errors as errors
+import bases.errors as errors
 import be.repository.stores as stores
 
 userstore = stores.userstore

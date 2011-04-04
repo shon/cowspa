@@ -1,53 +1,10 @@
 import datetime
 
 import commonlib.helpers
-import be.bases.persistence as persistence
+import bases.persistence as persistence
 import schemas
 
-class RedisStore(persistence.BaseStore):
-    def add(self, **data):
-        """
-        returns oid
-        """
-        raise NotImplemented
-
-    def edit(self, oid, mod_data):
-        """
-        """
-
-    def list(self, limit=None, order_by=None):
-        """
-        """
-        raise NotImplemented
-
-    def fetch_by(self, **crit):
-        """
-        """
-        return self.model.objects.filter(**crit)
-
-    def fetch_one_by(self, **crit):
-        """
-        """
-        return self.model.objects.filter(**crit)[0]
-
-    def fetch_by_id(self, oid):
-        """
-        """
-        return self.model.objects.get_by_id(oid)
-
-    def remove(self, oid):
-        obj = self.model.objects.filter(id=oid)[0]
-        return obj.delete()
-
-    @classmethod
-    def obj2dict(self, obj):
-        d = {}
-        for k, v in obj.attributes_dict.items():
-            if isinstance(v, datetime.datetime):
-                v = v.isoformat()
-            d[k] = v
-        return d
-
+RedisStore = persistence.RedisStore
 
 class UserStore(RedisStore):
     model = schemas.User
