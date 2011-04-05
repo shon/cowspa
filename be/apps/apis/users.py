@@ -99,7 +99,7 @@ def strip_context_from_ref(ref):
 
 def info(username):
     user = userstore.fetch_one_by(username=username)
-    return dict(role=get_biggest_role(user.id))
+    return dict(role=get_biggest_role(user.id), user_id=user.id)
 
 def get_biggest_role(user_id):
     role_ids = user_roles_store.fetch_one_by(user_id=user_id).role_ids

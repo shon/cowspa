@@ -5,9 +5,10 @@ import time
 path = os.path.abspath(os.getcwd())
 sys.path.append(path)
 
+import fe.repository.stores as stores
+
 import be
 import be.apps
-import be.bases
 
 cowapp = be.apps.cowapp
 
@@ -45,7 +46,8 @@ def login():
         retcode, auth_token = res['retcode'], res['result']
         if retcode == 0 and auth_token:
             info = cowapp.root['0.1'].users[username].info()['result']
-            result = '/en/%(role)s/default/dashboard' % info
+            pref = stores.ui_pref_store.fetch_one_by(user_id = info['user_id'])
+            result = pref.start_page
             session['authcookie'] = auth_token
             session.permanent = remember
             print 'login success'

@@ -31,6 +31,7 @@ var JSONRequest = new Class ({
         options['method'] = 'post';
         options['urlEncoded'] = false;
         this.on_success = options['on_success'];
+        this.on_fail = options['on_fail'];
         this.parent(options);
     },
     onSuccess: function(responseJSON, responseText) {
@@ -58,8 +59,8 @@ var JSONRequest = new Class ({
         this.json_send(data);
     },
     json_send: function(data) {
-        console.log(data);
-        console.log(JSON.encode(data));
+        // console.log(data);
+        // console.log(JSON.encode(data));
         this.setHeader('Content-Type', 'application/json');
         this.send(JSON.encode(data));
     },

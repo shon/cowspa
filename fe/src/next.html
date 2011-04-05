@@ -16,8 +16,22 @@
 
 {% block content %}
 
-<button class="big-choice-box bg-orange"><h1> I want to apply for membership </h1></button>
-<button class="big-choice-box bg-yellow"><h1> I want to start a coworking place</h1></button>
-<button class="big-choice-box bg-green"><h1> I work for a coworking place</h1></button>
+ 
+<button class="big-choice-box bg-yellow" id="places/new"><h1> Start a coworking place</h1></button><br/>
+<button class="big-choice-box bg-orange" id="member/new"><h1> Apply for membership </h1></button><br/>
+<button class="big-choice-box bg-green" id="member/new"><h1> Work for a coworking place</h1></button><br/>
+<button class="big-choice-box bg-gray" id="network/new"><h1> Start a business network</h1></button><br/>
+<button class="big-choice-box bg-orange" id="members/profile"><h1> Take me to my profille >> </h1></button><br/>
+
+<script>                            
+$$('.big-choice-box').addEvent('click', function (e) {
+    var link = this.get('id');
+    var cur_uri = new URI();
+    cur_uri.set('directory', '');
+    cur_uri.set('file', link);
+    cur_uri.go();
+});
+</script>                            
+
 
 {% endblock %}
