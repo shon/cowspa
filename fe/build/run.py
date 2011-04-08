@@ -9,6 +9,7 @@ import os
 import itertools
 import copy
 import jinja2
+import shpaml
 import cssprefixer
 
 DEBUG = bool(sys.argv[0:1])
@@ -76,12 +77,22 @@ class Template(object):
     def build(self, data={}, dst_data={}):
         final_dst_data = self.process_dst_data()
         for path, dst_data in final_dst_data:
+            dstpath = pathjoin(dstroot, path)
+            if os.path.exists(dstpath):
+                if os.path.getmtime(dstpath) > os.path.getmtime(pathjoin(srcroot, self.src)):
+                    print "skipping ", path
+                    continue
             context = copy.deepcopy(data)
             context.update(dst_data)
             context['pubroot'] = os.path.sep.join('..' for x in os.path.dirname(path).split('/') )
             context['curdir'] = os.path.dirname(path)
             out = self.render(context)
             self.copy(out, path)
+
+class SHPAMLTemplate(Template):
+    def render(self, context):
+        out = super(SHPAMLTemplate, self).render(context)
+        return shpaml.convert_text(out)
 
 class CSSTemplate(Template):
     def render(self, context):
