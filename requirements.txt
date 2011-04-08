@@ -8,3 +8,4 @@ turbomail
 html2text
 cssutils
 cssprefixer
+shpaml
