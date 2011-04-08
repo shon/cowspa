@@ -99,6 +99,23 @@ class UserPermissions(RedisStore):
         user_perms.save()
         return user_perms
 
+class RequestStore(RedisStore):
+    model = schemas.Request
+    def add(self, requestor_id, name, status, req_data):
+        req = self.model(name=name, requestor_id=requestor_id, status=status)
+        if not req.is_valid(): print req.errors # fail here
+        req.req_data = req_data
+        if not req.is_valid(): print req.errors # fail here
+        req.save()
+        if not req.is_valid(): print req.errors # fail here
+        return req
+    @classmethod
+    def obj2dict(cls, obj):
+        d = RedisStore.obj2dict(obj)
+        d.pop('_req_data')
+        d['req_data'] = obj.req_data
+        return d
+
 userstore = UserStore()
 contactstore = ContactStore()
 memberstore = MemberStore()
@@ -110,3 +127,4 @@ permission_store = persistence.CachedStore(PermissionStore())
 user_perms_store = UserPermissions()
 user_roles_store = UserRoles()
 biz_store = BizStore()
+request_store = RequestStore()

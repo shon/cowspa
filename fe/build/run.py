@@ -24,7 +24,7 @@ theme_codes = [theme[0] for theme in themes]
 langs = (('en', 'English'), ('es', 'Spanish'), ('de', 'German'))
 lang_labels = [lang[1] for lang in langs]
 lang_codes = [lang[0] for lang in langs]
-roles = ('member', 'host', 'director', 'board', 'admin')
+roles = ('new', 'member', 'host', 'director', 'board', 'admin')
 role_codes = roles
 contrib_root = "fe/contrib"
 contribs = ['css', 'js', 'Assets']
@@ -123,9 +123,14 @@ Template.compute_possible_pathdata(data)
 templates = [
     Template('login.html', dsts = ['login']),
     Template('dashboard.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/dashboard']),
+    Template('members/profile.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/profile']),
+    Template('members/membershipinfo.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/membershipinfo']),
+    Template('members/contact.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/contact']),
+    Template('members/billing.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/billing']),
+    Template('members/preferences.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/preferences']),
+    Template('members/security.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/security']),
     Template('next.html', dsts = ['next']),
     CSSTemplate('css/cowspa.css', dsts = ['css/main.css', '{{ lang }}/{{ role }}/{{ theme }}/css/main.css']),
-    CSSTemplate('css/moodialog.css', dsts = ['css/moodialog.css', '{{ lang }}/{{ role }}/{{ theme }}/css/moodialog.css'])
     ]
 
 def copy_contribs():

@@ -1,8 +1,4 @@
-{% extends "layout.html" %}
-
-{% block tabs %}
-    {{ macros.tabs(pubroot, [('About Me', '/members/myprofile'), ('Account', '/members/account'), ('Membership Information', '/members/membershipinfo'),('Contact Details','/members/contact'),('Billing','/members/billing'),('Preferences','/members/preferences'),('Security/Privacy','/members/security')]) }}
-{% endblock %}
+{% extends "members/profile_layout.html" %}
 
 {% block content %}
 <div class="pl2 pr2 dp50 rc box-shadow">

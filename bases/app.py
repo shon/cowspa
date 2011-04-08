@@ -1,3 +1,4 @@
+import inspect
 from functools import wraps, update_wrapper
 
 import errors
@@ -20,6 +21,12 @@ class API(object):
                 update_wrapper(f, target)
         self.f = f
     def __call__(self, *args, **kw):
+        args = list(args)
+        expected_args = (inspect.getargspec(self.f).args)
+        redundant_kw_keys = tuple(k for k in kw if k in expected_args)
+        for k in redundant_kw_keys:
+            pos = expected_args.index(k)
+            args.insert(pos, kw.pop(k))
         retcode = errors.complete_retcode
         try:
             res = self.f(*args, **kw)
@@ -27,6 +34,8 @@ class API(object):
             retcode = errors.execution_error
             res = err.msgs
         except Exception, err:
+            import traceback
+            traceback.print_exc()
             retcode = getattr(err, 'suggested_retcode', errors.exception_retcode)
             res = getattr(err, 'suggested_result', str(err))
         return {'retcode': retcode, 'result': res}
@@ -126,9 +135,7 @@ class TraverserFactory(object):
     def __init__(self, tree):
         self._tree = tree
     def set_context(self, auth_token):
-        print "set_context"
         env.context.user_id = self._tree.session_lookuper(auth_token)
-        print "set_context", env.context.user_id
     def __getattr__(self, name):
         return Traverser(self._tree)
     def __getitem__(self, name):

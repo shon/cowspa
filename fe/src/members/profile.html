@@ -1,8 +1,4 @@
-{% extends "layout.html" %}
-
-{% block tabs %}
-    {{ macros.tabs(pubroot, [('About Me', '/members/myprofile'), ('Account', '/members/account'), ('Membership Information', '/members/membershipinfo'),('Contact Details','/members/contact'),('Billing','/members/billing'),('Preferences','/members/preferences'),('Security/Privacy','/members/security')]) }}
-{% endblock %}
+{% extends "members/profile_layout.html" %}
 
 {% block content %}
 
@@ -12,7 +8,6 @@
         var extra_div_element = document.getElementById('extra_div');
         aTextBox = document.createElement('input');
         var inputidname = 'socialnw_choice_'+ socialnw_count;
-        //alert(inputidname);
         aTextBox.setAttribute('id', inputidname);
         aTextBox.setAttribute('class', 'socialnw-input');
         aTextBox.setAttribute('type','text');

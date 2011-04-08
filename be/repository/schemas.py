@@ -1,3 +1,5 @@
+import cPickle
+
 import redis
 import redisco
 import redisco.models as models
@@ -43,6 +45,8 @@ class Profile(models.Model):
     display_name = property(_get_display_name)
     short_description = models.Attribute(indexed=False)
     long_description = models.Attribute(indexed=False)
+    interests = models.ListField(str, default=[])
+    expertise = models.Attribute()
     twitter_handle = models.Attribute(indexed=False)
     facebook_name = models.Attribute(indexed=False)
     blog = models.Attribute(indexed=True)
@@ -93,5 +97,44 @@ class UserPermissions(models.Model):
     user_id = models.Attribute(required=True)
     permission_ids = models.ListField(str, default=[], required=True)
 
+class BizProfile(models.Model):
+    name = models.Attribute(required=True)
+    short_description = models.Attribute(indexed=False)
+    long_description = models.Attribute(indexed=False)
+    twitter_handle = models.Attribute(indexed=False)
+    facebook_page = models.Attribute(indexed=False)
+    blog = models.Attribute(indexed=True)
+    linkedin_biz = models.Attribute(indexed=True)
+    tags = models.ListField(str, default=[])
+
+class BizInvoicingPref(models.Model):
+    invoice_logo = models.Attribute()
+
 class Biz(models.Model):
     name = models.Attribute(required=True)
+    created = models.DateTimeField(auto_now_add=True)
+    enabled = models.BooleanField(default=True)
+    city = models.Attribute()
+    langs = models.ListField(str, default=['en'])
+    timezone = models.Attribute()
+    holidays = models.ListField(str, default=['6'])
+    logo = models.Attribute()
+    profile = models.ReferenceField(Profile, default=None)
+    services = models.ReferenceField(MemberServices, default=None)
+    contact = models.ReferenceField(Contact, default=None)
+    booking_contact = models.Attribute()
+
+class Request(models.Model):
+    name = models.Attribute(required=True)
+    created = models.DateTimeField(auto_now_add=True)
+    acted_at = models.DateTimeField()
+    requestor_id = models.Attribute(required=True)
+    status = models.IntegerField(default=0)
+    approver_id = models.Attribute()
+    request_note = models.Attribute()
+    _req_data = models.Attribute()
+    def _get_req_data(self):
+        return cPickle.loads(self._req_data)
+    def _set_req_data(self, data):
+        self._req_data = cPickle.dumps(data, -1)
+    req_data = property(_get_req_data, _set_req_data)

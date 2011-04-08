@@ -6,6 +6,7 @@ import apis
 import apis.members
 import apis.users
 import apis.biz
+import apis.requests
 
 cowapp_version = '0.1'
 
@@ -32,6 +33,11 @@ user_permissions = apis.users.get_user_permissions
 
 add_biz= apis.biz.add
 
+list_requests = apis.requests.list_requests
+create_request = apis.requests.create_request
+act_on_request = apis.requests.act_on_request
+request_info = apis.requests.info
+
 tree = applib.Tree()
 tree.register_api_wrappers(
     (wrapperslib.console_debugger, wrapperslib.permission_checker)
@@ -39,19 +45,28 @@ tree.register_api_wrappers(
 app = tree.add_branch(name=cowapp_version)
 app.add_branch(login)
 app.add_branch(get_cowapp_version, 'version')
+
 members = app.add_branch(name='members')
 members.add_branch(register)
 members.add_branch(activate)
 members.add_branch(add_member, 'new')
 member_id = members.add_branch(member_details, 'int:member_id')
+
 biz = app.add_branch(name='biz')
 biz.add_branch(add_biz, 'new')
+
 users = app.add_branch(name='users')
 user_id = users.add_branch(name='int:user_id')
 user_id.add_branch(user_permissions, name='permissions')
+user_id.add_branch(list_requests)
 username = users.add_branch(user_info, 'str:username')
 username.add_branch(user_info, 'info')
 username.add_branch(assign_roles)
+
+requests = app.add_branch(name='requests')
+requests.add_branch(create_request, 'new')
+request_id = requests.add_branch(request_info, 'int:request_id')
+request_id.add_branch(act_on_request, 'act')
 
 tree.register_session_lookup(apis.users.session_lookup)
 cowapp = applib.TraverserFactory(tree)

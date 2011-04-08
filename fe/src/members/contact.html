@@ -1,8 +1,5 @@
-{% extends "layout.html" %}
+{% extends "members/profile_layout.html" %}
 
-{% block tabs %}
-    {{ macros.tabs(pubroot, [('About Me', '/members/myprofile'), ('Account', '/members/account'), ('Membership Information', '/members/membershipinfo'),('Contact Details','/members/contact'),('Billing','/members/billing'),('Preferences','/members/preferences'),('Security/Privacy','/members/security')]) }}
-{% endblock %}
 {% block content %}
 
 <script type="text/javascript">

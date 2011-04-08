@@ -7,6 +7,10 @@ import shared.roles
 import be.repository.stores as stores
 import gevent.local
 
+#import sys
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
+
 def init():
     class env: pass
     env.config = conf.parse_config()

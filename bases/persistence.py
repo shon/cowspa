@@ -99,8 +99,11 @@ class RedisStore(BaseStore):
         raise NotImplemented
 
     def edit(self, oid, mod_data):
-        """
-        """
+        o = self.fetch_by_id(oid)
+        for k,v in mod_data.items():
+            setattr(o, k, v)
+        o.save()
+        return True
 
     def list(self, limit=None, order_by=None):
         """
