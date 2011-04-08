@@ -61,3 +61,7 @@ def get_details(member_id):
     for attr in ('user', 'contact', 'profile'):
         details[attr] = memberstore.obj2dict(getattr(member, attr))
     return details
+
+def get_my_details():
+    member_id = env.context.user_id
+    return get_details(member_id)

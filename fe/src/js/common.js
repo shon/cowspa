@@ -62,6 +62,10 @@ var JSONRequest = new Class ({
         // console.log(data);
         // console.log(JSON.encode(data));
         this.setHeader('Content-Type', 'application/json');
-        this.send(JSON.encode(data));
+        if (data) {
+            this.send(JSON.encode(data));
+        } else {
+            this.send();
+        };
     },
 });

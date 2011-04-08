@@ -8,6 +8,7 @@ sys.path.append(path)
 import fe.repository.stores as stores
 
 import be
+import be.bootstrap
 import be.apps
 
 cowapp = be.apps.cowapp
@@ -21,10 +22,13 @@ redirect_to_index = redirect('/dashboard')
 
 @app.route('/api/<path:apireq>', methods=['GET', 'POST'])
 def api_dispatch(apireq):
-    root = be.apps.cowapp
     # if you have nothing in request.json mostly 'Content-type' request header are not set to 'application/json'
-    data = dict(request.json.items())
+    data = {}
+    if hasattr(request, 'json') and request.json:
+        data = request.json
     # app.root.process_slashed_path('0.1/members/1')()
+    #cowapp.set_context( session['authcookie'] )
+    cowapp.set_context( request.cookies['authcookie'] )
     res = cowapp.root.process_slashed_path(apireq)(**data)
     resp = jsonify(res)
     resp.mimetype='text/plain'
@@ -48,13 +52,14 @@ def login():
             info = cowapp.root['0.1'].users[username].info()['result']
             pref = stores.ui_pref_store.fetch_one_by(user_id = info['user_id'])
             result = pref.start_page
-            session['authcookie'] = auth_token
-            session.permanent = remember
+            #session['authcookie'] = auth_token
+            #session.permanent = remember
             print 'login success'
         else:
             result = None
             print 'login failed'
         resp = jsonify({'retcode': retcode, 'result': result})
+        resp.set_cookie('authcookie',value=auth_token)
     elif request.method == 'GET':
         resp = static('login')
     return resp

@@ -23,6 +23,8 @@ member_details = apis.members.get_details
 member_details.permissions = ['test_permission']
 member_details.console_debug = True
 
+mydetails = apis.members.get_my_details
+
 add_member = apis.members.add
 
 assign_roles = apis.users.assign_roles
@@ -45,6 +47,7 @@ tree.register_api_wrappers(
 app = tree.add_branch(name=cowapp_version)
 app.add_branch(login)
 app.add_branch(get_cowapp_version, 'version')
+app.add_branch(mydetails, 'mydetails')
 
 members = app.add_branch(name='members')
 members.add_branch(register)
