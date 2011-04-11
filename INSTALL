@@ -20,6 +20,6 @@ cd src
 =======
 # test
 vi conf_local.py # Refer conf/default.py
-rm -rf pub; python  fe/build/compile.py
+rm -rf pub; python  fe/build/run.py
 python fe/run_webserver.py
-firefox http://127.0.0.1:5000/en/admin/default/dashboard
+firefox http://127.0.0.1:5000/login
