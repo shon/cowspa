@@ -3,6 +3,7 @@ flask
 redis
 redisco
 colander
+greenlet
 gevent
 turbomail
 html2text
