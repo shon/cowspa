@@ -149,6 +149,7 @@ div.hidediv  {
     background: linear-gradient(top, {{ nav_bg_start }}, {{ nav_bg_end }});
     background: -moz-linear-gradient(top, {{ nav_bg_start }}, {{ nav_bg_end }});
     background: -webkit-gradient(linear, left top, left bottom, from({{ nav_bg_start }}), to({{ nav_bg_end }}));
+    background: -o-linear-gradient(top, {{ nav_bg_start }}, {{ nav_bg_end }});
 } 
 .slogan { 
     color: {{ slogan_color }};
@@ -159,6 +160,7 @@ div.hidediv  {
     background: linear-gradient(top, {{ main_bg_start }}, {{ main_bg_end }}); 
     background: -moz-linear-gradient(top, {{ main_bg_start }}, {{ main_bg_end }}); 
     background: -webkit-gradient(linear, left top, left bottom, from({{ main_bg_start }}), to({{ main_bg_end }}));
+    background: -o-linear-gradient(top, {{ main_bg_start }}, {{ main_bg_end }});
     border: none;
     border-radius:5px;
     border-bottom-right-radius: 0px;
