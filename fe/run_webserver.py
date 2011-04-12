@@ -28,7 +28,7 @@ def api_dispatch(apireq):
         data = request.json
     # app.root.process_slashed_path('0.1/members/1')()
     #cowapp.set_context( session['authcookie'] )
-    cowapp.set_context( request.cookies['authcookie'] )
+    cowapp.set_context( request.cookies.get('authcookie', ''))
     res = cowapp.root.process_slashed_path(apireq)(**data)
     resp = jsonify(res)
     resp.mimetype='text/plain'
