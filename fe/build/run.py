@@ -12,6 +12,7 @@ import jinja2
 import shpaml
 import cssprefixer
 
+
 DEBUG = bool(sys.argv[0:1])
 pathjoin = os.path.join
 
@@ -80,7 +81,7 @@ class Template(object):
             dstpath = pathjoin(dstroot, path)
             if os.path.exists(dstpath):
                 if os.path.getmtime(dstpath) > os.path.getmtime(pathjoin(srcroot, self.src)):
-                    print "skipping ", path
+                    #print "skipping ", path
                     continue
             context = copy.deepcopy(data)
             context.update(dst_data)
@@ -91,8 +92,9 @@ class Template(object):
 
 class SHPAMLTemplate(Template):
     def render(self, context):
-        out = super(SHPAMLTemplate, self).render(context)
-        return shpaml.convert_text(out)
+        source = file(pathjoin(srcroot, self.src)).read()
+        out = shpaml.convert_text(source)
+        return template_env.from_string(out).render(**context)
 
 class CSSTemplate(Template):
     def render(self, context):
@@ -134,7 +136,7 @@ Template.compute_possible_pathdata(data)
 templates = [
     Template('login.html', dsts = ['login']),
     Template('dashboard.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/dashboard']),
-    Template('members/profile.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/profile']),
+    SHPAMLTemplate('members/profile.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/profile']),
     Template('members/membershipinfo.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/membershipinfo']),
     Template('members/contact.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/contact']),
     Template('members/billing.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/billing']),
