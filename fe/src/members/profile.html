@@ -32,146 +32,156 @@
     socialnw_count = 0;
 </script>
 
-    <div id="myprofilediv" class="showdiv">
-        <div class="pl2 pr2 pb2 dp50 rc box-shadow">
-            <h3 class="mt1 member-name">
-                <c class="data-display_name"></c>
-                <span class="edit-link"> <a href="#myprofileedit" onclick="showeditpage()">Edit</a> </span>
-            </h3>
-            <hr/>
-            <div class="data-ldescription">
-            </div>
-            <hr/>
-            <div class="p1">
-                    <div class="dp50 leftcol">Interests in</div>
-                    <div class="dp50 rightcol" id="interests">Networking, Collaboration</div>
-            </div>
-            <div class="p1">
-                    <div class="dp50 leftcol">Expertise</div>
-                    <div class="dp50 rightcol">Python Developer</div>
-            </div>
-        </div>
-    </div>
+#myprofilediv.showdiv 
+    .pl2.pr2.pb2.dp50.rc.box-shadow
+        h3.mt1.member-name
+            c.data-display_name | Loading...
+            span.edit-link
+                a href=#myprofileedit onclick=showeditpage() | Edit
+        > hr
+        > div.data-long_description
+        > hr
+        .p1
+            .dp50.leftcol | Interests in
+            #interests.dp50.rightcol | Networking, Collaboration
+        .p1
+            .dp50.leftcol | Expertise
+            #expertise.dp50.rightcol | Python Developer
 
-    {% include 'socialme.html' %}
-    <div id="myprofileedit" class="hidediv">
-        <div class="pl2 pr2 dp80 rc box-shadow">
-        <h3 class="mt1">Edit: Profile</h3>
-        <hr/>
-        <form id="myprofileeditform" method="post">
-                <table>			
-		    <tr>
-                        <td></td>
-                        <td></td>
-                        <th class="rightcol-makepublic" ><c>Make it Public?</c></th>
-                    </tr>
-                    <tr>
-                        <td class="leftcol-sp">First Name</td>
-                        <td class="middlecol-sp"><input class="text" name="first_name" type="text" placeholder="First name" /> </td>
-                        <td/>
-                    </tr>
-                    <tr>
-                        <td class="leftcol-sp">Last Name</td>
-                        <td class="middlecol-sp"><input class="text" name="last_name" type="text" placeholder="Last name" /> </td>
-                        <td/>
-                    </tr>
+{% include 'socialme.html' %}
 
-		    <tr>
-                        <td class="leftcol-sp">Short Description</td>
-                        <td class="middlecol-sp"><input class="text" name="short_description" type="text" placeholder="Short Description" /> </td>
-                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
-                    </tr>
-		    <tr>
-                        <td class="leftcol-sp">Long Description</td>
-                        <!-- <td class="middlecol-sp"><textarea name="description" id="description" class="richtext"> </textarea></td> -->
-                        <td><textarea name="description" id="description" class="data-ldescription richtext"> </textarea></td>
-                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
-                    </tr>
-                    <tr>
-			<td class="leftcol-sp">Upload photo</td>
-			<td class="middlecol-sp"><input name="uploadPicture" id="uploadPicture" class="textbox" type="file" /> </td>
-                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" type="checkbox" title="Make it public?" /></td>
-                   </tr>
-                    <tr>                    
-			<td></td>
-                        <td class="specific pb3"><em>Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images.</em></td> 
-                    </tr>	
-		    <tr>
-                        <td class="leftcol-sp">Website</td>
-                        <td class="middlecol-sp"><input id="website" class="text" name="website" type="url" placeholder="http://my-website-link.org" /> </td>
-                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
-                    </tr>
-                    <tr>
-                        <td class="leftcol-sp">Interests in</td>
-                        <td class="middlecol-sp"><input class="text" name="interests" type="text" placeholder="Networking, Collaboration" /> </td>
-                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
-                    </tr>
-                    <tr>
-                        <td class="leftcol-sp">Expertise</td>
-                        <td class="middlecol-sp"><input class="text" name="expertise" type="text" placeholder="Analyst" /> </td>
-                        <td class="rightcol-makepublic"><input name="public_field" value="1" id="public_field" title="Make it public?" type="checkbox" /></td>
-                    </tr>
-                    <tr>
-                        <td class="leftcol-sp"> IM Screen Names </td>
-                        <td class="middlecol">
-                            <div id="social_nw_div">
-                                <input name="socialnw_choice_0" class="socialnw-input" type="text">
-                                <select id="social_nw_div_select" name="socialnw_options[]" class="socialnw-select">
-                                    <option value="1">Twitter</option>
-                                    <option value="2">Facebook</option>
-                                    <option value="3">LinkedIn</option>
-                                    <option value="4">Google Profile</option>
-                                    <option value="5">Flickr</option>
-                                    <option value="6">Skype</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="leftcol-sp"> </td>
-                        <td class="middlecol">
-                            <div id="extra_div"> </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="leftcol-sp"> </td>
-                        <td>
-                            <div>
-                                <a href="javascript:;" onclick='addMore();'>Add more</a>
-                            </div>
-                        </td>
-                    </tr>
-                </table>	
-                <script>
+#myprofileedit.hidediv
+    div.pl2.pr2.dp80.rc.box-shadow
+        h3.mt1 | Edit Profile
+        > hr
+        form#myprofileeditform
+            table
+                tr
+                    > td
+                    > td
+                    th.rightcol-makepublic
+                        c | Make it Public?
+                tr
+                    td.leftcol-sp | First Name
+                    td.middlecol-sp
+                        > input.text.data-first_name name=first_name type=text placeholder=First name
+                    > td
 
-                    $('description').mooEditable({
-                        actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview'
-                    });
+                tr
+                    td.leftcol-sp | Last Name
+                    td.middlecol-sp
+                        > input.text.data-last_name name=first_name type=text placeholder=Last name
+                    > td
 
-                </script>
-                <hr/>
-                <div class="middlecol">
-                      <button id="submit_myprofileedit">Update</button>
-                      <button id="reset" type="reset">Reset</button>
-                      <button id="cancel" type="button" onclick="hideeditpage()">Cancel</button>
-                </div>
-                <hr/>
-                </form>
-            </div>
-        </div>
+                tr
+                    td.leftcol-sp | Short Description
+                    td.middlecol-sp
+                        > input.text.data-last_name name=short_description type=text placeholder=One line summary about you
+                    td.rightcol-makepublic
+                        > input#public_field name="public_field" value=1 title="Make it public?" type=checkbox
+
+                tr
+                    td.leftcol-sp | Long Description
+                    td.middlecol-sp
+                        > input.text.data-last_name name=short_description type=text
+                    td.rightcol-makepublic
+                        > input#public_field name="public_field" value=1 title="Make it public?" type=checkbox
+
+                tr
+                    td.leftcol-sp | Upload photo
+                    td.middlecol-sp
+                        > input#uploadPicture.textbox type="file"
+                    td.rightcol-makepublic
+                        > input#public_field name="public_field" value=1 title="Make it public?" type=checkbox
+
+                tr
+                    > td
+                    td.specific.pb3
+                        em | Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images.
+
+                tr
+                    td.leftcol-sp | Website
+                    td.middlecol-sp
+                        > input#website.text type=url name=website placeholder=http://
+                    td.rightcol-makepublic
+                        > input#public_field name="public_field" value=1 title="Make it public?" type=checkbox
+
+                tr
+                    td.leftcol-sp | Interests in
+                    td.middlecol-sp
+                        > input#interests.text type=text name=interests placeholder="Fields you are interested in"
+                    td.rightcol-makepublic
+                        > input#public_field name="public_field" value=1 title="Make it public?" type=checkbox
+
+                tr
+                    td.leftcol-sp | Expertise in
+                    td.middlecol-sp
+                        > input#expertise.text type=text name=expertise placeholder=Your expertise
+                    td.rightcol-makepublic
+                        > input#public_field name="public_field" value=1 title="Make it public?" type=checkbox
+
+                tr
+                    td.leftcol-sp | Social me
+                    td.middlecol
+                       #social_nw_div
+                           > input.socialnw-input name=socialnw_choice_0 class=socialnw-input type=text
+                           select#social_nw_div_select.social-select name=socialnw_options[]
+                              option value=1 | Twitter
+                              option value=2 | Facebook
+                              option value=3 | LinkedIn
+                              option value=4 | Google Profile
+                              option value=5 | Flickr
+                              option value=6 | Skype
+
+                tr
+                    > td.leftcol-sp
+                    td.middlecol
+                        > div#extra_div
+
+                tr
+                    > td.leftcol-sp
+                    td
+                        div
+                            a href=javascript:; onclick=addMore(); | Add more
+
+            > hr
+            .middlecol
+                button#submit_myprofileedit | Update
+                button#reset | Reset
+                button#cancel onclick=hideeditpage() | Cancel
+            > hr
 
 <script>
-function show_loading() {};
+function show_loading() {
+    var fields = [
+        '.data-first_name',
+        '.data-last_name'
+    ];
+    for (var i in fields) {
+        $$(fields[i]).set('value', 'loading ...');
+    };
+    var fields = [
+        '.data-long_description'
+    ];
+    for (var i in fields) {
+        $$(fields[i]).set('text', 'loading ....');
+    };
+
+};
 function hide_loading() {};
 function load_data(data) {
     var first_name = data['profile']['first_name'];
     var last_name = data['profile']['last_name'];
     var display_name = first_name + ' ' + last_name;
-    var long_description = data['profile']['long_description'];
-    $$('.data-ldescription').set('html', long_description);
     $$('.data-display_name').set('text', display_name);
-    $('myprofileeditform').getElements('input[name=first_name]').set('value', first_name);
-    $('myprofileeditform').getElements('input[name=last_name]').set('value', last_name);
+    $$('.data-first_name').set('value', first_name);
+    $$('.data-last_name').set('value', last_name);
+    var long_description = data['profile']['long_description'];
+    $$('.data-long_description').set('html', long_description);
+    $('long_description').set('text', long_description);
+    var long_description_editor = new MooEditable('long_description', {
+        actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview' });
+    long_description_editor.setContent(long_description);
 };
 
 var req = new JSONRequest({
@@ -183,6 +193,5 @@ var req = new JSONRequest({
 req.json_send();
 
 </script>
-
 
 {% endblock %}
