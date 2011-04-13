@@ -8,6 +8,7 @@ import commonlib.messaging.email as emaillib
 import commonlib.messaging as messaging
 
 memberstore = stores.memberstore
+profilestore = stores.profilestore
 registered_store = stores.registered_store
 
 create_activation_key = commonlib.helpers.random_key_gen
@@ -65,3 +66,19 @@ def get_details(member_id):
 def get_my_details():
     member_id = env.context.user_id
     return get_details(member_id)
+
+def get_my_profile():
+    member_id = env.context.user_id
+    return get_profile(member_id)
+
+def edit_my_profile(mod_data):
+    member_id = env.context.user_id
+    return edit_profile(member_id, mod_data)
+
+def get_profile(member_id):
+    member = memberstore.fetch_by_id(member_id)
+    return memberstore.obj2dict(member.profile)
+
+def edit_profile(member_id, mod_data):
+    profilestore.edit(member_id, mod_data)
+    return True

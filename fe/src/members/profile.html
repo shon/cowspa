@@ -4,7 +4,7 @@
 
 <script>
     
-    function addMore() { 
+    function add_more() { 
         var extra_div_element = document.getElementById('extra_div');
         aTextBox = document.createElement('input');
         var inputidname = 'socialnw_choice_'+ socialnw_count;
@@ -14,157 +14,121 @@
         extra_div_element.appendChild(aTextBox); 
         var extra_select_element = document.getElementById('social_nw_div_select');
         var clone = extra_select_element.clone().inject(inputidname,'after');
-        socialnw_count = socialnw_count + 1;
+        socialnw_count++;
     };
 
     function hideeditpage(){
-        $('myprofileedit').set('class', 'hidediv');
-        $('myprofilediv').set('class', 'showdiv');
-        $('socialmediv').set('class', 'showdiv');
+        $('myprofileedit').hide();
+        $('myprofilediv').show();
+        $('socialmediv').show();
     };
 
     function showeditpage(){
-        $('myprofileedit').set('class', 'showdiv');
-        $('myprofilediv').set('class', 'hidediv');
-        $('socialmediv').set('class', 'hidediv');
+        $('myprofileedit').show();
+        $('myprofilediv').hide();
+        $('socialmediv').hide();
     };
 
-    socialnw_count = 0;
+    var socialnw_count = 0;
 </script>
 
-#myprofilediv.showdiv 
-    .pl2.pr2.pb2.dp50.rc.box-shadow
-        h3.mt1.member-name
-            c.data-display_name | Loading...
-            span.edit-link
-                a href=#myprofileedit onclick=showeditpage() | Edit
-        > hr
-        > div.data-long_description
-        > hr
-        .p1
-            .dp50.leftcol | Interests in
-            #interests.dp50.rightcol | Networking, Collaboration
-        .p1
-            .dp50.leftcol | Expertise
-            #expertise.dp50.rightcol | Python Developer
+#myprofilediv.p2.dp50.rc.box-shadow
+    h3.mt1.member-name
+        c.data-display_name | Loading ...
+        span.edit-link
+            a onclick=showeditpage() | Edit
+    > hr
+    .data-long_description
+        Loading...
+    > hr
+    .p1
+        .dp50.leftcol | Interests in
+        #data-interests.dp50.rightcol | Loading ...
+    .p1
+        .dp50.leftcol | Expertise
+        #data-expertise.dp50.rightcol | Loading ...
 
 {% include 'socialme.html' %}
-
-#myprofileedit.hidediv
-    div.pl2.pr2.dp80.rc.box-shadow
-        h3.mt1 | Edit Profile
+       
+#myprofileedit.p2.rc.box-shadow
+    h3.mt1 | Edit Profile
+    form#myprofileedit
         > hr
-        form#myprofileeditform
-            table
-                tr
-                    > td
-                    > td
-                    th.rightcol-makepublic
-                        c | Make it Public?
-                tr
-                    td.leftcol-sp | First Name
-                    td.middlecol-sp
-                        > input.text.data-first_name name=first_name type=text placeholder=First name
-                    > td
+        .hp
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | First Name
+                .dp75.ml2
+                    > input.text.data-first_name name=first_name type=text placeholder="First name"
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Last Name
+                .dp75.ml2
+                    > input.text.data-last_name name=first_name type=text placeholder="Last name"
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Short Description
+                .dp75.ml2
+                    > input.text.data-short_description name=short_description type=text placeholder="One line about you"
 
-                tr
-                    td.leftcol-sp | Last Name
-                    td.middlecol-sp
-                        > input.text.data-last_name name=first_name type=text placeholder=Last name
-                    > td
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Description
+                .dp75.ml2
+                    textarea#long_description.richtext name=description | Loading ...
 
-                tr
-                    td.leftcol-sp | Short Description
-                    td.middlecol-sp
-                        > input.text.data-last_name name=short_description type=text placeholder=One line summary about you
-                    td.rightcol-makepublic
-                        > input#public_field name="public_field" value=1 title="Make it public?" type=checkbox
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Upload photo
+                .dp75.ml2
+                    > input#uploadPicture.textbox type="file"
+                    > br
+                    em | Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images.
 
-                tr
-                    td.leftcol-sp | Long Description
-                    td.middlecol-sp
-                        > input.text.data-last_name name=short_description type=text
-                    td.rightcol-makepublic
-                        > input#public_field name="public_field" value=1 title="Make it public?" type=checkbox
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Website
+                .dp75.ml2
+                    > input#website.text type=url name=website placeholder=http://
 
-                tr
-                    td.leftcol-sp | Upload photo
-                    td.middlecol-sp
-                        > input#uploadPicture.textbox type="file"
-                    td.rightcol-makepublic
-                        > input#public_field name="public_field" value=1 title="Make it public?" type=checkbox
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Interests in
+                .dp75.ml2
+                    > input#edit_interests.text type=text name=interests placeholder="Fields you are interested in"
 
-                tr
-                    > td
-                    td.specific.pb3
-                        em | Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images.
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Expertise in
+                .dp75.ml2
+                    > input#edit_expertise.text type=text name=expertise placeholder="Your expertise"
 
-                tr
-                    td.leftcol-sp | Website
-                    td.middlecol-sp
-                        > input#website.text type=url name=website placeholder=http://
-                    td.rightcol-makepublic
-                        > input#public_field name="public_field" value=1 title="Make it public?" type=checkbox
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Social me
+                .dp75.ml2
+                   #social_nw_div
+                       > input.socialnw-input name=socialnw_choice_0 type=text
+                       select#social_nw_div_select.social-select name=socialnw_options[]
+                          option value=1 | Twitter
+                          option value=2 | Facebook
+                          option value=3 | LinkedIn
+                          option value=4 | Google Profile
+                          option value=5 | Flickr
+                          option value=6 | Skype
+                   div
+                       a href=javascript:; onclick=add_more(); | Add more
 
-                tr
-                    td.leftcol-sp | Interests in
-                    td.middlecol-sp
-                        > input#interests.text type=text name=interests placeholder="Fields you are interested in"
-                    td.rightcol-makepublic
-                        > input#public_field name="public_field" value=1 title="Make it public?" type=checkbox
+        > hr
 
-                tr
-                    td.leftcol-sp | Expertise in
-                    td.middlecol-sp
-                        > input#expertise.text type=text name=expertise placeholder=Your expertise
-                    td.rightcol-makepublic
-                        > input#public_field name="public_field" value=1 title="Make it public?" type=checkbox
-
-                tr
-                    td.leftcol-sp | Social me
-                    td.middlecol
-                       #social_nw_div
-                           > input.socialnw-input name=socialnw_choice_0 class=socialnw-input type=text
-                           select#social_nw_div_select.social-select name=socialnw_options[]
-                              option value=1 | Twitter
-                              option value=2 | Facebook
-                              option value=3 | LinkedIn
-                              option value=4 | Google Profile
-                              option value=5 | Flickr
-                              option value=6 | Skype
-
-                tr
-                    > td.leftcol-sp
-                    td.middlecol
-                        > div#extra_div
-
-                tr
-                    > td.leftcol-sp
-                    td
-                        div
-                            a href=javascript:; onclick=addMore(); | Add more
-
-            > hr
-            .middlecol
-                button#submit_myprofileedit | Update
-                button#reset | Reset
-                button#cancel onclick=hideeditpage() | Cancel
-            > hr
+        .middlecol
+            button#submit_profileedit  type=button | Update
+            button#reset  type=button | Reset
+            button#cancel type=button onclick=hideeditpage() | Cancel
+        > hr
 
 <script>
+
+hideeditpage();
+
 function show_loading() {
     var fields = [
         '.data-first_name',
         '.data-last_name'
     ];
     for (var i in fields) {
-        $$(fields[i]).set('value', 'loading ...');
-    };
-    var fields = [
-        '.data-long_description'
-    ];
-    for (var i in fields) {
-        $$(fields[i]).set('text', 'loading ....');
+        $$(fields[i]).set('value', 'Loading ...');
     };
 
 };
@@ -173,15 +137,29 @@ function load_data(data) {
     var first_name = data['profile']['first_name'];
     var last_name = data['profile']['last_name'];
     var display_name = first_name + ' ' + last_name;
+    var interests = data['profile']['interests'];
+    var expertise = data['profile']['expertise'];
+    var short_description = data['profile']['short_description'];
     $$('.data-display_name').set('text', display_name);
     $$('.data-first_name').set('value', first_name);
     $$('.data-last_name').set('value', last_name);
+    $('data-interests').set('text', interests);
+    $('data-expertise').set('text', expertise);
+    $('edit_interests').set('value', interests);
+    $('edit_expertise').set('value', expertise);
+    // $$('short_description').set('value', short_description);
     var long_description = data['profile']['long_description'];
     $$('.data-long_description').set('html', long_description);
     $('long_description').set('text', long_description);
     var long_description_editor = new MooEditable('long_description', {
-        actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview' });
+        actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview',
+        dimensions: {x: '100%', y: '100%'}
+    });
     long_description_editor.setContent(long_description);
+
+    // var long_description_editor = new MooEditable('long_description', {
+    //    actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview' });
+    // long_description_editor.setContent(long_description);
 };
 
 var req = new JSONRequest({
@@ -191,6 +169,18 @@ var req = new JSONRequest({
     on_success: load_data
 });
 req.json_send();
+
+function show_profile_saved() {};
+
+function submit_profile() {
+    var req = new JSONRequest({
+        url: "/api/0.1/me/profile/edit",
+        on_success: show_profile_saved
+    });
+    req.postform('myprofileedit');
+};
+
+$('submit_profileedit').addEvent('click', submit_profile);
 
 </script>
 

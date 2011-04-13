@@ -25,6 +25,11 @@ member_details.console_debug = True
 
 mydetails = apis.members.get_my_details
 
+get_profile = apis.members.get_profile
+get_my_profile = apis.members.get_my_profile
+edit_profile = apis.members.edit_profile
+edit_my_profile = apis.members.edit_my_profile
+
 add_member = apis.members.add
 
 assign_roles = apis.users.assign_roles
@@ -54,6 +59,12 @@ members.add_branch(register)
 members.add_branch(activate)
 members.add_branch(add_member, 'new')
 member_id = members.add_branch(member_details, 'int:member_id')
+profile = member_id.add_branch(get_profile, 'profile')
+profile.add_branch(edit_profile, 'edit')
+
+me = app.add_branch(name='me')
+profile = me.add_branch(get_my_profile, 'profile')
+profile.add_branch(edit_my_profile, 'edit')
 
 biz = app.add_branch(name='biz')
 biz.add_branch(add_biz, 'new')

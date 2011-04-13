@@ -60,7 +60,7 @@ div.hidediv  {
 /*table into div */
 
 .boldtitle {
-    font-weight:bold;
+    text-shadow: 1px 1px 0px gray;
 }
 .leftcol {
     float: left;
@@ -81,14 +81,10 @@ div.hidediv  {
 .middlecol-sp {
     float: center;
     text-align: left;
-    width: 35%;
+    width: 65%;
 }
 .rightcol-sp {
     float: right;
-    margin-right: 10%;
-    text-align: center;
-}
-.rightcol-makepublic {
     margin-right: 10%;
     text-align: center;
 }

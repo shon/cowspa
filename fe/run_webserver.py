@@ -66,6 +66,8 @@ def login():
 
 @app.route('/<path:path>')
 def static(path):
+    if path.startswith('en/Assets'): # mooEditable smileys
+        path = path[3:]
     static_root = "pub/"
     fspath = os.path.join(static_root, path)
     filename = os.path.basename(path)
