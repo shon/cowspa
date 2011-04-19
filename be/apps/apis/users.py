@@ -3,7 +3,9 @@ import itertools
 from pycerberus.schema import SchemaValidator
 from pycerberus.validators import StringValidator
 
+import bases
 import commonlib
+import bases
 import bases.errors as errors
 import be.repository.stores as stores
 
@@ -97,9 +99,13 @@ def get_context_permissions(context, user):
 def strip_context_from_ref(ref):
     return ref.split('::')[-1]
 
-def info(username):
-    user = userstore.fetch_one_by(username=username)
-    return dict(role=get_biggest_role(user.id), user_id=user.id)
+class UserMethods(bases.app.ObjectMethods):
+    methods_available = ['info']
+    def info(self, username):
+        user = userstore.fetch_one_by(username=username)
+        return dict(role=get_biggest_role(user.id), user_id=user.id)
+
+user_methods = UserMethods()
 
 def get_biggest_role(user_id):
     role_ids = user_roles_store.fetch_one_by(user_id=user_id).role_ids
@@ -107,3 +113,12 @@ def get_biggest_role(user_id):
         role_names = tuple(role_store.fetch_by_id(strip_context_from_ref(rid)).name for rid in role_ids)
         return [name for name in role_names_ordered if name in role_names][-1]
     return role_names[0]
+
+class Users(bases.app.Collection):
+    pass
+
+class UserMethods(bases.app.ObjectMethods):
+    pass
+
+users = Users(userstore)
+users_methods = UserMethods(userstore)

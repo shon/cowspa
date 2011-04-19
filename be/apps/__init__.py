@@ -1,5 +1,4 @@
 import bases.app as applib
-
 import wrappers as wrapperslib
 
 import apis
@@ -15,26 +14,7 @@ get_cowapp_version.console_debug = True
 
 login = apis.users.login
 
-register = apis.members.register
-
-activate = apis.members.activate
-
-member_details = apis.members.get_details
-member_details.permissions = ['test_permission']
-member_details.console_debug = True
-
-mydetails = apis.members.get_my_details
-
-get_profile = apis.members.get_profile
-get_my_profile = apis.members.get_my_profile
-edit_profile = apis.members.edit_profile
-edit_my_profile = apis.members.edit_my_profile
-
-add_member = apis.members.add
-
 assign_roles = apis.users.assign_roles
-
-user_info = apis.users.info
 
 user_permissions = apis.users.get_user_permissions
 
@@ -45,42 +25,20 @@ create_request = apis.requests.create_request
 act_on_request = apis.requests.act_on_request
 request_info = apis.requests.info
 
-tree = applib.Tree()
-tree.register_api_wrappers(
-    (wrapperslib.console_debugger, wrapperslib.permission_checker)
-    )
-app = tree.add_branch(name=cowapp_version)
-app.add_branch(login)
-app.add_branch(get_cowapp_version, 'version')
-app.add_branch(mydetails, 'mydetails')
+def api_factory(f):
+    wrappers = (wrapperslib.console_debugger, wrapperslib.permission_checker)
+    return applib.API(f, wrappers)
 
-members = app.add_branch(name='members')
-members.add_branch(register)
-members.add_branch(activate)
-members.add_branch(add_member, 'new')
-member_id = members.add_branch(member_details, 'int:member_id')
-profile = member_id.add_branch(get_profile, 'profile')
-profile.add_branch(edit_profile, 'edit')
+mapper = applib.Mapper(cowapp_version)
+mapper.add_api_factory(api_factory)
+mapper.connect(login)
+mapper.connect('version', get_cowapp_version)
+mapper.connect_collection('members', apis.members.members)
+mapper.connect_object_methods('members/<int:member_id>', apis.members.member_methods)
+mapper.connect_object_methods('me', apis.members.me_methods)
+mapper.connect_object_methods('users/<username>', apis.users.user_methods)
 
-me = app.add_branch(name='me')
-profile = me.add_branch(get_my_profile, 'profile')
-profile.add_branch(edit_my_profile, 'edit')
+tree = mapper.build()
 
-biz = app.add_branch(name='biz')
-biz.add_branch(add_biz, 'new')
-
-users = app.add_branch(name='users')
-user_id = users.add_branch(name='int:user_id')
-user_id.add_branch(user_permissions, name='permissions')
-user_id.add_branch(list_requests)
-username = users.add_branch(user_info, 'str:username')
-username.add_branch(user_info, 'info')
-username.add_branch(assign_roles)
-
-requests = app.add_branch(name='requests')
-requests.add_branch(create_request, 'new')
-request_id = requests.add_branch(request_info, 'int:request_id')
-request_id.add_branch(act_on_request, 'act')
-
-tree.register_session_lookup(apis.users.session_lookup)
-cowapp = applib.TraverserFactory(tree)
+cowapp = applib.TraverserFactory(applib.PyTraverser, tree, apis.users.session_lookup)
+cowapp_http = applib.TraverserFactory(applib.HTTPTraverser, tree, apis.users.session_lookup)

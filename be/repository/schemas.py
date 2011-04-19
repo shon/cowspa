@@ -23,7 +23,6 @@ class Contact(models.Model):
     email = models.Attribute(required=True)
     skype_name = models.Attribute(indexed=False, default=None)
     sip_id = models.Attribute(indexed=False, default=None)
-    website = models.Attribute(indexed=False, default=None)
 
 class MemberPref(models.Model):
     theme = models.Attribute(default="default")
@@ -47,6 +46,7 @@ class Profile(models.Model):
     long_description = models.Attribute(indexed=False)
     interests = models.ListField(str, default=[])
     expertise = models.Attribute()
+    website = models.Attribute(indexed=False, default=None)
     twitter_handle = models.Attribute(indexed=False)
     facebook_name = models.Attribute(indexed=False)
     blog = models.Attribute(indexed=True)

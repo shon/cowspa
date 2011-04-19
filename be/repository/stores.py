@@ -35,6 +35,12 @@ class MemberStore(RedisStore):
         member = self.model(user=user, contact=contact, profile=profile)
         member.save()
         return member
+    @classmethod
+    def obj2dict(cls, obj):
+        d = {}
+        for attr in ('user', 'contact', 'profile'):
+            d[attr] = RedisStore.obj2dict(getattr(obj, attr))
+        return d
 
 class ProfileStore(RedisStore):
     model = schemas.Profile

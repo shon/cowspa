@@ -62,7 +62,7 @@
             .dp75.ml2.p1
                 .dp20.tr.boldtitle | Last Name
                 .dp75.ml2
-                    > input.text.data-last_name name=first_name type=text placeholder="Last name"
+                    > input.text.data-last_name name=last_name type=text placeholder="Last name"
             .dp75.ml2.p1
                 .dp20.tr.boldtitle | Short Description
                 .dp75.ml2
@@ -134,12 +134,12 @@ function show_loading() {
 };
 function hide_loading() {};
 function load_data(data) {
-    var first_name = data['profile']['first_name'];
-    var last_name = data['profile']['last_name'];
+    var first_name = data['first_name'];
+    var last_name = data['last_name'];
     var display_name = first_name + ' ' + last_name;
-    var interests = data['profile']['interests'];
-    var expertise = data['profile']['expertise'];
-    var short_description = data['profile']['short_description'];
+    var interests = data['interests'];
+    var expertise = data['expertise'];
+    var short_description = data['short_description'];
     $$('.data-display_name').set('text', display_name);
     $$('.data-first_name').set('value', first_name);
     $$('.data-last_name').set('value', last_name);
@@ -148,7 +148,7 @@ function load_data(data) {
     $('edit_interests').set('value', interests);
     $('edit_expertise').set('value', expertise);
     // $$('short_description').set('value', short_description);
-    var long_description = data['profile']['long_description'];
+    var long_description = data['long_description'];
     $$('.data-long_description').set('html', long_description);
     $('long_description').set('text', long_description);
     var long_description_editor = new MooEditable('long_description', {
@@ -156,14 +156,10 @@ function load_data(data) {
         dimensions: {x: '100%', y: '100%'}
     });
     long_description_editor.setContent(long_description);
-
-    // var long_description_editor = new MooEditable('long_description', {
-    //    actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview' });
-    // long_description_editor.setContent(long_description);
 };
 
 var req = new JSONRequest({
-    url: "/api/0.1/mydetails",
+    url: "/api/0.1/me/profile",
     onRequest: show_loading,
     onComplete: hide_loading,
     on_success: load_data
@@ -174,7 +170,7 @@ function show_profile_saved() {};
 
 function submit_profile() {
     var req = new JSONRequest({
-        url: "/api/0.1/me/profile/edit",
+        url: "/api/0.1/me/profile",
         on_success: show_profile_saved
     });
     req.postform('myprofileedit');

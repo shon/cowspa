@@ -125,6 +125,9 @@ class RedisStore(BaseStore):
         """
         return self.model.objects.get_by_id(oid)
 
+    def fetch_all(self):
+        return [self.obj2dict(o) for o in self.model.objects.all()]
+
     def remove(self, oid):
         obj = self.model.objects.filter(id=oid)[0]
         return obj.delete()

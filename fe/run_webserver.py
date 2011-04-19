@@ -20,7 +20,7 @@ app.secret_key = os.urandom(24)
 
 redirect_to_index = redirect('/dashboard')
 
-@app.route('/api/<path:apireq>', methods=['GET', 'POST'])
+@app.route('/api/<path:apireq>', methods=['GET', 'POST', 'DELETE'])
 def api_dispatch(apireq):
     # if you have nothing in request.json mostly 'Content-type' request header are not set to 'application/json'
     data = {}
@@ -28,8 +28,8 @@ def api_dispatch(apireq):
         data = request.json
     # app.root.process_slashed_path('0.1/members/1')()
     #cowapp.set_context( session['authcookie'] )
-    cowapp.set_context( request.cookies.get('authcookie', ''))
-    res = cowapp.root.process_slashed_path(apireq)(**data)
+    cowapp.root.set_context( request.cookies.get('authcookie', ''))
+    res = be.apps.cowapp_http.root(apireq, request.method, data)
     resp = jsonify(res)
     resp.mimetype='text/plain'
     return resp

@@ -54,4 +54,59 @@ Colander
 - No JSON schema, need manual if decide to expose schema
 - friendly error messages, well documented
 
+JSON URI Scheme
+---------------
 
+GET /<resource-type>/<resource-id>
+-> info {}
+
+GET /<resource-type>/<resource-id>/<key>/<value>
+-> TRUE/f
+
+GET /<resource-type>/<resource-id>/<key>
+-> <value>
+
+DELETE /<resource-type>/<resource-id>
+-> True/False
+
+POST /<resource-type>/<resource-id>/ json {}
+-> True/False
+
+GET /<container-resource-type>/<container-resource-id>/<resource-type>
+-> info {}
+
+Supported
+=========
+Collections
+-----------
+GET /members
+    members.list()
+POST /members/ {filter}
+    members.search(filter)
+POST /members/new {name: ..}
+    members.add({..})
+DELETE /members
+    members.delete_all
+
+Objects
+-------
+GET /members/3 
+    members[3].info()
+DELETE /members/3
+    members[3].delete()
+POST /contact/3/ {address: "new address"}
+    members[3].update(mod_data={address: "new address")
+POST /members/3/contact {address: "new address"}
+    members[3].contact.update(mod_data={address: "new address")
+GET /members/3/contact/address
+    members[3].contact.get("address")
+
+- Unsupported
+GET /members/3/contact/address/new%20address {address: "new address"}
+    members[3].contact.update(mod_data={address: "new address")
+
+Object methods
+    info/details
+    delete
+    update
+    get

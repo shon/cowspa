@@ -28,7 +28,6 @@ var JSONRequest = new Class ({
     Extends: Request.JSON,
     initialize: function(options){
         //options['Content-Type'] = 'application/json';
-        options['method'] = 'post';
         options['urlEncoded'] = false;
         this.on_success = options['on_success'];
         this.on_fail = options['on_fail'];
@@ -65,7 +64,7 @@ var JSONRequest = new Class ({
         if (data) {
             this.send(JSON.encode(data));
         } else {
-            this.send();
+            this.send(options={method: 'get'});
         };
     },
 });
