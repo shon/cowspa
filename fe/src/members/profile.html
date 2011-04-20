@@ -37,6 +37,7 @@
         c.data-display_name | Loading ...
         span.edit-link
             a onclick=showeditpage() | Edit
+    c.data-short_description | Loading ...
     > hr
     .data-long_description
         Loading...
@@ -55,6 +56,10 @@
     form#myprofileedit
         > hr
         .hp
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Show name as
+                .dp75.ml2
+                    > select#display_name-select name="display_name"
             .dp75.ml2.p1
                 .dp20.tr.boldtitle | First Name
                 .dp75.ml2
@@ -136,18 +141,34 @@ function hide_loading() {};
 function load_data(data) {
     var first_name = data['first_name'];
     var last_name = data['last_name'];
-    var display_name = first_name + ' ' + last_name;
+    var display_name = data['display_name'];
+    var first_and_last_name = first_name + ' ' + last_name;
+    var last_and_first_name = last_name + ' ' + first_name;
+    $$('.data-first_name').set('value', first_name);
+    $$('.data-last_name').set('value', last_name);
+    var display_name_select = $('display_name-select');
+    var display_name_opts = [first_and_last_name, first_name, last_and_first_name, last_name];
+    function add_name_option(name, idx) {
+        var opt = new Element('option', {
+            value: name
+        });
+        opt.set('text', name);
+        display_name_select.grab(opt);
+        if (name == display_name) {
+            opt.set('selected', 'selected');
+        };
+    };
+    display_name_opts.each(add_name_option);
     var interests = data['interests'];
     var expertise = data['expertise'];
     var short_description = data['short_description'];
     $$('.data-display_name').set('text', display_name);
-    $$('.data-first_name').set('value', first_name);
-    $$('.data-last_name').set('value', last_name);
     $('data-interests').set('text', interests);
     $('data-expertise').set('text', expertise);
     $('edit_interests').set('value', interests);
     $('edit_expertise').set('value', expertise);
-    // $$('short_description').set('value', short_description);
+    $$('.short_description').set('value', short_description);
+    $$('.data-short_description').set('text', short_description);
     var long_description = data['long_description'];
     $$('.data-long_description').set('html', long_description);
     $('long_description').set('text', long_description);
