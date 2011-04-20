@@ -73,6 +73,11 @@ def SELF_CLOSING_DIV(m):
     text = m.group(1).strip()
     return '<%s> </div>' % apply_jquery(text)[0]
 
+@syntax('> (select.*)')
+def SELF_CLOSING_SELECT(m):
+    text = m.group(1).strip()
+    return '<%s> </SELECT>' % apply_jquery(text)[0]
+
 @syntax('(.*)')
 def RAW_TEXT(m):
     return m.group(1).rstrip()
@@ -83,6 +88,7 @@ LINE_METHODS = [
         OUTER_CLOSING_TAG,
         TEXT_ENCLOSING_TAG,
         SELF_CLOSING_DIV,
+        SELF_CLOSING_SELECT,
         SELF_CLOSING_TAG,
         RAW_TEXT,
         ]
