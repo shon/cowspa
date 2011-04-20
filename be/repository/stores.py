@@ -35,6 +35,16 @@ class MemberStore(RedisStore):
         member = self.model(user=user, contact=contact, profile=profile)
         member.save()
         return member
+    def edit(self, member_id, mod_data):
+        stores = dict(profile=profilestore,
+            contact = contactstore,
+            user = userstore)
+        member = self.fetch_by_id(member_id)
+        for k, v in mod_data.items():
+            oid = getattr(member, k+'_id')
+            store = stores[k]
+            store.edit(oid, v)
+
     @classmethod
     def obj2dict(cls, obj):
         d = {}

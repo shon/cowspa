@@ -39,9 +39,7 @@ class MemberProfileSecurity(models.Model):
 class Profile(models.Model):
     first_name = models.Attribute(required=True)
     last_name = models.Attribute(default='')
-    def _get_display_name(self):
-        return self.first_name + ' ' + self.last_name
-    display_name = property(_get_display_name)
+    display_name = models.Attribute()
     short_description = models.Attribute(indexed=False)
     long_description = models.Attribute(indexed=False)
     interests = models.ListField(str, default=[])

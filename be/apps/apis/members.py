@@ -68,24 +68,19 @@ class MemberMethods(bases.app.ObjectMethods):
     def info(self, member_id):
         member = memberstore.fetch_by_id(member_id)
         return memberstore.obj2dict(member)
+    #info.perms = OR(EQ(match_cuser('member_id')), 'biz:<cuser_biz>::host')
 
     def get(self, member_id, attr):
         member = memberstore.fetch_by_id(member_id)
         return profilestore.obj2dict(getattr(member, attr))
 
     def set(self, member_id, attr, v):
-        member = memberstore.fetch_by_id(member_id)
-        member_attr = getattr(member, attr)
-        member_attr.edit(member_id, {attr: v})
+        mod_data = {attr: v}
+        memberstore.edit(member_id, mod_data)
         return True
 
     def update(self, member_id, mod_data):
-        member = memberstore.fetch_by_id(member_id)
-        for k, v in mod_data.items():
-            oid = getattr(member, k).id
-            methods = self.contained_items[k]
-            methods.update(oid, v)
-
+        memberstore.edit(member_id, mod_data)
 
 class MeMethods(bases.app.ObjectMethods):
     methods_available = ['info', 'update', 'get', 'set']
