@@ -1,4 +1,5 @@
 import traceback
+import inspect
 from functools import wraps, update_wrapper, partial
 import functools
 
@@ -76,7 +77,15 @@ class Mapper(object):
         if add_rest_support and 'get' in o_mehtods.methods_available:
             self.append_rule(prefix + '/<attr>', o_mehtods.get, [http_methods.GET])
         if add_rest_support and 'set' in o_mehtods.methods_available:
-            self.append_rule(prefix + '/<attr>', o_mehtods.set, [http_methods.POST])
+            def set_a(**kw):
+                args = inspect.getargspec(o_mehtods.set).args[1:-1]
+                try:
+                    args_extracted = [kw.pop(arg) for arg in args]
+                    args_extracted.append(kw)
+                except KeyError:
+                    raise TypeError('some of the arguments (%s) are missing' % str(args))
+                return o_mehtods.set(*args_extracted)
+            self.append_rule(prefix + '/<attr>', set_a, [http_methods.POST])
 
         ## One more way to map get/set atrribute URLs, here we don't have keywaords embedded in the URL but have generated functions per attribute
         #if add_rest_support and 'get' in o_mehtods.methods_available:
@@ -138,7 +147,7 @@ class ObjectMethods(object):
         raise NotImplemented
     def set(self, oid, attr):
         raise NotImplemented
-    def update(oid, mod_data):
+    def update(self, oid, mod_data):
         self.store.edit(oid, mod_data)
         return True
 
@@ -176,7 +185,6 @@ class HTTPTraverser(Traverser):
             data.update(kw)
         except werkzeug.exceptions.NotFound:
             raise Exception("Handler for %s not found" % path)
-        print data
         return f(**data)
 
 class TraverserFactory(object):
