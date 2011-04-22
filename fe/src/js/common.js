@@ -1,3 +1,13 @@
+function collect_form_data(form_id) {
+    return $(form_id).toQueryString().parseQueryString();
+};
+
+function csv2array(csv_str) {
+    return csv_str.split(',').map(function(item, idx) {
+        return item.trim()
+    });
+};
+
 function popup_login(prev_req) {
     var login_form = $('relogin_form');
     var msgbox = $('relogin_msg');
@@ -51,11 +61,6 @@ var JSONRequest = new Class ({
                 this.on_fail(result);
             };
         };
-    },
-    postform: function(form_id) {
-        var data = $(form_id).toQueryString().parseQueryString();
-        //console.log(data);
-        this.json_send(data);
     },
     json_send: function(data) {
         // console.log(data);

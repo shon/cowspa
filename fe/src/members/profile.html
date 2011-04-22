@@ -4,19 +4,6 @@
 
 <script>
     
-    function add_more() { 
-        var extra_div_element = document.getElementById('extra_div');
-        aTextBox = document.createElement('input');
-        var inputidname = 'socialnw_choice_'+ socialnw_count;
-        aTextBox.setAttribute('id', inputidname);
-        aTextBox.setAttribute('class', 'socialnw-input');
-        aTextBox.setAttribute('type','text');
-        extra_div_element.appendChild(aTextBox); 
-        var extra_select_element = document.getElementById('social_nw_div_select');
-        var clone = extra_select_element.clone().inject(inputidname,'after');
-        socialnw_count++;
-    };
-
     function hideeditpage(){
         $('myprofileedit').hide();
         $('myprofilediv').show();
@@ -29,21 +16,20 @@
         $('socialmediv').hide();
     };
 
-    var socialnw_count = 0;
 </script>
 
 #myprofilediv.p2.dp50.rc.box-shadow
-    h3.mt1.member-name
+    h3.member-name
         c.data-display_name | Loading ...
         span.edit-link
             a onclick=showeditpage() | Edit
-    c.data-short_description | Loading ...
     > hr
-    .data-long_description
+
+    .p1.data-long_description
         Loading...
     > hr
     .p1
-        .dp50.leftcol | Interests in
+        .dp50.leftcol | Interests
         #data-interests.dp50.rightcol | Loading ...
     .p1
         .dp50.leftcol | Expertise
@@ -52,75 +38,69 @@
 {% include 'socialme.html' %}
        
 #myprofileedit.p2.rc.box-shadow
-    h3.mt1 | Edit Profile
+    h3 | Edit Profile
     form#myprofileedit
-        > hr
         .hp
-            .dp75.ml2.p1
-                .dp20.tr.boldtitle | Show name as
-                .dp75.ml2
-                    > select#display_name-select name="display_name"
-            .dp75.ml2.p1
-                .dp20.tr.boldtitle | First Name
-                .dp75.ml2
-                    > input.text.data-first_name name=first_name type=text placeholder="First name"
-            .dp75.ml2.p1
-                .dp20.tr.boldtitle | Last Name
-                .dp75.ml2
-                    > input.text.data-last_name name=last_name type=text placeholder="Last name"
-            .dp75.ml2.p1
-                .dp20.tr.boldtitle | Short Description
-                .dp75.ml2
-                    > input.text.data-short_description name=short_description type=text placeholder="One line about you"
+            fieldset
+                legend | About me
 
-            .dp75.ml2.p1
-                .dp20.tr.boldtitle | Description
-                .dp75.ml2
-                    textarea#long_description.richtext name=description | Loading ...
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Show name as
+                    .dp75.ml2
+                        > select#display_name-select name="display_name"
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | First Name
+                    .dp75.ml2
+                        > input.text.data-first_name name=first_name type=text placeholder="First name"
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Last Name
+                    .dp75.ml2
+                        > input.text.data-last_name name=last_name type=text placeholder="Last name"
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Short Description
+                    .dp75.ml2
+                        > textarea.text.data-short_description name=short_description placeholder="Few words about you"
 
-            .dp75.ml2.p1
-                .dp20.tr.boldtitle | Upload photo
-                .dp75.ml2
-                    > input#uploadPicture.textbox type="file"
-                    > br
-                    em | Do not upload photos containing cartoons, celebrities, nudity, artwork or copyrighted images.
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Description
+                    .dp75.ml2
+                        textarea#long_description.richtext name=long_description | Loading ...
 
-            .dp75.ml2.p1
-                .dp20.tr.boldtitle | Website
-                .dp75.ml2
-                    > input#website.text type=url name=website placeholder=http://
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Website
+                    .dp75.ml2
+                        > input.data-website.text type=url name=website placeholder=http://
 
-            .dp75.ml2.p1
-                .dp20.tr.boldtitle | Interests in
-                .dp75.ml2
-                    > input#edit_interests.text type=text name=interests placeholder="Fields you are interested in"
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Interests in
+                    .dp75.ml2
+                        > input#edit_interests.text type=text name=interests placeholder="Fields you are interested in"
 
-            .dp75.ml2.p1
-                .dp20.tr.boldtitle | Expertise in
-                .dp75.ml2
-                    > input#edit_expertise.text type=text name=expertise placeholder="Your expertise"
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Expertise in
+                    .dp75.ml2
+                        > input#edit_expertise.text type=text name=expertise placeholder="Your expertise"
 
-            .dp75.ml2.p1
-                .dp20.tr.boldtitle | Social me
-                .dp75.ml2
-                   #social_nw_div
-                       > input.socialnw-input name=socialnw_choice_0 type=text
-                       select#social_nw_div_select.social-select name=socialnw_options[]
-                          option value=1 | Twitter
-                          option value=2 | Facebook
-                          option value=3 | LinkedIn
-                          option value=4 | Google Profile
-                          option value=5 | Flickr
-                          option value=6 | Skype
-                   div
-                       a href=javascript:; onclick=add_more(); | Add more
+            fieldset
+                legend | Social me
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Facebook
+                    .dp75.ml2
+                        > input type=text
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Twitter
+                    .dp75.ml2
+                        > input type=text
+
 
         > hr
 
-        .middlecol
+        .mt2.middlecol
+            > div#submit_status
             button#submit_profileedit  type=button | Update
             button#reset  type=button | Reset
             button#cancel type=button onclick=hideeditpage() | Cancel
+            > br
         > hr
 
 <script>
@@ -159,7 +139,7 @@ function load_data(data) {
         };
     };
     display_name_opts.each(add_name_option);
-    var interests = data['interests'];
+    var interests = data['interests'].join(', ');
     var expertise = data['expertise'];
     var short_description = data['short_description'];
     $$('.data-display_name').set('text', display_name);
@@ -176,7 +156,15 @@ function load_data(data) {
         actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview',
         dimensions: {x: '100%', y: '100%'}
     });
-    long_description_editor.setContent(long_description);
+    //long_description_editor.setContent(long_description);
+    var website = data['website'];
+    if (website) {
+        $$('.data-website').set('text', website);
+        $$('.data-website').set('value', website);
+        $('website_link').set('href', website);
+    } else {
+        $$('.website-box').hide();
+    };
 };
 
 var req = new JSONRequest({
@@ -187,17 +175,35 @@ var req = new JSONRequest({
 });
 req.json_send();
 
-function show_profile_saved() {};
+var submit_btn = $('submit_profileedit');
+var submit_status = $('submit_status');
+
+function show_profile_saved() {
+    submit_btn.set('class', 'btn-success');
+    submit_btn.set('text', 'Update');
+    submit_status.set('text', 'Your changes have been saved.')
+};
+
+function show_saving() {
+    submit_btn.set('class', 'btn-saving');
+    submit_btn.set('text', "Saving...");
+};
 
 function submit_profile() {
     var req = new JSONRequest({
         url: "/api/0.1/me/profile",
+        onRequest: show_saving,
         on_success: show_profile_saved
     });
-    req.postform('myprofileedit');
+    var data = collect_form_data('myprofileedit');
+    if (data.interests) {
+        data.interests = csv2array(data.interests)
+    };
+    console.log(data);
+    req.json_send(data);
 };
 
-$('submit_profileedit').addEvent('click', submit_profile);
+submit_btn.addEvent('click', submit_profile);
 
 </script>
 

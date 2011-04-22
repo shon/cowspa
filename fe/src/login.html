@@ -48,7 +48,8 @@
                         }
                     });
                     $('login').addEvent('click', function(e) {
-                        request.postform('login_form');
+                        var data = collect_form_data('login_form');
+                        request.json_send(data);
                     });
                 </script>
             </form>
