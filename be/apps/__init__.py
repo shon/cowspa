@@ -14,11 +14,7 @@ get_cowapp_version.console_debug = True
 
 login = apis.users.login
 
-assign_roles = apis.users.assign_roles
-
 user_permissions = apis.users.get_user_permissions
-
-add_biz= apis.biz.add
 
 list_requests = apis.requests.list_requests
 create_request = apis.requests.create_request
@@ -33,6 +29,8 @@ mapper = applib.Mapper(cowapp_version)
 mapper.add_api_factory(api_factory)
 mapper.connect(login)
 mapper.connect('version', get_cowapp_version)
+mapper.connect_collection('registrations', apis.members.registrations)
+mapper.connect_collection('biz', apis.biz.biz)
 mapper.connect_collection('members', apis.members.members)
 mapper.connect_object_methods('members/<int:member_id>', apis.members.member_methods)
 mapper.connect_object_methods('me', apis.members.me_methods)

@@ -44,7 +44,7 @@ def session_lookup(token):
 def authenticate(username, password):
     try:
         user = userstore.fetch_one_by(username=username)
-    except IndexError:
+    except IndexError, err:
         return False
     return user.password == password
 
@@ -61,33 +61,6 @@ def add(username, password, enabled=True):
     user = userstore.add(username, password, enabled)
     return user.id
 
-def assign_roles(username, biz_id, role_names):
-    if isinstance(role_names, basestring):
-        role_names = [role_names]
-    # to ensure user and biz exist
-    user = userstore.fetch_one_by(username=username)
-    biz = biz_store.fetch_by_id(biz_id)
-    roles = [role_store.fetch_one_by(name=name) for name in role_names]
-    role_ids = list(r.id for r in roles)
-    user_roles = user_roles_store.soft_fetch_one_by(user_id=user.id)
-    if not user_roles:
-        user_roles_store.add(user, biz, roles)
-    else:
-        user_roles.role_ids.extend(role_ids)
-        user_perms.save()
-
-    user_perms = user_perms_store.soft_fetch_one_by(user_id=user.id)
-
-    permissions = list(itertools.chain(*[role.permissions for role in roles]))
-
-    if user_perms:
-        user_perms.permission_ids.extend(p.id for p in permissions)
-        user_perms.save()
-    else:
-        user_perms = user_perms_store.add(user, biz, permissions)
-
-    return user_perms.permission_ids
-
 def get_user_permissions(user_id):
     return user_perms_store.fetch_one_by(user_id=user_id).permission_ids
 
@@ -98,14 +71,6 @@ def get_context_permissions(context, user):
 
 def strip_context_from_ref(ref):
     return ref.split('::')[-1]
-
-class UserMethods(bases.app.ObjectMethods):
-    methods_available = ['info']
-    def info(self, username):
-        user = userstore.fetch_one_by(username=username)
-        return dict(role=get_biggest_role(user.id), user_id=user.id)
-
-user_methods = UserMethods()
 
 def get_biggest_role(user_id):
     role_ids = user_roles_store.fetch_one_by(user_id=user_id).role_ids
@@ -118,7 +83,37 @@ class Users(bases.app.Collection):
     pass
 
 class UserMethods(bases.app.ObjectMethods):
-    pass
+    methods_available = ['info', 'assign_roles']
+    def info(self, username):
+        user = self.store.fetch_one_by(username=username)
+        return dict(role=get_biggest_role(user.id), user_id=user.id)
+    def assign_roles(self, username, biz_id, role_names):
+        if isinstance(role_names, basestring):
+            role_names = [role_names]
+        # to ensure user and biz exist
+        user = userstore.fetch_one_by(username=username)
+        biz = biz_store.fetch_by_id(biz_id)
+        roles = [role_store.fetch_one_by(name=name) for name in role_names]
+        role_ids = list(r.id for r in roles)
+        user_roles = user_roles_store.soft_fetch_one_by(user_id=user.id)
+        if not user_roles:
+            user_roles_store.add(user, biz, roles)
+        else:
+            user_roles.role_ids.extend(role_ids)
+            user_perms.save()
+
+        user_perms = user_perms_store.soft_fetch_one_by(user_id=user.id)
+
+        permissions = list(itertools.chain(*[role.permissions for role in roles]))
+
+        if user_perms:
+            user_perms.permission_ids.extend(p.id for p in permissions)
+            user_perms.save()
+        else:
+            user_perms = user_perms_store.add(user, biz, permissions)
+
+        return user_perms.permission_ids
+
 
 users = Users(userstore)
-users_methods = UserMethods(userstore)
+user_methods = UserMethods(userstore)

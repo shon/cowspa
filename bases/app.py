@@ -48,6 +48,7 @@ class Mapper(object):
         path = self.prefix + '/' + path
         if not methods:
             self.rules.append(routing.Rule(path, endpoint=endpoint))
+            print path, endpoint
         else:
             print path, endpoint, methods
             self.rules.append(routing.Rule(path, endpoint=endpoint, methods=methods))

@@ -16,9 +16,10 @@ contactstore = stores.contactstore
 create_activation_key = commonlib.helpers.random_key_gen
 
 class Registrations(bases.app.Collection):
+    methods_available = ['new', 'activate', 'by_id']
     def new(self, first_name, last_name, email, ipaddr, sendmail=False):
         activation_key = create_activation_key()
-        registered = registered_store.add(activation_key, first_name, last_name, email, ipaddr)
+        registered = self.store.add(activation_key, first_name, last_name, email, ipaddr)
         activation_url = "http://127.0.0.1/members/activate/" + activation_key
         data = dict (first_name = first_name, activation_url = activation_url)
         mail_data = messaging.activation.create_message(data)
@@ -27,31 +28,35 @@ class Registrations(bases.app.Collection):
         return registered.id
     new.exec_mode = constants.exec_modes.BG
 
+    def by_id(self, id):
+        return self.store.obj2dict(self.store.fetch_by_id(id))
+
     def info(self, activation_key):
-        member = registered_store.fetch_one_by(activation_key=activation_key)
+        print activation_key
+        member = self.store.fetch_one_by(activation_key=activation_key)
         if not member:
             raise erros.APIExecutionError("Invalid/Expired Activation key")
-        return registered_store.obj2dict(member)
+        return self.store.obj2dict(member)
 
-    def activate(activation_key, **member_data):
-        activation_info = get_activation_info(activation_key)
+    def activate(self, activation_key, **member_data):
+        activation_info = self.info(activation_key)
         member_data.update(activation_info)
         member_data.pop('activation_key')
         member_data.pop('ipaddr')
-        member_id = add(**member_data)
+        member_id = members.new(**member_data)
         return member_id
 
 
 class Members(bases.app.Collection):
     methods_available = ['new', 'list', 'search']
-    def new(self, username, password, enabled, email, address=None, city=None, country=None, pincode=None, organization=None, home_no=None, mobile_no=None, fax_no=None, skype_name=None, sip_id=None, website=None, first_name=None, last_name=None, short_description=None, long_description=None, twitter_handle=None, facebook_name=None, blog=None, linkedin_contact=None, use_gravtar=None):
-        member = memberstore.add(username, password, enabled, email, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website, first_name, last_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar)
+    def new(self, username, password, enabled, email, address=None, city=None, country=None, pincode=None, organization=None, home_no=None, mobile_no=None, fax_no=None, skype_name=None, sip_id=None, website=None, first_name=None, last_name=None, short_description=None, long_description=None, twitter=None, facebook=None, blog=None, linkedin=None, use_gravtar=None):
+        member = memberstore.add(username, password, enabled, email, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website, first_name, last_name, short_description, long_description, twitter, facebook, blog, linkedin, use_gravtar)
         return member.id
     def search(self, crit):
         return 'TEST'
 
 class ProfileMethods(bases.app.ObjectMethods):
-    pass
+    social_attrs = ('twitter', 'facebook', 'blog', 'linkedin')
 
 class ContactMethods(bases.app.ObjectMethods):
     pass
@@ -103,6 +108,7 @@ class MeMethods(bases.app.ObjectMethods):
         member_id = env.context.user_id
         return member_methods.update(member_id, mod_data)
 
+registrations = Registrations(registered_store)
 members = Members(memberstore)
 me_methods = MeMethods()
 member_methods = MemberMethods(memberstore)
