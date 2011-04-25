@@ -45,10 +45,10 @@ class Profile(models.Model):
     interests = models.ListField(str, default=[])
     expertise = models.Attribute()
     website = models.Attribute(indexed=False, default=None)
-    twitter_handle = models.Attribute(indexed=False)
-    facebook_name = models.Attribute(indexed=False)
-    blog = models.Attribute(indexed=True)
-    linkedin_contact = models.Attribute(indexed=True)
+    twitter = models.ListField(str, indexed=False)
+    facebook = models.ListField(str, indexed=False)
+    blog = models.ListField(str, indexed=True)
+    linkedin = models.ListField(str, indexed=True)
     use_gravtar = models.BooleanField(default=True)
 
 # Container objects

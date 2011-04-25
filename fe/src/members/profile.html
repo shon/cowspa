@@ -83,15 +83,14 @@
 
             fieldset
                 legend | Social me
+                {% for name in ('twitter', 'linkedin', 'facebook', 'blog') %}
                 .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Facebook
-                    .dp75.ml2
-                        > input type=text
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Twitter
-                    .dp75.ml2
-                        > input type=text
-
+                    .dp20.tr.boldtitle | {{ name|capitalize }}
+                    .dp30.ml2
+                        > input.data-label-{{name}} type=text name={{name}} placeholder=Label
+                    .dp40.ml2
+                        > input.data-url-{{name}} type=url name={{name}} placeholder=URL
+                {% endfor %}
 
         > hr
 
@@ -105,6 +104,11 @@
 
 <script>
 
+var social_attrs = ['twitter', 'facebook', 'blog', 'linkedin'];
+social_attrs.each(function (nw_name, idx) {
+    $$('.' + nw_name + '-box').hide();
+});
+
 hideeditpage();
 
 function show_loading() {
@@ -117,6 +121,21 @@ function show_loading() {
     };
 
 };
+
+function show_social_link(data, nw_name) {
+    var nw_data = data[nw_name];
+    if (nw_data && nw_data[1]) {
+        var box = $$('.' + nw_name + '-box')[0];
+        box.getElements('a').each( function (elm, idx) {
+            elm.set('href', nw_data[1]);
+            elm.set('text', nw_data[0]);
+        });
+        box.show();
+        $$('.data-url-' + nw_name).set('value', nw_data[1]);
+        $$('.data-label-' + nw_name).set('value', nw_data[0]);
+    };
+};
+
 function hide_loading() {};
 function load_data(data) {
     var first_name = data['first_name'];
@@ -165,6 +184,9 @@ function load_data(data) {
     } else {
         $$('.website-box').hide();
     };
+    social_attrs.each(function (nw_name, idx) {
+        show_social_link(data, nw_name);
+    });
 };
 
 var req = new JSONRequest({
@@ -199,7 +221,6 @@ function submit_profile() {
     if (data.interests) {
         data.interests = csv2array(data.interests)
     };
-    console.log(data);
     req.json_send(data);
 };
 

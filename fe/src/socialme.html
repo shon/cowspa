@@ -11,9 +11,12 @@
         <div class="mt2 bio">Bio: <c class="data-short_description">Loading ...</c></div>
         <hr/>
         <div>
-            <img class="socialme-logo" src="/images/logos/tweeter.png"/>
-            <img class="socialme-logo" src="/images/logos/fb.png"/>
-            <img class="socialme-logo" src="/images/logos/digg.jpg"/>
+            {% for name in ('twitter', 'linkedin', 'facebook', 'blog') %}
+            <div class="p05 hp {{name}}-box">
+                <img class="socialme-logo dp20" src="/images/logos/{{name}}.png"/>
+                <div class="dp70"><a class="link-{{name}}">Loading ..</a></div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
