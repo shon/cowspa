@@ -3,8 +3,17 @@ import datetime
 
 from commonlib.helpers import odict
 
+known_stores = {}
+
+def ref2o(ref):
+    _type, id = ref.split(':')
+    return known_stores[_type].fetch_by_id(id)
+
 class BaseStore(object):
     __metaclass__ = abc.ABCMeta
+
+    def __init__(self):
+        known_stores[self.model.__name__] = self
 
     def ref(self, obj):
         return obj.__class__.__name__ + ':' + str(obj.id)
@@ -22,11 +31,6 @@ class BaseStore(object):
 
     @abc.abstractmethod
     def edit(self, oid, mod_data):
-        """
-        """
-
-    @abc.abstractmethod
-    def list(self, limit=None, order_by=None):
         """
         """
 
@@ -105,11 +109,6 @@ class RedisStore(BaseStore):
         o.save()
         return True
 
-    def list(self, limit=None, order_by=None):
-        """
-        """
-        raise NotImplemented
-
     def fetch_by(self, **crit):
         """
         """
@@ -126,7 +125,7 @@ class RedisStore(BaseStore):
         return self.model.objects.get_by_id(oid)
 
     def fetch_all(self):
-        return [self.obj2dict(o) for o in self.model.objects.all()]
+        return self.model.objects.all()
 
     def remove(self, oid):
         obj = self.model.objects.filter(id=oid)[0]
@@ -134,11 +133,9 @@ class RedisStore(BaseStore):
 
     @classmethod
     def obj2dict(self, obj):
-        d = {}
+        d = {'id': obj.id}
         for k, v in obj.attributes_dict.items():
             if isinstance(v, datetime.datetime):
                 v = v.isoformat()
             d[k] = v
         return d
-
-

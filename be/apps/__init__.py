@@ -6,6 +6,7 @@ import apis.members
 import apis.users
 import apis.biz
 import apis.requests
+import apis.plans
 
 cowapp_version = '0.1'
 
@@ -31,10 +32,14 @@ mapper.connect(login)
 mapper.connect('version', get_cowapp_version)
 mapper.connect_collection('registrations', apis.members.registrations)
 mapper.connect_collection('biz', apis.biz.biz)
+mapper.connect_object_methods('biz/<int:biz_id>', apis.biz.biz_methods)
 mapper.connect_collection('members', apis.members.members)
 mapper.connect_object_methods('members/<int:member_id>', apis.members.member_methods)
 mapper.connect_object_methods('me', apis.members.me_methods)
 mapper.connect_object_methods('users/<username>', apis.users.user_methods)
+mapper.connect_collection('plans', apis.plans.plans)
+mapper.connect_object_methods('plans/<int:plan_id>', apis.plans.plan_methods)
+mapper.connect_collection('plans/<int:plan_id>/subscribers', apis.plans.subscribers)
 
 tree = mapper.build()
 

@@ -16,7 +16,7 @@ role_store = stores.role_store
 user_perms_store = stores.user_perms_store
 user_roles_store = stores.user_roles_store
 
-role_names_ordered = ['activated', 'member', 'host', 'director', 'network', 'admin']
+role_names_ordered = ['new', 'member', 'host', 'director', 'network', 'admin']
 
 def create_session(username):
     token  = commonlib.helpers.random_key_gen()
@@ -73,11 +73,12 @@ def strip_context_from_ref(ref):
     return ref.split('::')[-1]
 
 def get_biggest_role(user_id):
-    role_ids = user_roles_store.fetch_one_by(user_id=user_id).role_ids
-    if role_ids:
+    roles = user_roles_store.fetch_by(user_id=user_id)
+    if roles:
+        role_ids = roles[0].role_ids
         role_names = tuple(role_store.fetch_by_id(strip_context_from_ref(rid)).name for rid in role_ids)
         return [name for name in role_names_ordered if name in role_names][-1]
-    return role_names[0]
+    return role_names_ordered[0]
 
 class Users(bases.app.Collection):
     pass

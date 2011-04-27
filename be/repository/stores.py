@@ -121,9 +121,7 @@ class RequestStore(RedisStore):
         req = self.model(name=name, requestor_id=requestor_id, status=status)
         if not req.is_valid(): print req.errors # fail here
         req.req_data = req_data
-        if not req.is_valid(): print req.errors # fail here
         req.save()
-        if not req.is_valid(): print req.errors # fail here
         return req
     @classmethod
     def obj2dict(cls, obj):
@@ -131,6 +129,14 @@ class RequestStore(RedisStore):
         d.pop('_req_data')
         d['req_data'] = obj.req_data
         return d
+
+class PlanStore(RedisStore):
+    model = schemas.Plan
+    def add(self, name, description, owner):
+        plan = self.model(name=name, description=description, owner=owner)
+        if not plan.is_valid(): print plan.errors # fail here
+        plan.save()
+        return plan
 
 userstore = UserStore()
 contactstore = ContactStore()
@@ -144,3 +150,4 @@ user_perms_store = UserPermissions()
 user_roles_store = UserRoles()
 biz_store = BizStore()
 request_store = RequestStore()
+plan_store = PlanStore()
