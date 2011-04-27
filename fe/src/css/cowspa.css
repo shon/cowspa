@@ -77,21 +77,24 @@ form textarea {
     width: 90%;
 }
 
+/* TODO remove showdiv and hidediv */
 div.showdiv  { 
     visibility:visible;
     position:relative;
 }
-
 div.hidediv  { 
     visibility:hidden;
     position:absolute;
 }
 
-/*table into div */
-
-.boldtitle {
-    text-shadow: 1px 1px 0px gray;
+.b { 
+    font-size: 1.10em;
+    letter-spacing:0.1em; 
+    font-weight: bold;
 }
+.boldtitle { text-shadow: 1px 1px 0px gray; }
+
+/*table into div */
 .leftcol {
     float: left;
     margin-left: inherit;
@@ -562,10 +565,41 @@ div.hidediv  {
 .btn-saving {
     background: linear-gradient(top, orange, {{ main_bg_end }}); 
     background: -moz-linear-gradient(top, orange, {{ main_bg_end }}); 
-    background: -webkit-gradient(linear, left top, left bottom, from(orange, to({{ main_bg_end }}));
     background: -o-linear-gradient(top, orange, {{ main_bg_end }});
+    background: -webkit-gradient(linear, left top, left bottom, from(orange), to({{ main_bg_end }}));
 }
 .btn-success {
     background: {{ main_bg_start }};
 }
-
+.circle {
+    border: 0.4em solid {{ main_bg_start }};
+    font-size: 1.5em;
+    border-radius: 3em;
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0.5em;
+    text-align: center; 
+}
+.circle-text {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.circle-dark {
+    background: {{ main_bg_start }};
+    font-size: 1.2em;
+    border-radius: 3em;
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0.5em;
+    text-align: center; 
+    display: inline-table;
+    opacity: 0.35;
+}
+.circle-dark-text {
+    color : {{ footer_color }};
+    font-size: 1.7em;
+    font-weight: bold;
+}
+.circle-current {
+    opacity: 0.85;
+}
