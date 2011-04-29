@@ -34,7 +34,7 @@ def api_dispatch(apireq):
     resp.mimetype='text/plain'
     return resp
 
-@app.route('/app/<path:path>')
+@app.route('/app/<path:path>', methods=['GET', 'POST', 'DELETE'])
 def default(path):
     data = getattr(testdata, path, {'error':'no donuts for you'})
     return jsonify(data=data)

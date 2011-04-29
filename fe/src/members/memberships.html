@@ -1,0 +1,207 @@
+{% extends "members/profile_layout.html" %}
+
+{% block content %}
+
+<script type="text/javascript">
+function hideeditpage(){
+    $('editsection').hide();
+    $('infosection').show();
+};
+
+function showeditpage(){
+    $('infosection').hide();
+    $('editsection').show();
+};
+</script>
+
+
+#infosection.pl2.pr2.pb2.dp50.rc.box-shadow
+    h3.mt1 
+        Membership Information
+        span.edit-link
+            a onclick=showeditpage() | Edit
+    > hr
+
+    .p1
+        .p1
+            .dp30.leftcol.b | Location
+            .dp30.middlecol.b | Tariff
+            .dp30.rightcol.b | Role
+        .p1
+            .dp30.leftcol | Amsterdam
+            .dp30.middlecol | Start 50
+            .dp30.rightcol | Member
+        .p1
+            .dp30.leftcol | Amsterdam
+            .dp30.middlecol | Start 50
+            .dp30.rightcol | Member
+    > hr
+
+    h3 | Services related information
+
+#editsection
+    .pl2.pr2.dp60.rc.box-shadow
+
+        h3.mt1 | Request Membership(s)
+        form#membershipinfoeditform
+            p
+                #circle_place.circle-dark.circle-current
+                    .circle-dark-text | 1
+                a#select_place | Select Co-working Place
+
+                #circle_plan.circle-dark
+                    .circle-dark-text | 2
+                a#select_plan | Select Co-working Plan
+
+                #circle_confirm.circle-dark
+                    .circle-dark-text | 3
+                a#confirm_plan | Send Request
+
+
+        > hr
+
+        h3.mt1 | Change Roles/ Tariff
+
+        .tc
+            table
+                tr
+                    th | Location
+                    th | Tariff
+                    th | Role
+                tr
+                    td | Amsterdam
+                    td | Start 50
+                    td
+                        select name=role
+                            option | Member
+                            option | Host
+        
+        > hr
+
+        h3 | Other Services Information
+
+        > hr
+        .middlecol
+            button | Update
+            button#reset type=reset | Reset
+            button#cancel type=button onclick=hideeditpage() | Cancel
+        > hr
+
+#places_box.MooDialog.popup-form.formborder.dl40
+    .places-col.dp30
+        .places-list | loading..
+    .places-col.dp30
+        .places-list | loading..
+    .places-col.dp30
+        .places-list | loading..
+
+> div#plans_box.MooDialog.popup-form.dl40
+
+<script>
+// .popup-form.rc.p2
+hideeditpage();
+
+var places_box = $('places_box');
+var plans_box = $('plans_box');
+places_box.hide();
+plans_box.hide();
+
+
+$('select_place').addEvent('click', function () {
+    //places_box.removeClass('invisible');
+    //places_box.addClass('MooDialog');
+    places_box.show();
+});
+
+$('select_plan').addEvent('click', function () {
+    plans_box.show();
+});
+
+function show_loading() {};
+function hide_loading() {};
+
+function load_data(places) {
+    places.sort();
+
+    var per_col = places.length / 3;
+
+    if (places.length%3) { per_col++; };
+
+{% raw %}
+    var place_template = '\
+<ul> \
+{{#places}} \
+    <li> <a class="place-selector" id="place_selected-{{ id }}">{{ name }} {{ city }}</a> </li> \
+{{/places}} \
+</ul> \
+';
+    var plan_template = '\
+{{#plans}} \
+    <p><a class="plan-selector" id="plan_selected-{{id}}">{{name}}</a></p> \
+{{/plans}} \
+';
+
+{% endraw %} 
+
+    $$('.places-list').each(function (item, idx) {
+        var start = idx * per_col;
+        var end = (idx * per_col) + per_col;
+        var _places = places.slice(start, end);
+        var html = Mustache.to_html(place_template, {places: _places});
+        item.set('html', html);
+    });
+
+    function load_plans(plans) {
+        var html = Mustache.to_html(plan_template, {plans: plans});
+        plans_box.set('html', html);
+        $$('.plan-selector').addEvent('click', function () {
+            var plan = this.get('id').split('-')[1];
+            selected_plan_id = plan; // global intentionally
+            $('select_plan').set('text', 'Selected: ' + this.get('text'));
+            $('circle_plan').removeClass('circle-current');
+            $('circle_confirm').addClass('circle-current');
+            plans_box.hide();
+        });
+    }
+    
+    $$('.place-selector').addEvent('click', function () {
+        var place = this.get('id').split('-')[1];
+        var req = new JSONRequest({
+            url: "/api/0.1/biz/" + place + "/plans",
+            // onRequest: show_loading,
+            // onComplete: hide_loading,
+            on_success: load_plans
+        });
+        req.json_send();
+        places_box.hide();
+        $('circle_place').removeClass('circle-current');
+        $('circle_plan').addClass('circle-current');
+        $('select_place').set('text', 'Selected: ' + this.get('text'));
+    });
+
+};
+
+$('confirm_plan').addEvent('click', function() {
+    function on_success() {
+        $('confirm_plan').set('text', 'Success!');
+    };
+    var req = new JSONRequest({
+        url: "/api/0.1/requests/new",
+        // onRequest: show_loading,
+        // onComplete: hide_loading,
+        on_success: on_success
+    });
+    req.json_send({name: 'membership', req_data: {plan_id: selected_plan_id}});
+});
+
+var req = new JSONRequest({
+    url: "/api/0.1/biz",
+    onRequest: show_loading,
+    onComplete: hide_loading,
+    on_success: load_data
+});
+req.json_send();
+
+</script>
+
+{% endblock %}

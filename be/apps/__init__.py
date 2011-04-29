@@ -17,11 +17,6 @@ login = apis.users.login
 
 user_permissions = apis.users.get_user_permissions
 
-list_requests = apis.requests.list_requests
-create_request = apis.requests.create_request
-act_on_request = apis.requests.act_on_request
-request_info = apis.requests.info
-
 def api_factory(f):
     wrappers = (wrapperslib.console_debugger, wrapperslib.permission_checker)
     return applib.API(f, wrappers)
@@ -37,6 +32,8 @@ mapper.connect_collection('members', apis.members.members)
 mapper.connect_object_methods('members/<int:member_id>', apis.members.member_methods)
 mapper.connect_object_methods('me', apis.members.me_methods)
 mapper.connect_object_methods('users/<username>', apis.users.user_methods)
+mapper.connect_collection('requests', apis.requests.requests)
+mapper.connect_object_methods('requests/<int:request_id>', apis.requests.request_methods)
 mapper.connect_collection('plans', apis.plans.plans)
 mapper.connect_object_methods('plans/<int:plan_id>', apis.plans.plan_methods)
 mapper.connect_collection('plans/<int:plan_id>/subscribers', apis.plans.subscribers)

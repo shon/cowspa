@@ -228,7 +228,7 @@ div.hidediv  {
 .search-btn {
     border: 0px;
     background: {{ page_bg }};
-    color: {{ main_bg_start }};
+    color: {{ main_bg_end }};
     border-radius:10px;
     border-color: {{ page_bg }};
     border-radius:10px;
@@ -550,14 +550,26 @@ div.hidediv  {
     display: inline;
     width: 10em;
 }
+.MooDialog {
+    position: fixed;
+    z-index: 50000;
+    padding: 0.7em;
+    background: {{ main_bg_end }};
+}
 .popup-form {
-    background: {{ page_bg }};
-    height: 20em;
-    width: 40em;
-    opacity: 0.85;
-    padding: 2em;
-    border-radius:5px;
     color: {{ footer_color }};
+    background: {{ page_bg }};
+    top: 20%;
+    left: 20%;
+    bottom: 10%;
+    /* overflow:scroll; */
+    opacity: 0.9;
+    padding: 2em;
+    border-radius: 0.5em;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+}
+.formborder {
+    border: 0.5em solid {{ main_bg_end }};
 }
 .bio {
     white-space: pre-wrap;
