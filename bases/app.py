@@ -65,7 +65,7 @@ class Mapper(object):
             self.append_rule(prefix +'/' + name, method)
             if add_rest_support and name in collection.supported_rest_config:
                 http_method, subpath = collection.supported_rest_config[name]
-                self.append_rule(prefix + '/' + subpath, method, [http_method])
+                self.append_rule(prefix + subpath, method, [http_method])
     def connect_object_methods(self, prefix, o_mehtods, add_rest_support=True):
         if not isinstance(o_mehtods, ObjectMethods):
             raise TypeError("Typs mismatch: %s is not instance of ObjectMethods" % o_mehtods)
@@ -109,7 +109,7 @@ class Collection(object):
     supported_rest_config = dict(
             list = (http_methods.GET, ''),
             filter = (http_methods.POST, '/'),
-            add = (http_methods.POST, '/new'),
+            new = (http_methods.POST, '/new'),
             delete_all = (http_methods.DELETE, '/'),
             bulk_add = (http_methods.PUT, '/'))
     def __init__(self, store):
