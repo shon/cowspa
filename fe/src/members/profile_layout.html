@@ -7,9 +7,9 @@
 
 {% block tabs %}
     {% if role == "new" %}
-        {{ macros.tabs('', [('About Me', 'profile'), ('Account', 'account'), ('Membership Information', 'membershipinfo'),('Contact Details','contact'),('Billing','billing'),('Preferences','preferences'),('Security/Privacy','security')]) }}
+        {{ macros.tabs('', [('About Me', 'profile'), ('Account', 'account'), ('Membership Information', 'memberships'),('Contact Details','contact'),('Billing','billing'),('Preferences','preferences'),('Security/Privacy','security')]) }}
     {% elif role != "new" %}
-        {{ macros.tabs('', [('About Me', 'profile'), ('Account', 'account'), ('Membership Information', 'membershipinfo'),('Contact Details','contact'),('Billing','billing'),('Preferences','preferences'),('Security/Privacy','security')]) }}
+        {{ macros.tabs('', [('About Me', 'profile'), ('Account', 'account'), ('Membership Information', 'memberships'),('Contact Details','contact'),('Billing','billing'),('Preferences','preferences'),('Security/Privacy','security')]) }}
     {% endif %}
 {% endblock %}
 

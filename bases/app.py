@@ -65,7 +65,7 @@ class Mapper(object):
             self.append_rule(prefix +'/' + name, method)
             if add_rest_support and name in collection.supported_rest_config:
                 http_method, subpath = collection.supported_rest_config[name]
-                self.append_rule(prefix + '/' + subpath, method, [http_method])
+                self.append_rule(prefix + subpath, method, [http_method])
     def connect_object_methods(self, prefix, o_mehtods, add_rest_support=True):
         if not isinstance(o_mehtods, ObjectMethods):
             raise TypeError("Typs mismatch: %s is not instance of ObjectMethods" % o_mehtods)
@@ -109,7 +109,7 @@ class Collection(object):
     supported_rest_config = dict(
             list = (http_methods.GET, ''),
             filter = (http_methods.POST, '/'),
-            add = (http_methods.POST, '/new'),
+            new = (http_methods.POST, '/new'),
             delete_all = (http_methods.DELETE, '/'),
             bulk_add = (http_methods.PUT, '/'))
     def __init__(self, store):
@@ -117,7 +117,7 @@ class Collection(object):
             raise TypeError("Typs mismatch: %s is not instance of persistence.Store" % store)
         self.store = store
     def list(self):
-        return self.store.fetch_all()
+        return [self.store.obj2dict(o) for o in self.store.fetch_all()]
     def new(self):
         raise NotImplemented
     def search(self, crit):
@@ -131,23 +131,33 @@ class ObjectMethods(object):
         update = (http_methods.POST, ''))
     get_attributes = []
     set_attributes = []
+    id_name = 'oid'
     def __init__(self, store=None):
         if store:
             if not isinstance(store, persistence.BaseStore):
                 raise TypeError("Typs mismatch: %s is not instance of persistence.Store" % store)
             self.store = store
-    def info(self, oid):
+    def info(self, *args, **kw):
+        oid = kw.get(self.id_name)
         o = self.store.fetch_by_id(oid)
         return self.store.obj2dict(o)
     info.console_debug = True
     def details(self, oid):
-        raise NotImplemented
+        oid = kw.get(self.id_name)
+        o = self.store.fetch_by_id(oid)
+        return self.store.obj2dict(o)
     def delete(self, oid):
         raise NotImplemented
-    def get(self, oid, attr):
-        raise NotImplemented
-    def set(self, oid, attr):
-        raise NotImplemented
+    def get(self, *args, **kw):
+        oid = kw.get(self.id_name)
+        attr = kw['attr']
+        o = self.store.fetch_by_id(oid)
+        return getattr(o, attr)
+    def set(self, *args, **kw):
+        oid = kw.get(self.id_name)
+        attr = kw['attr']
+        o = self.store.fetch_by_id(plan_id)
+        setattr(o, attr, kw['v'])
     def update(self, oid, mod_data):
         self.store.edit(oid, mod_data)
         return True

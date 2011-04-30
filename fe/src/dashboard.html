@@ -73,7 +73,7 @@ function formattime24to12(hhmm) {
 };
 function load_data(data, data_text) {
 
-    html = Mustache.to_html(template, data.data);
+    var html = Mustache.to_html(template, data.data);
     $('mustache-feed').set('html', html);
     $$('.event-start').each(function (tag) { tag.set('text', formattime24to12(tag.get('text'))); });
     $$('.event-end').each(function (tag) { tag.set('text', formattime24to12(tag.get('text'))); });
@@ -91,13 +91,14 @@ function load_data(data, data_text) {
 };
 
 
-var req = new JSONRequest({
-    url: "/api/0.1/login", // To be removed
+var req = new Request.JSON({
+    // url: "/api/0.1/login", // To be removed
+    url: '/app/dashboard',
     onRequest: show_loading,
     onComplete: hide_loading,
-    on_success: load_data 
+    onSuccess: load_data 
 });
-req.json_send({username: '', password: ''});
+req.send(); //{username: '', password: ''});
 
 </script>
     <div class="pl1 dp40 tc rc box-shadow feeds">

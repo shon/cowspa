@@ -136,3 +136,10 @@ class Request(models.Model):
     def _set_req_data(self, data):
         self._req_data = cPickle.dumps(data, -1)
     req_data = property(_get_req_data, _set_req_data)
+
+class Plan(models.Model):
+    name = models.Attribute(required=True)
+    description = models.Attribute(indexed=False)
+    created = models.DateTimeField(auto_now_add=True)
+    owner = models.Attribute(required=True)
+    subscribers = models.ListField(int, default=[])

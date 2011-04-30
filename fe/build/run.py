@@ -50,10 +50,12 @@ class Template(object):
         self.src = src
         # self.source = file(src).read()
         self.dsts = dsts if not isinstance(dsts, basestring) else [dsts]
+    def add_env(self, context):
+        context.update( dict(available_langs=langs, available_themes=themes, api_version=api_version) )
     def render(self, context):
         #out = jinja2.Template(self.source).render(**context)
         template = template_env.get_template(self.src)
-        context.update( dict(available_langs=langs, available_themes=themes, api_version=api_version) )
+        self.add_env(context)
         out = template.render(**context)
         return out
     def copy(self, content, path):
@@ -94,6 +96,7 @@ class SHPAMLTemplate(Template):
     def render(self, context):
         source = file(pathjoin(srcroot, self.src)).read()
         out = shpaml.convert_text(source)
+        self.add_env(context)
         return template_env.from_string(out).render(**context)
 
 class CSSTemplate(Template):
@@ -137,13 +140,14 @@ templates = [
     Template('login.html', dsts = ['login']),
     Template('dashboard.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/dashboard']),
     SHPAMLTemplate('members/profile.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/profile']),
-    Template('members/membershipinfo.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/membershipinfo']),
+    SHPAMLTemplate('members/memberships.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/memberships']),
     Template('members/contact.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/contact']),
     Template('members/billing.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/billing']),
     Template('members/preferences.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/preferences']),
     Template('members/security.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/security']),
     Template('next.html', dsts = ['next']),
     CSSTemplate('css/cowspa.css', dsts = ['css/main.css', '{{ lang }}/{{ role }}/{{ theme }}/css/main.css']),
+    CSSTemplate('css/MooDialog.css', dsts = ['css/MooDialog.css', '{{ lang }}/{{ role }}/{{ theme }}/css/MooDialog.css']),
     ]
 
 def copy_contribs():

@@ -34,7 +34,7 @@ def api_dispatch(apireq):
     resp.mimetype='text/plain'
     return resp
 
-@app.route('/app/<path:path>')
+@app.route('/app/<path:path>', methods=['GET', 'POST', 'DELETE'])
 def default(path):
     data = getattr(testdata, path, {'error':'no donuts for you'})
     return jsonify(data=data)
@@ -50,6 +50,7 @@ def login():
         retcode, auth_token = res['retcode'], res['result']
         if retcode == 0 and auth_token:
             info = cowapp.root['0.1'].users[username].info()['result']
+            print 'info', info
             pref = stores.ui_pref_store.fetch_one_by(user_id = info['user_id'])
             result = pref.start_page
             #session['authcookie'] = auth_token

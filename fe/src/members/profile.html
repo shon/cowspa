@@ -4,21 +4,21 @@
 
 <script>
     
-    function hideeditpage(){
-        $('myprofileedit').hide();
-        $('myprofilediv').show();
-        $('socialmediv').show();
-    };
+function hideeditpage(){
+    $('editsection').hide();
+    $('infosection').show();
+    $('socialmediv').show();
+};
 
-    function showeditpage(){
-        $('myprofileedit').show();
-        $('myprofilediv').hide();
-        $('socialmediv').hide();
-    };
+function showeditpage(){
+    $('editsection').show();
+    $('infosection').hide();
+    $('socialmediv').hide();
+};
 
 </script>
 
-#myprofilediv.p2.dp50.rc.box-shadow
+#infosection.p2.dp50.rc.box-shadow
     h3.member-name
         c.data-display_name | Loading ...
         span.edit-link
@@ -37,7 +37,7 @@
 
 {% include 'socialme.html' %}
        
-#myprofileedit.p2.rc.box-shadow
+#editsection.p2.rc.box-shadow
     h3 | Edit Profile
     form#myprofileedit
         .hp
