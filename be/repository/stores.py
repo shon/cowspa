@@ -138,6 +138,18 @@ class PlanStore(RedisStore):
         plan.save()
         return plan
 
+class ActivityStore(RedisStore):
+    model = schemas.Activity
+    defs = definitions.Activity
+
+    def add(self, name, added):
+        activity = self.model(name=name,added=added)
+	if not activity.is_valid():
+            print "Errors adding", activity.errors
+	else:
+            activity.save()
+            return activity
+
 userstore = UserStore()
 contactstore = ContactStore()
 memberstore = MemberStore()
@@ -151,3 +163,4 @@ user_roles_store = UserRoles()
 biz_store = BizStore()
 request_store = RequestStore()
 plan_store = PlanStore()
+activity_store = ActivityStore

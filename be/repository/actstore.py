@@ -1,6 +1,5 @@
 import datetime
 
-import tests.common
 import bases.persistence as persistence
 import definitions
 

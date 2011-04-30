@@ -143,3 +143,7 @@ class Plan(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     owner = models.Attribute(required=True)
     subscribers = models.ListField(int, default=[])
+
+class Activity(models.Model):
+    name = models.Attribute(required=True)
+    created = models.DateTimeField(auto_now_add=False)
