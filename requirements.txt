@@ -4,7 +4,7 @@ redis
 git+git://github.com/shon/redisco.git
 colander
 greenlet
-gevent
+#gevent
 turbomail
 html2text
 cssutils
