@@ -145,6 +145,7 @@ templates = [
     Template('members/billing.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/billing']),
     Template('members/preferences.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/preferences']),
     Template('members/security.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/security']),
+    Template('spaces/new.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/spaces/new']),
     Template('next.html', dsts = ['next']),
     CSSTemplate('css/cowspa.css', dsts = ['css/main.css', '{{ lang }}/{{ role }}/{{ theme }}/css/main.css']),
     CSSTemplate('css/MooDialog.css', dsts = ['css/MooDialog.css', '{{ lang }}/{{ role }}/{{ theme }}/css/MooDialog.css']),
