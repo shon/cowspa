@@ -9,8 +9,8 @@ plan_store = stores.plan_store
 
 class Plans(bases.app.Collection):
     methods_available = ['new', 'list']
-    def new(self, name, description, owner):
-        plan = self.store.add(name, description, owner)
+    def new(self, name, description, biz_id):
+        plan = self.store.add(name, description, biz_id)
         return plan.id
 
 class PlanMethods(bases.app.ObjectMethods):

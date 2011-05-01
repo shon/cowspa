@@ -85,9 +85,14 @@ class CachedStore(BaseStore):
                 return d
         else:
             raise IndexError("No match")
+    def fetch_all(self):
+        return self._cache_by_id.values()
     def fetch_by(self, **crit):
+        #print tuple(d for d in self._cache_by_id.values())
+        #d = self._cache_by_id.values()[0]
+        #print list(((k,v),(k,d[k])) for k,v in crit.items())
         return tuple(d for d in self._cache_by_id.values() if \
-            all(((k,v)==(d[k])) for k,v in crit.items()))
+            all(((k,v)==(k,d[k])) for k,v in crit.items()))
     def fetch_by_id(self, oid):
         return self._cache_by_id[oid]
     def remove(self, oid):

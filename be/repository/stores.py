@@ -117,8 +117,8 @@ class UserPermissions(RedisStore):
 
 class RequestStore(RedisStore):
     model = schemas.Request
-    def add(self, requestor_id, name, status, req_data):
-        req = self.model(name=name, requestor_id=requestor_id, status=status)
+    def add(self, requestor_id, name, status, approver_perm, req_data):
+        req = self.model(name=name, requestor_id=requestor_id, approver_perm=approver_perm, status=status)
         if not req.is_valid(): print req.errors # fail here
         req.req_data = req_data
         req.save()
@@ -132,15 +132,15 @@ class RequestStore(RedisStore):
 
 class PlanStore(RedisStore):
     model = schemas.Plan
-    def add(self, name, description, owner):
-        plan = self.model(name=name, description=description, owner=owner)
+    def add(self, name, description, biz_id):
+        plan = self.model(name=name, description=description, biz_id=biz_id)
         if not plan.is_valid(): print plan.errors # fail here
         plan.save()
         return plan
 
 class ActivityStore(RedisStore):
     model = schemas.Activity
-    defs = definitions.Activity
+    #defs = definitions.Activity
 
     def add(self, name, added):
         activity = self.model(name=name,added=added)

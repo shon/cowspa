@@ -101,14 +101,14 @@ class UserMethods(bases.app.ObjectMethods):
             user_roles_store.add(user, biz, roles)
         else:
             user_roles.role_ids.extend(role_ids)
-            user_perms.save()
+            user_roles.save()
 
         user_perms = user_perms_store.soft_fetch_one_by(user_id=user.id)
 
         permissions = list(itertools.chain(*[role.permissions for role in roles]))
 
         if user_perms:
-            user_perms.permission_ids.extend(p.id for p in permissions)
+            user_perms.permission_ids.extend(('Biz:%s::%s' % (biz_id, p.id)) for p in permissions)
             user_perms.save()
         else:
             user_perms = user_perms_store.add(user, biz, permissions)

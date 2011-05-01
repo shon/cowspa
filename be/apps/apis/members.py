@@ -32,7 +32,6 @@ class Registrations(bases.app.Collection):
         return self.store.obj2dict(self.store.fetch_by_id(id))
 
     def info(self, activation_key):
-        print activation_key
         member = self.store.fetch_one_by(activation_key=activation_key)
         if not member:
             raise erros.APIExecutionError("Invalid/Expired Activation key")
@@ -43,6 +42,8 @@ class Registrations(bases.app.Collection):
         member_data.update(activation_info)
         member_data.pop('activation_key')
         member_data.pop('ipaddr')
+        member_data.pop('id')
+        print member_data
         member_id = members.new(**member_data)
         return member_id
 

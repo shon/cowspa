@@ -58,6 +58,7 @@ class Member(models.Model):
     profile = models.ReferenceField(Profile, default=None)
     services = models.ReferenceField(MemberServices, default=None)
     contact = models.ReferenceField(Contact, default=None)
+    biz_memberships = models.ListField(str, indexed=True)
 
 class Business(models.Model):
     profile = models.ReferenceField(Profile, default=None)
@@ -128,6 +129,7 @@ class Request(models.Model):
     acted_at = models.DateTimeField()
     requestor_id = models.Attribute(required=True)
     status = models.IntegerField(default=0)
+    approver_perm = models.Attribute(required=True)
     approver_id = models.Attribute()
     request_note = models.Attribute()
     _req_data = models.Attribute()
@@ -141,7 +143,7 @@ class Plan(models.Model):
     name = models.Attribute(required=True)
     description = models.Attribute(indexed=False)
     created = models.DateTimeField(auto_now_add=True)
-    owner = models.Attribute(required=True)
+    biz_id = models.Attribute(required=True)
     subscribers = models.ListField(int, default=[])
 
 class Activity(models.Model):

@@ -17,8 +17,7 @@ class BizMethods(bases.app.ObjectMethods):
     methods_available = ['info', 'plans']
     id_name = 'biz_id'
     def plans(self, biz_id):
-        biz_ref = 'Biz:%s' % biz_id
-        plans = plan_store.fetch_by(owner=biz_ref)
+        plans = plan_store.fetch_by(biz_id=biz_id)
         return [plan_store.obj2dict(plan) for plan in plans]
 
 biz = Biz(biz_store)

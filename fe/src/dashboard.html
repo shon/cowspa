@@ -16,14 +16,20 @@
     <h5 class="mt1 feedbox-title tl">Requests</h5>
     <div class="p1">
     <ul>
-        <li>Approve membership: <a>Yes</a>|<a>No</a></li>
-        <li>Approve membership: <a>Yes</a>|<a>No</a></li>
     </ul>
-    <p>Approve membership: <a>Yes</a>|<a>No</a></p>
-    <p>Approve membership: <a>Yes</a>|<a>No</a></p>
-    <p>Approve membership: <a>Yes</a>|<a>No</a></p>
     </div>
 </div>
+
+<script>
+var req = new Request.JSON({
+    url: '/api/0.1/requests/forme',
+    onRequest: show_loading,
+    onComplete: hide_loading,
+    onSuccess: load_data 
+});
+req.send(); //{username: '', password: ''});
+
+</script>
 
 <div class="pr2 dp95 rc box-shadow feeds">
     <div class="fluid">
@@ -37,24 +43,9 @@
     </div>
 </div>
 </div>
+
 <script>
 {% raw %}
-var template = '\
-{{#events}} \
-<div> \
-    <div class="dp95"> \
-        <c class="highlight"><c class="event-start"/>{{start}}</c>-<c class="event-end">{{end}}</c></c> <c class="engrave">{{name}}</c> at <a>{{resource_name}}</a> {{attending}} attending <a>..</a> \
-    </div> \
-    <div class="dp5 red"><a>x</a></div> \
-    <div class="feed-item hp tr"> \
-        {{#tags}} \
-        <c class="event-tag tag">{{.}}</c> \
-        {{/tags}} \
-    </div> \
-    <div class="clear"/> \
-</div> \
-{{/events}} \
-';
 var template = '\
 {{#events}} \
 <p> \
@@ -66,6 +57,17 @@ var template = '\
 </span> \
 </p> \
 {{/events}} \
+';
+
+var requests_template = '\
+{{#data}} \
+    {{#requests}} \
+        <li> \
+            {{description}} <a id="action_yes-{{id}}">Yes</a> | <a id="action_no-{{id}}">No</a> <br/> \
+            <c class="tr">Sure? <a id=act-{{id}}>Yes</a>|<a id="rc_cancel-{{id}}">Cancel</a> </c> \
+        </li> \
+    {{/requests}} \
+{{/data}} \
 ';
 {% endraw %}
 

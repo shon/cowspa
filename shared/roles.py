@@ -31,8 +31,8 @@ view_own_invoices.name = "view_own_invoices"
 search_biz = Permission()
 search_biz.name = "search_biz"
 
-approve_membership = Permission()
-approve_membership.name = "approve_membership"
+approve_plan = Permission()
+approve_plan.name = "approve_plan"
 
 invite_member = Permission()
 invite_member.name = "invite_member"
@@ -63,7 +63,7 @@ member.permissions = [
 host = Role()
 host.name = "host"
 host.permissions = [
-    approve_membership,
+    approve_plan,
     invite_member,
     manage_biz_profile,
     activate_member,
