@@ -21,6 +21,7 @@ class ContactStore(RedisStore):
     model = schemas.Contact
     def add(self, email, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website):
         contact = self.model(email=email, address=address, city=city, country=country, pincode=pincode, organization=organization, home_no=home_no, mobile_no=mobile_no, fax_no=fax_no, skype_name=skype_name, sip_id=skype_name, website=website)
+        contact.save()
         return contact
 
 
@@ -30,9 +31,7 @@ class MemberStore(RedisStore):
         user = userstore.add(username, password, enabled)
         contact = contactstore.add(email, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website)
         profile = profilestore.add(first_name, last_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar)
-        user.save()
-        contact.save()
-        member = self.model(user=user, contact=contact, profile=profile)
+        member = self.model(id=user.id, user=user, contact=contact, profile=profile)
         member.save()
         return member
     def edit(self, member_id, mod_data):

@@ -56,11 +56,10 @@ req_id = result
 
 app.root['0.1'].requests[req_id].update(mod_data=dict(status=1))
 app.root['0.1'].requests[req_id].info()
-#
-#def test_add(data):
-#    username = data['username']
-#    data['username'] = username + str(int(username[-1]) + 1)
-#    member_id = app.root['0.1'].members.new(**data)
+
+username = username + '1'
+member1_data = dict(username=username, first_name='Shon', password='secret', enabled=True, email='abc@example.com')
+member_id = app.root['0.1'].members.new(**member1_data)
 #
 #def test_get(member_id):
 #    member = app.root['0.1'].members.get(member_id)
