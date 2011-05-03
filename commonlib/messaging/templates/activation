@@ -1,5 +1,5 @@
-to = "to.shon@gmail.com"
-author = "to.shon@gmail.com"
+to = "{{ to }}"
+author = "cowspa.dev@gmail.com"
 subject = "Spaces | Activation Key"
 plain = """Dear {{ first_name }},
 
