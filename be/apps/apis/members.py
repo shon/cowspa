@@ -17,11 +17,11 @@ create_activation_key = commonlib.helpers.random_key_gen
 
 class Registrations(bases.app.Collection):
     methods_available = ['new', 'activate', 'by_id']
-    def new(self, first_name, last_name, email, ipaddr, sendmail=False):
+    def new(self, first_name, last_name, email, ipaddr=None, sendmail=True):
         activation_key = create_activation_key()
         registered = self.store.add(activation_key, first_name, last_name, email, ipaddr)
-        activation_url = "http://127.0.0.1/members/activate/" + activation_key
-        data = dict (first_name = first_name, activation_url = activation_url)
+        activation_url = env.config.http_baseurl + "/activate#" + activation_key
+        data = dict (to=email, first_name=first_name, activation_url=activation_url)
         mail_data = messaging.activation.create_message(data)
         if sendmail:
             env.mailer.send(**mail_data)
@@ -43,6 +43,7 @@ class Registrations(bases.app.Collection):
         member_data.pop('activation_key')
         member_data.pop('ipaddr')
         member_data.pop('id')
+        member_data['enabled'] = True
         print member_data
         member_id = members.new(**member_data)
         return member_id
