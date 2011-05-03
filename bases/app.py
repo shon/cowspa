@@ -74,7 +74,7 @@ class Mapper(object):
             self.append_rule(prefix + '/' + name, method)
             if add_rest_support and name in o_mehtods.supported_rest_config:
                 http_method, subpath = o_mehtods.supported_rest_config[name]
-                self.append_rule(prefix + '/' + subpath, method, [http_method])
+                self.append_rule(prefix + subpath, method, [http_method])
         if add_rest_support and 'get' in o_mehtods.methods_available:
             self.append_rule(prefix + '/<attr>', o_mehtods.get, [http_methods.GET])
         if add_rest_support and 'set' in o_mehtods.methods_available:
