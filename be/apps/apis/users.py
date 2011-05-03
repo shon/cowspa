@@ -53,6 +53,13 @@ def login(username, password):
         return get_or_create_session(username)
     raise errors.WrapperException(errors.auth_failed, '')
 
+def logout(token):
+    try:
+        session = session_store.fetch_one_by(token=token)
+        session.delete()
+    except Exception, err:
+        print err
+
 class AddValidator(SchemaValidator):
     username = StringValidator(required=True)
     password = StringValidator(required=True)

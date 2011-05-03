@@ -13,17 +13,14 @@ cowapp_version = '0.1'
 get_cowapp_version = lambda: cowapp_version
 get_cowapp_version.console_debug = True
 
-login = apis.users.login
-
-user_permissions = apis.users.get_user_permissions
-
 def api_factory(f):
     wrappers = (wrapperslib.console_debugger, wrapperslib.permission_checker)
     return applib.API(f, wrappers)
 
 mapper = applib.Mapper(cowapp_version)
 mapper.add_api_factory(api_factory)
-mapper.connect(login)
+mapper.connect(apis.users.login)
+mapper.connect(apis.users.logout)
 mapper.connect('version', get_cowapp_version)
 mapper.connect_collection('registrations', apis.members.registrations)
 mapper.connect_collection('biz', apis.biz.biz)
