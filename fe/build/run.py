@@ -147,6 +147,7 @@ templates = [
     Template('members/security.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/security']),
     Template('spaces/new.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/spaces/new']),
     Template('next.html', dsts = ['next']),
+    Template('activate.html', dsts = ['activate']),
     CSSTemplate('css/cowspa.css', dsts = ['css/main.css', '{{ lang }}/{{ role }}/{{ theme }}/css/main.css']),
     CSSTemplate('css/MooDialog.css', dsts = ['css/MooDialog.css', '{{ lang }}/{{ role }}/{{ theme }}/css/MooDialog.css']),
     ]
