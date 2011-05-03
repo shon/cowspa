@@ -18,8 +18,6 @@ from flask import Flask, jsonify, url_for, session, redirect, request
 app = Flask(__name__)#, static_path=os.path.abspath("../pub"))
 app.secret_key = os.urandom(24)
 
-redirect_to_index = redirect('/dashboard')
-
 @app.route('/api/<path:apireq>', methods=['GET', 'POST', 'DELETE'])
 def api_dispatch(apireq):
     # if you have nothing in request.json mostly 'Content-type' request header are not set to 'application/json'
@@ -63,6 +61,12 @@ def login():
         resp.set_cookie('authcookie',value=auth_token)
     elif request.method == 'GET':
         resp = static('login')
+    return resp
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    resp = redirect('/login')
+    resp.delete_cookie('authcookie')
     return resp
 
 @app.route('/<path:path>')
