@@ -1,47 +1,23 @@
 {% extends "layout.html" %}
 
 {% block tabs %}
-    {{ macros.tabs(pubroot, [('Dashboard', '/dashboard'), ('Feeds', '/feeds'), ('Events', '/events')]) }}
 {% endblock %}
 
 {% block content %}
-<!--<img src="{{ pubroot }}/images/chart.png" width="220" height="75" alt="Revenue (Months)" />
- <img src="http://chart.apis.google.com/chart?chf=a,s,000000|bg,s,67676700|c,s,67676700&chxl=0:|2000|2500|3000|3500&chxr=0,-5,100&chxs=0,000000,11.5,0,l,000000&chxt=r&chs=220x75&cht=ls&chco=DA3B15,F7A10A,4582E7&chds=0,3000,-5,3000&chd=t2:1900,2100,2700,3000,2500,2700|1800,2100,2600,3000,2500,2900|24.59,27.869,31.148,29.508,24.59,21.311,26.23,39.344,36.066,27.869,22.951,26.23,31.148,37.705,39.344,27.869,26.23,-1&chdl=Invoiced|Uninvoiced&chls=1|1|1&chma=|5&chtt=Revenue+(Months)&chts=000000,11.5" width="220" height="75" alt="Revenue (Months)" /> 
-<br/>
-<br/>
- -->
 
 <div class="dp45">
-<div class="pr2 dp95 rc box-shadow feeds">
-    <h5 class="mt1 feedbox-title tl">Requests</h5>
-    <div class="p1">
-    <ul>
-    </ul>
+
+    <div class="pr2 dp95 rc box-shadow feeds">
+        <div class="fluid">
+            <p id="events-area">
+                <div class="datebox box-shadow">
+                    <span class="datebox-year">Mar 2011</span><h2 class="datebox-date">1</h2><small>Friday</small>
+                </div>
+                <br/>
+                <c id="mustache-feed"/>
+            </p>
+        </div>
     </div>
-</div>
-
-<script>
-var req = new Request.JSON({
-    url: '/api/0.1/requests/forme',
-    onRequest: show_loading,
-    onComplete: hide_loading,
-    onSuccess: load_data 
-});
-req.send(); //{username: '', password: ''});
-
-</script>
-
-<div class="pr2 dp95 rc box-shadow feeds">
-    <div class="fluid">
-        <p id="events-area">
-            <div class="datebox box-shadow">
-                <span class="datebox-year">Mar 2011</span><h2 class="datebox-date">1</h2><small>Friday</small>
-            </div>
-            <br/>
-            <c id="mustache-feed"/>
-        </p>
-    </div>
-</div>
 </div>
 
 <script>
@@ -60,16 +36,55 @@ var template = '\
 ';
 
 var requests_template = '\
-{{#data}} \
-    {{#requests}} \
-        <li> \
-            {{description}} <a id="action_yes-{{id}}">Yes</a> | <a id="action_no-{{id}}">No</a> <br/> \
-            <c class="tr">Sure? <a id=act-{{id}}>Yes</a>|<a id="rc_cancel-{{id}}">Cancel</a> </c> \
-        </li> \
-    {{/requests}} \
-{{/data}} \
+{{#requests}} \
+    <li id="req-{{id}}"> \
+        <span> {{description}} </span> \
+        <span class="ml2"><a class="req-action-link" id="action_yes-{{id}}">Approve</a> | <a id="action_no-{{id}}">Reject</a> </span> \
+        <span class="tr highlight confirm_approval" id="confirm_approval-{{id}}">Sure? <a id=approve_{{id}}>Yes</a>|<a id="rc_cancel-{{id}}">Cancel</a></span> \
+    </li> \
+{{/requests}} \
 ';
 {% endraw %}
+
+function act_on_request() {
+    var [action, req_id] = this.get('id').split('-');
+    function on_act_success() {
+        var req = $('req-' + req_id);
+        req.set('html', 'Success');
+    };
+    var req = new JSONRequest({
+        url: '/api/0.1/requests/' + req_id,
+        // onRequest: show_loading,
+        // onComplete: hide_loading,
+        on_success: on_act_success
+    });
+    var mod_data = {status: 1};
+    req.json_send({mod_data:mod_data}); 
+};
+function load_requests(data, data_text) {
+    var requests_box = $('requests_box');
+    if (data.length!=0) {
+        data = {requests: data};
+        var html = Mustache.to_html(requests_template, data);
+        requests_box.set('html', html);
+        $$('.req-action-link').addEvent('click', function() {
+            var req_id = this.get('id').split('-')[1];
+            var confirm_approval = $('confirm_approval-' + req_id);
+            confirm_approval.addEvent('click', act_on_request);
+            confirm_approval.show();
+        });
+    } else {
+        requests_box.hide();
+    };
+    $$('.confirm_approval').hide();
+};
+var req = new JSONRequest({
+    url: '/api/0.1/requests/forme',
+    // onRequest: show_loading,
+    // onComplete: hide_loading,
+    on_success: load_requests
+});
+req.send(); //{username: '', password: ''});
 
 function show_loading () {
     $('comm-status').set('text', 'loading..');
@@ -117,7 +132,17 @@ var req = new Request.JSON({
 req.send(); //{username: '', password: ''});
 
 </script>
-    <div class="pl1 dp40 tc rc box-shadow feeds">
+<div class="pl1 dp40">
+    <div class="pr2 dp95 rc box-shadow feeds">
+        <h5 class="mt1 feedbox-title tl">Requests</h5>
+        <div class="p1 tl">
+        <br/>
+        <ul id="requests_box">
+        </ul>
+        </div>
+    </div>
+
+    <div class="pr2 dp95 rc box-shadow feeds">
         <h5 class="tc mt1 feedbox-title">Recent Activities</h5>
         <br/>
         <div class="feed-date"> Friday, March 5 </div>
@@ -158,9 +183,9 @@ req.send(); //{username: '', password: ''});
             </ul>
             </c>
         </div>
-        <div class="clear"/>
 
     </div>
+    <div class="clear"/>
 </div>
 
 {% endblock %}
