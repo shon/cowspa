@@ -144,7 +144,7 @@ class Plan(models.Model):
     description = models.Attribute(indexed=False)
     created = models.DateTimeField(auto_now_add=True)
     biz_id = models.Attribute(required=True)
-    subscribers = models.ListField(int, default=[])
+    subscribers = models.ListField(unicode, default=[])
 
 class Activity(models.Model):
     name = models.Attribute(required=True)

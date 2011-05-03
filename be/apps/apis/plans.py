@@ -2,6 +2,7 @@ import itertools
 import bases
 import bases.persistence as persistence
 import be.repository.stores as stores
+import be.libs.signals as signals
 
 import members as memberslib
 
@@ -43,3 +44,5 @@ class Subscribers(bases.app.Collection):
 plans = Plans(plan_store)
 plan_methods = PlanMethods(plan_store)
 subscribers = Subscribers(plan_store)
+
+signals.connect("plan_approved", subscribers.new)

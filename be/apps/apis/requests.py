@@ -4,6 +4,7 @@ import inspect
 import bases
 import be.repository.stores as stores
 import be.libs.macros as macros
+import be.libs.signals as signals
 
 ACTION_AWAITED = 0
 APPROVED = 1
@@ -29,6 +30,9 @@ class MembershipRequest(Request):
     approver_perm = 'Biz:{{biz_id_from_plan_id}}::' + permission_store.fetch_one_by(name='approve_plan').id
     label = "membership request"
     template = "Membership request by \"{{requestor_display_name}}\" for plan {{name_from_plan_id}}"
+    @classmethod
+    def approve(self, req):
+        signals.send_signal('plan_approved', req.requestor_id, req.req_data['plan_id'])
 
 request_types = dict((req.name, req) for req in globals().values() if inspect.isclass(req) and req is not Request and issubclass(req, Request))
 
@@ -37,7 +41,7 @@ def is_approver(user_id, req):
     return req.approver_perm in permission_ids
 
 class Requests(bases.app.Collection):
-    methods_available = ['new', 'list', 'requests_for_me']
+    methods_available = ['new', 'list', 'forme']
 
     def new(self, name, **req_data):
         requestor_id = env.context.user_id
@@ -46,10 +50,10 @@ class Requests(bases.app.Collection):
             req_data=req_data)
         return req.id
 
-    def requests_for_me(self):
+    def forme(self):
         return [request_methods.to_info(req) for req in self.store.fetch_all() if is_approver(env.context.user_id, req)]
 
-    def my_requests(self):
+    def mine(self):
         requestor_id = env.context.user_id
         return [request_store.obj2dict(req) for req in request_store.fetch_by(requestor_id=requestor_id)]
 
@@ -61,6 +65,8 @@ class RequestMethods(bases.app.ObjectMethods):
         req = self.store.fetch_by_id(request_id)
         if not is_approver(approver_id, req):
             raise Exception("approver does not have permissions")
+        if mod_data.get('status') == APPROVED:
+            request_types[req.name].approve(req)
         mod_data.update(acted_at = datetime.datetime.now(), approver_id=approver_id)
         request_store.edit(request_id, mod_data)
         return True
@@ -70,7 +76,7 @@ class RequestMethods(bases.app.ObjectMethods):
         d['label'] = request_types[req.name].label
         data =req.req_data
         data['requestor_id'] = req.requestor_id
-        d['req_str'] = macros.process(request_types[req.name].template, env.context, data)
+        d['description'] = macros.process(request_types[req.name].template, env.context, data)
         return d
 
     def info(self, request_id):
