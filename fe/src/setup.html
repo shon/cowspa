@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {% include 'js.essential.html' %}
+    {% include 'style.html' %}
+    <div id="style">{% block style %}{% endblock %}</div>
+    <title> S P A C E S | Setup </title>
+</head>
+<body>
+
+{% import 'macros.html' as macros %}
+
+<div class="page tl ml2 fluid">
+    <div class="dl40 mt2 tr p2 about-box ">
+    <img src="/images/cow_bath.png"/> 
+    </div>
+    <div class="dl40 setup-box rc box-shadow">
+        <div class="setup-form tc p2 tl">
+            <form id="setup_form">
+                <input class="setup-field" type="text" name="username" placeholder="Username" />
+                <input class="setup-field" type="password" name="password" placeholder="password"/>
+                <input class="setup-field" type="email-address" name="email-address" placeholder="email-address"/>
+                <br/>
+                <div>
+                    <div class="setup-error"><strong id="msg"/></div>
+                    <div class="tr">
+                        <button type="button" id="setup" class="dp45 setup-btn box-shadow tc">Add Superuser</button>
+                    </div>
+                </div>
+
+                <script>
+                    var msgbox = $('msg');
+                    var request = new JSONRequest({
+                        url: '/add_super_user',
+                        onRequest: function(){
+                            msgbox.set('text', 'Setup ...');
+                        },
+                        on_success: function(result, responseText) {
+                            msgbox.set('text', 'Adding superuser...');
+                        },
+                        on_fail: function(result) {
+                            msgbox.set('text', "Try again..");
+                        }
+                    });
+                    $('setup').addEvent('click', function(e) {
+                        var data = collect_form_data('setup_form');
+                        request.json_send(data);
+                    });
+                </script>
+            </form>
+        </div>
+    </div>
+{% include 'footer.html' %}
+</div>
+
+</body>
+</html>
