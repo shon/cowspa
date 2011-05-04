@@ -34,9 +34,9 @@ a { color: #035292; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 
-table {  margin-bottom: 1.5em; border-collapse: collapse; }
+/* table {  margin-bottom: 1.5em; border-collapse: collapse; } */
 th {font-weight: bold; }
-tr, th, td { margin:0; padding:0 1.5em 0 1em; height:18px; }
+/* tr, th, td { margin:0; padding:0 1.5em 0 1em; height:18px; } */
 tfoot { font-style: italic;  }
 caption { text-align:center; font-family:Georgia, serif;  }
 
