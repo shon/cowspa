@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {% include 'js.essential.html' %}
+    {% include 'style.html' %}
+    <div id="style">{% block style %}{% endblock %}</div>
+    <title> S P A C E S | Activation </title>
+</head>
+<body>
+
+{% import 'macros.html' as macros %}
+
+<!-- <div class="page hp tl box-1 p2"> -->
+<div class="page tl ml2 fluid">
+
+    <div class="dl40 login-box rc box-shadow">
+        <div class="login-form tc p2 tl">
+            <form id="activation_form">
+                Username: 
+                <input type="text" name="username" class="login-field validate['required']" placeholder="Choose Username" />
+                Password: 
+                <input type="password" name="password" class="login-field validate['required']" placeholder="password"/>
+                <div class="tc">
+                    <button type="button" class="validate['submit']" id="activate" class="dp70">Create Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <c id="msgbox"></c>
+
+<script>
+var msgbox = $('msgbox');
+
+var login_req = new JSONRequest({
+    url: '/login',
+    onRequest: function(){
+        msgbox.set('text', 'Logging in ...');
+    },
+    on_success: function(result, responseText) {
+        var cur_uri = new URI();
+        cur_uri.set('directory', '');
+        cur_uri.set('file', '/next');
+        cur_uri.go();
+    },
+    on_fail: function(result) {
+        msgbox.set('text', "Try again..");
+    }
+});
+
+var request = new JSONRequest({
+    url: '/api/0.1/registrations/activate',
+    onRequest: function(){
+        msgbox.set('text', 'Please wait, account activation in progress...');
+    },
+    on_success: function(result, responseText) {
+        var data = collect_form_data('activation_form');
+        login_req.json_send(data);
+        msgbox.set('html', '<big>☑</big> Activation is successful.<br/>Proceeding to next page.');
+    },
+    on_fail: function(result) {
+        msgbox.set('text', "Some error. Try again by refreshing the page..");
+    }
+});
+
+function send_to_activation () {
+    var data = collect_form_data('activation_form');
+    var cur_uri = new URI();
+    data.activation_key = cur_uri.get('fragment');
+    request.json_send(data);
+};
+
+$('activate').addEvent('click', send_to_activation);
+</script>
+
+{% include 'footer.html' %}
+
+</div>
+
+</body>
+</html>

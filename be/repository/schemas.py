@@ -32,7 +32,7 @@ class MemberServices(models.Model):
     webpage = models.BooleanField(default=False)
 
 class MemberProfileSecurity(models.Model):
-    membership_id = models.IntegerField(required=True)
+    #membership_id = models.IntegerField(required=True)
     property_name = models.Attribute(required=True)
     #level = models.ListField(required=True) # 0 off 1 on: [anonymous access][all locations][same location][private]
 
@@ -144,7 +144,7 @@ class Plan(models.Model):
     description = models.Attribute(indexed=False)
     created = models.DateTimeField(auto_now_add=True)
     biz_id = models.Attribute(required=True)
-    subscribers = models.ListField(int, default=[])
+    subscribers = models.ListField(unicode, default=[])
 
 class Activity(models.Model):
     name = models.Attribute(required=True)

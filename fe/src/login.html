@@ -11,7 +11,6 @@
 
 {% import 'macros.html' as macros %}
 
-<!-- <div class="page hp tl box-1 p2"> -->
 <div class="page tl ml2 fluid">
     <div class="dl40 mt2 tr p2 about-box ">
     <img src="/images/cow_bath.png"/>
@@ -56,29 +55,47 @@
         </div>
     </div>
     <div class="signup-box dl40 rc tc box-shadow">
-        Signup is quick and easy <button type="button" id="register" class="login-btn box-shadow tc">Sign Up</button>
+        Signup is quick and easy <button type="button" id="signup_link" class="login-btn box-shadow tc">Sign Up</button>
         <div class="invisible">
-            <form class="popup-form dl40" id="registerform">
+            <form class="popup-form dl40" id="signupform">
                 <input class="login-field" type="text" name="first_name" placeholder="First Name" />
                 <input class="login-field" type="text" name="last_name" placeholder="Last Name"/>
                 <input class="login-field" type="text" name="email" placeholder="Email Address" />
+                <br/><c id="signup_msgbox"></c>
                 <button type="button" id="signup" class="dp70 signup-btn tc">Sign Up</button>
                 <br/>
             </form>
         </div>
-        <script>
-        var registerform = $('registerform');
-        function popup_registration(e) {
-            registerform.MooDialog();
-        };
-        function register(e) {
-        };
-        $('register').addEvent('click', popup_registration);
-        $('signup').addEvent('click', register);
-        </script>
     </div>
 {% include 'footer.html' %}
 </div>
+
+<script>
+var signupform = $('signupform');
+var signup_msgbox = $('signup_msgbox');
+
+function popup_registration(e) {
+    signupform.MooDialog();
+};
+function register(e) {
+    var request = new JSONRequest({
+    url: '/api/0.1/registrations/new',
+    onRequest: function(){
+        signup_msgbox.set('text', 'Processing the request ...');
+        },
+    on_success: function(result, responseText) {
+        signup_msgbox.set('html', '<big>☑</big> Registration is successful.<br/>Please check your email to activate the account.');
+        },
+    on_fail: function(result) {
+        signup_msgbox.set('text', "Try again..");
+        }
+    });
+    var data = collect_form_data('signupform');
+    request.json_send(data);
+};
+$('signup_link').addEvent('click', popup_registration);
+$('signup').addEvent('click', register);
+</script>
 
 </body>
 </html>
