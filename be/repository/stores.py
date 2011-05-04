@@ -27,10 +27,10 @@ class ContactStore(RedisStore):
 
 class MemberStore(RedisStore):
     model = schemas.Member
-    def add(self, username, password, enabled, email, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website, first_name, last_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar):
+    def add(self, username, password, enabled, email, display_name, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website, first_name, last_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar):
         user = userstore.add(username, password, enabled)
         contact = contactstore.add(email, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website)
-        profile = profilestore.add(first_name, last_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar)
+        profile = profilestore.add(first_name, last_name, display_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar)
         member = self.model(id=user.id, user=user, contact=contact, profile=profile)
         member.save()
         return member
@@ -53,8 +53,8 @@ class MemberStore(RedisStore):
 
 class ProfileStore(RedisStore):
     model = schemas.Profile
-    def add(self, first_name, last_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar):
-        profile = self.model(first_name=first_name, last_name=last_name, short_description=short_description, long_description=long_description, twitter_handle=twitter_handle, facebook_name=facebook_name, blog=blog, linkedin_contact=linkedin_contact, use_gravtar=use_gravtar)
+    def add(self, first_name, last_name, display_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar):
+        profile = self.model(first_name=first_name, last_name=last_name, display_name=display_name, short_description=short_description, long_description=long_description, twitter_handle=twitter_handle, facebook_name=facebook_name, blog=blog, linkedin_contact=linkedin_contact, use_gravtar=use_gravtar)
         profile.save()
         return profile
 
