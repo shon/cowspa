@@ -30,7 +30,12 @@
                     <div class="dp45 tr"> <br/> <a>Reset password</a> </div>
                 </div>
                 <script>
+
                     var msgbox = $('msg');
+                    function login() {
+                        var data = collect_form_data('login_form');
+                        request.json_send(data);
+                    };
                     var request = new JSONRequest({
                         url: '/login',
                         onRequest: function(){
@@ -46,10 +51,18 @@
                             msgbox.set('text', "Try again..");
                         }
                     });
-                    $('login').addEvent('click', function(e) {
-                        var data = collect_form_data('login_form');
-                        request.json_send(data);
-                    });
+                    $('login').addEvent('click', login);
+
+                    function enterKey(evt) {
+                      var evt = (evt) ? evt : event
+                      var charCode = (evt.which) ? evt.which : evt.keyCode
+                      if (charCode == 13) {
+                        login();
+                      };
+                    }; 
+
+                    document.body.onkeypress = enterKey
+
                 </script>
             </form>
         </div>
