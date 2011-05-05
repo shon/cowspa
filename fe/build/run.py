@@ -150,6 +150,8 @@ templates = [
     Template('activate.html', dsts = ['activate']),
     CSSTemplate('css/cowspa.css', dsts = ['css/main.css', '{{ lang }}/{{ role }}/{{ theme }}/css/main.css']),
     CSSTemplate('css/MooDialog.css', dsts = ['css/MooDialog.css', '{{ lang }}/{{ role }}/{{ theme }}/css/MooDialog.css']),
+    Template('setup.html', dsts = ['setup']),
+    CSSTemplate('css/setup.css', dsts = ['css/setup.css']),
     ]
 
 def copy_contribs():
