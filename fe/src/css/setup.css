@@ -1,13 +1,13 @@
 .setup-main {
     align: center;
-    color: #3B5998;
+    color: {{ main_bg_end }};
     height: 20em;
     margin-top: 10%;
     margin-left: 10%;
 }
 .setup-box { 
     border: 0.4em solid {{ main_bg_end }};
-    color: #3B5998;
+    color: {{ main_bg_end }};
     background: #ffffff;
     opacity: 0.8;
     margin-top: 10em;
