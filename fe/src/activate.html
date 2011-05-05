@@ -21,8 +21,15 @@
                 <input type="text" name="username" class="login-field validate['required']" placeholder="Choose Username" />
                 Password: 
                 <input type="password" name="password" class="login-field validate['required']" placeholder="password"/>
+                Prefered language: 
+                <select name="language">
+                    {% for lang in available_langs %}
+                        <option value="{{lang[0]}}"> {{ lang[1] }} </option>
+                    {% endfor %}
+                </select>
+                <br/>
                 <div class="tc">
-                    <button type="button" class="validate['submit']" id="activate" class="dp70">Create Account</button>
+                    <button type="button" class="login-btn box-shadow validate['submit']" id="activate" class="dp70">Create Account</button>
                 </div>
             </form>
         </div>
@@ -41,8 +48,9 @@ var login_req = new JSONRequest({
     },
     on_success: function(result, responseText) {
         var cur_uri = new URI();
-        cur_uri.set('directory', '');
-        cur_uri.set('file', '/next');
+        cur_uri.set('directory', '/');
+        cur_uri.set('file', result);
+        cur_uri.set('fragment', '');
         cur_uri.go();
     },
     on_fail: function(result) {

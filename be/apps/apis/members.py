@@ -68,7 +68,7 @@ contact_methods = ContactMethods(contactstore)
 
 class MemberMethods(bases.app.ObjectMethods):
     methods_available = ['info', 'get', 'set']
-    get_attributes = ['profile', 'contact']
+    get_attributes = ['profile', 'contact', 'pref']
     contained_items = dict(profile=profile_methods, contact=contact_methods, user=userslib.user_methods)
     contained = contained_items.keys()
 

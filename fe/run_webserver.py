@@ -37,6 +37,14 @@ def default(path):
     data = getattr(testdata, path, {'error':'no donuts for you'})
     return jsonify(data=data)
 
+start_pages = dict (
+    new = '%(language)s/%(role)s/%(theme)s/next',
+    member = '%(language)s/%(role)s/%(theme)s/profile',
+    host = '%(language)s/%(role)s/%(theme)s/dashboard',
+    director = '%(language)s/%(role)s/%(theme)s/dashboard',
+    board = '%(language)s/%(role)s/%(theme)s/dashboard',
+    admin = '%(language)s/%(role)s/%(theme)s/dashboard')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -47,10 +55,10 @@ def login():
         res = cowapp.root['0.1'].login(username, password) #TODO remove version hard coding
         retcode, auth_token = res['retcode'], res['result']
         if retcode == 0 and auth_token:
-            info = cowapp.root['0.1'].users[username].info()['result']
-            print 'info', info
-            pref = stores.ui_pref_store.fetch_one_by(user_id = info['user_id'])
-            result = pref.start_page
+            session_data = {}
+            session_data.update(cowapp.root['0.1'].users[username].info()['result'])
+            session_data.update(cowapp.root['0.1'].members[session_data['id']].get(attr='pref')['result'])
+            result = start_pages[session_data['role']] % session_data
             #session['authcookie'] = auth_token
             #session.permanent = remember
             print 'login success'

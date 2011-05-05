@@ -38,7 +38,7 @@ class MemberStore(RedisStore):
         contact = contactstore.add(email, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website)
         profile = profilestore.add(first_name, last_name, display_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar)
         pref = memberpref_store.add(language=language)
-        member = self.model(id=user.id, user=user, contact=contact, profile=profile)
+        member = self.model(id=user.id, user=user, contact=contact, profile=profile, pref=pref)
         member.save()
         return member
     def edit(self, member_id, mod_data):
