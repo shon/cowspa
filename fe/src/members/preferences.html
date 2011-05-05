@@ -7,13 +7,13 @@
     <form id="preferencesedit">		
         <table>
             <tr>
-                <td class="leftcol-sp">Hub Provided Languages</td>
+                <td class="leftcol-sp">Languages Available</td>
                 <td class="middlecol-sp">
-                    <select>
+                    <select name="language">
                         {% for lang in available_langs %}
-                            <option value="hub_lang">{{ lang }}</option><br/>
+                            <option value="{{lang[0]}}"> {{ lang[1] }} </option>
                         {% endfor %}
-                    </select> 
+                    </select>
                 </td>
                 <td class="rightcol">
                     <select>
@@ -44,6 +44,5 @@
         <hr/>
     </form>
     </div>
-    {% include 'socialme.html' %}
 
 {% endblock %}
