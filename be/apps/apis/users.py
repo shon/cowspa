@@ -106,30 +106,30 @@ class UserMethods(bases.app.ObjectMethods):
     def assign_roles(self, username, biz_id, role_names):
         if isinstance(role_names, basestring):
             role_names = [role_names]
-        # to ensure user and biz exist
+
         user = userstore.fetch_one_by(username=username)
-        biz = biz_store.fetch_by_id(biz_id)
-        roles = [role_store.fetch_one_by(name=name) for name in role_names]
-        role_ids = list(r.id for r in roles)
         user_roles = user_roles_store.soft_fetch_one_by(user_id=user.id)
-        if not user_roles:
-            user_roles_store.add(user, biz, roles)
-        else:
-            user_roles.role_ids.extend(role_ids)
-            user_roles.save()
-
+        roles = [role_store.fetch_one_by(name=name) for name in role_names]
         user_perms = user_perms_store.soft_fetch_one_by(user_id=user.id)
-
         permissions = list(itertools.chain(*[role.permissions for role in roles]))
 
+        biz = None
+        if biz_id:
+            biz = biz_store.fetch_by_id(biz_id)
+
+        if user_roles:
+            user_roles_store.extend(user, biz, roles)
+            user_roles.save()
+        else:
+            user_roles_store.add(user, biz, roles)
+
         if user_perms:
-            user_perms.permission_ids.extend(('Biz:%s::%s' % (biz_id, p.id)) for p in permissions)
+            user_perms_store.extend(user, biz, permissions)
             user_perms.save()
         else:
             user_perms = user_perms_store.add(user, biz, permissions)
 
         return user_perms.permission_ids
-
 
 users = Users(userstore)
 user_methods = UserMethods(userstore)
