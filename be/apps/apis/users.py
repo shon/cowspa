@@ -91,7 +91,7 @@ class Users(bases.app.Collection):
     pass
 
 def addsuperuser(username, password):
-	try
+	try:
 		user = userstore.fetch_one_by(username=username)
 	except IndexError, err:
 	user = userstore.add(username, password, enabled=True)
