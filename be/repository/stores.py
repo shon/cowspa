@@ -24,13 +24,20 @@ class ContactStore(RedisStore):
         contact.save()
         return contact
 
+class MemberPrefStore(RedisStore):
+    model = schemas.MemberPref
+    def add(self, language="en", theme="default"):
+        pref = self.model(language=language, theme=theme)
+        pref.save()
+        return pref
 
 class MemberStore(RedisStore):
     model = schemas.Member
-    def add(self, username, password, enabled, email, display_name, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website, first_name, last_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar):
+    def add(self, username, password, enabled, email, language, display_name, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website, first_name, last_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar):
         user = userstore.add(username, password, enabled)
         contact = contactstore.add(email, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website)
         profile = profilestore.add(first_name, last_name, display_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar)
+        pref = memberpref_store.add(language=language)
         member = self.model(id=user.id, user=user, contact=contact, profile=profile)
         member.save()
         return member
@@ -98,21 +105,51 @@ class PermissionStore(RedisStore):
 
 class UserRoles(RedisStore):
     model = schemas.UserRoles
+    def make_contexted_roles(self, context, roles):
+        if context:
+            ctx_ref = self.ref(context)
+            role_ids = [(ctx_ref + '::' + str(p.id)) for p in roles]
+        else:
+            role_ids = [p.id for p in roles]
+        return role_ids
+
     def add(self, user, context, roles):
-        ctx_ref = self.ref(context)
-        ctx_roles = [(ctx_ref + '::' + str(r.id)) for r in roles]
+        ctx_roles = self.make_contexted_roles(context, roles)
         user_roles  = self.model(user_id=user.id, role_ids=ctx_roles)
         user_roles.save()
         return user_roles
 
+    def extend(self, user, context, roles):
+        ctx_roles = self.make_contexted_roles(context, roles)
+        user_roles = self.fetch_one_by(user_id=user.id)
+        current_role_ids = user_roles.role_ids
+        ctx_roles = [r for r in ctx_roles if r not in current_role_ids]
+        user_roles.role_ids.extend(ctx_roles)
+        user_roles.save()
+
 class UserPermissions(RedisStore):
     model = schemas.UserPermissions
+    def make_contexted_perms(self, context, permissions):
+        if context:
+            ctx_ref = self.ref(context)
+            permission_ids = [(ctx_ref + '::' + str(p.id)) for p in permissions]
+        else:
+            permission_ids = [p.id for p in permissions]
+        return permission_ids
+
     def add(self, user, context, permissions):
-        ctx_ref = self.ref(context)
-        ctx_permissions = [(ctx_ref + '::' + str(p.id)) for p in permissions]
+        ctx_permissions = self.make_contexted_perms(context, permissions)
         user_perms = self.model(user_id=user.id, permission_ids=ctx_permissions)
         user_perms.save()
         return user_perms
+
+    def extend(self, user, context, permissions):
+        ctx_permissions = self.make_contexted_perms(context, permissions)
+        user_perms = self.fetch_one_by(user_id=user.id)
+        current_perm_ids = user_perms.permission_ids
+        ctx_permissions = [r for r in ctx_permissions if r not in current_perm_ids]
+        user_perms.permission_ids.extend(ctx_permissions)
+        user_perms.save()
 
 class RequestStore(RedisStore):
     model = schemas.Request
@@ -163,3 +200,4 @@ biz_store = BizStore()
 request_store = RequestStore()
 plan_store = PlanStore()
 activity_store = ActivityStore
+memberpref_store = MemberPrefStore()

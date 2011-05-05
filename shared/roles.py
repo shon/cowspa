@@ -9,6 +9,10 @@ class ACObject(object): # Access Control Object
 
 class Permission(ACObject): pass
 
+admin = Permission()
+admin.name = 'admin'
+admin.label = 'Superuser'
+
 access_business = Permission()
 access_business.name = "access_business"
 access_business.label = "Access Business"
@@ -44,6 +48,10 @@ change_member_role = Permission()
 change_member_role.name = "change_member_role"
 
 class Role(ACObject): pass
+
+admin = Role()
+admin.name = "admin"
+admin.permissions = [admin]
 
 registered = Role()
 registered.name = "registered"
