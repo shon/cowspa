@@ -381,7 +381,6 @@ div.hidediv  {
     display: none;
 }
 .toplink { 
-    width: 5em; 
     float:right; 
     z-index:  100; 
     position: relative;
