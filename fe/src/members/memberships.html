@@ -183,7 +183,7 @@ function load_data(places) {
 
 $('confirm_plan').addEvent('click', function() {
     function on_success() {
-        $('confirm_plan').set('text', 'Success!');
+        $('confirm_plan').set('html', '<big>☑</big> Success!');
     };
     var req = new JSONRequest({
         url: "/api/0.1/requests/new",

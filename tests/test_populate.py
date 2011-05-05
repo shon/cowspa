@@ -1,4 +1,6 @@
 import common
+#import redisco
+#redisco.connection_setup(host="")
 
 import be.bootstrap
 import be.apps
@@ -49,8 +51,8 @@ app.root['0.1'].plans[plan_id].info()
 app.root['0.1'].biz[biz_id].plans()
 #app.root['0.1'].plans[4].subscribers.new(1)
 
-req_data = dict(name = 'membership', plan_id=plan_id)
-res = app.root['0.1'].requests.new(**req_data)
+req_data = dict(plan_id=plan_id)
+res = app.root['0.1'].requests.new(name = 'membership', reg_data=req_data)
 retcode, result = res['retcode'], res['result']
 req_id = result
 

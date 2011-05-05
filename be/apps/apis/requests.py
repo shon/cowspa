@@ -43,7 +43,7 @@ def is_approver(user_id, req):
 class Requests(bases.app.Collection):
     methods_available = ['new', 'list', 'forme']
 
-    def new(self, name, **req_data):
+    def new(self, name, req_data):
         requestor_id = env.context.user_id
         approver_perm = macros.process(request_types[name].approver_perm, env.context, req_data)
         req = request_store.add(name=name, requestor_id=requestor_id, status=ACTION_AWAITED, approver_perm=approver_perm,

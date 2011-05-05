@@ -101,7 +101,7 @@ class UserMethods(bases.app.ObjectMethods):
     methods_available = ['info', 'assign_roles']
     def info(self, username):
         user = self.store.fetch_one_by(username=username)
-        return dict(role=get_biggest_role(user.id), user_id=user.id)
+        return dict(role=get_biggest_role(user.id), id=user.id)
     def assign_roles(self, username, biz_id, role_names):
         if isinstance(role_names, basestring):
             role_names = [role_names]

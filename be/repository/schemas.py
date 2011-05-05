@@ -6,7 +6,7 @@ import redisco.models as models
 
 class User(models.Model):
     username = models.Attribute(required=True, unique=True)
-    password = models.Attribute()
+    password = models.Attribute(required=True)
     created = models.DateTimeField(auto_now_add=True)
     enabled = models.BooleanField(default=True)
     last_seen = models.DateTimeField()
