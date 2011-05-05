@@ -94,8 +94,8 @@ def addsuperuser(username, password):
 	try:
 		user = userstore.fetch_one_by(username=username)
 	except IndexError, err:
-	user = userstore.add(username, password, enabled=True)
-	return user.id
+		user = userstore.add(username, password, enabled=True)
+		return user.id
 
 class UserMethods(bases.app.ObjectMethods):
     methods_available = ['info', 'assign_roles']
