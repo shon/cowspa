@@ -48,10 +48,19 @@ class Registrations(bases.app.Collection):
         member_id = members.new(**member_data)
         return member_id
 
+def addsuperuser(first_name, last_name, username, password, email):
+    if memberstore.fetch_by_id(1):
+        raise Exception("Existing User detected")
+    member_id = members.new(username, password, True, email, first_name=first_name, last_name=last_name)
+    assert int(member_id) == 1
+    userslib.user_methods.assign_roles(username, None, ['admin'])
+    return True
 
 class Members(bases.app.Collection):
     methods_available = ['new', 'list', 'search']
     def new(self, username, password, enabled, email, language='en', display_name=None, address=None, city=None, country=None, pincode=None, organization=None, home_no=None, mobile_no=None, fax_no=None, skype_name=None, sip_id=None, website=None, first_name=None, last_name=None, short_description=None, long_description=None, twitter=None, facebook=None, blog=None, linkedin=None, use_gravtar=None):
+        if not display_name:
+            display_name = first_name + ' ' + last_name
         member = memberstore.add(username, password, enabled, email, language, display_name, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website, first_name, last_name, short_description, long_description, twitter, facebook, blog, linkedin, use_gravtar)
         return member.id
     def search(self, crit):

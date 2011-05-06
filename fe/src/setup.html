@@ -16,38 +16,73 @@
     <img src="/images/cow_bath.png"/> 
     </div>
     <div class="dl40 login-box rc box-shadow">
-        <div class="login-form tc p2 tl">
+        <div class="login-form tc tl">
+            <h5>Setup Administrator Account</h5>
+            <br/>
             <form id="setup_form">
+                First Name
+                <input class="login-field" type="text" name="first_name" placeholder="First Name" />
+                Last Name
+                <input class="login-field" type="text" name="last_name" placeholder="Last Name"/>
+                Username:
                 <input class="login-field" type="text" name="username" placeholder="Username" />
+                Password:
                 <input class="login-field" type="password" name="password" placeholder="password"/>
+                Email Address:
+                <input class="login-field" type="email" name="email" placeholder="Email Address"/>
                 <br/>
                 <div>
                     <div class="login-error"><strong id="msg"/></div>
                     <div class="tr">
-                        <button type="button" id="addsuperuser" class="dp45 login-btn box-shadow tc">Add Superuser</button>
+                        <button type="button" id="addsuperuser" class="dp45 login-btn box-shadow tc">Create</button>
                     </div>
                 </div>
 
                 <script>
-                    var msgbox = $('msg');
-                    var su_request = new JSONRequest({
-                        url: '/api/0.1/addsuperuser',
-                        onRequest: function(){
-                            msgbox.set('text', 'Setup ...');
-                        },
-                        on_success: function(result, responseText) {
-		        var data = collect_form_data('setup_form');
-                        msgbox.set('text', 'Adding superuser...');
-			msgbox.set(data)
-                        },
-                        on_fail: function(result) {
-                            msgbox.set('text', "Try again..");
-                        }
-                    });
-                    $('addsuperuser').addEvent('click', function(e) {
-                        var data = collect_form_data('setup_form');
-                        su_request.json_send(data);
-                    });
+var msgbox = $('msg');
+
+var login_req = new JSONRequest({
+    url: '/login',
+    onRequest: function(){
+        msgbox.set('text', 'Logging in ...');
+    },
+    on_success: function(result, responseText) {
+        var cur_uri = new URI();
+        cur_uri.set('directory', '/');
+        cur_uri.set('file', result);
+        cur_uri.set('fragment', '');
+        cur_uri.go();
+    },
+    on_fail: function(result) {
+        msgbox.set('text', "Admin user login failed. Try login by visiting login page.");
+    }
+});
+
+
+var su_request = new JSONRequest({
+    url: '/api/0.1/addsuperuser',
+    onRequest: function(){
+        msgbox.set('text', 'Setup ...');
+    },
+    on_success: function(result, responseText) {
+        msgbox.set('html', '<big>☑</big> Adding Admin user is successful. Proceeding to next page.');
+        var data = collect_form_data('setup_form');
+        delete data.email;
+        delete data.first_name;
+        delete data.last_name;
+        login_req.json_send(data);
+    },
+    on_fail: function(result) {
+        msgbox.set('text', "Secirity violation/Setup error");
+    }
+});
+
+$('addsuperuser').addEvent('click', function(e) {
+    msgbox.set('text', 'Adding superuser...');
+    var data = collect_form_data('setup_form');
+    su_request.json_send(data);
+});
+
                 </script>
             </form>
         </div>

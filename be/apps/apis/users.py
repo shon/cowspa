@@ -90,13 +90,6 @@ def get_biggest_role(user_id):
 class Users(bases.app.Collection):
     pass
 
-def addsuperuser(username, password):
-	try:
-		user = userstore.fetch_one_by(username=username)
-	except IndexError, err:
-		user = userstore.add(username, password, enabled=True)
-		return user.id
-
 class UserMethods(bases.app.ObjectMethods):
     methods_available = ['info', 'assign_roles']
     def info(self, username):

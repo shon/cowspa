@@ -34,7 +34,7 @@ mapper.connect_object_methods('requests/<int:request_id>', apis.requests.request
 mapper.connect_collection('plans', apis.plans.plans)
 mapper.connect_object_methods('plans/<int:plan_id>', apis.plans.plan_methods)
 mapper.connect_collection('plans/<int:plan_id>/subscribers', apis.plans.subscribers)
-mapper.connect(apis.users.addsuperuser)
+mapper.connect('addsuperuser', apis.members.addsuperuser)
 
 tree = mapper.build()
 
