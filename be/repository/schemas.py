@@ -37,7 +37,7 @@ class MemberProfileSecurity(models.Model):
     #level = models.ListField(required=True) # 0 off 1 on: [anonymous access][all locations][same location][private]
 
 class Profile(models.Model):
-    first_name = models.Attribute(required=True)
+    first_name = models.Attribute()
     last_name = models.Attribute(default='')
     display_name = models.Attribute()
     short_description = models.Attribute(indexed=False)
@@ -61,7 +61,8 @@ class Member(models.Model):
     biz_memberships = models.ListField(str, indexed=True)
 
 class Business(models.Model):
-    profile = models.ReferenceField(Profile, default=None)
+    enabled = models.BooleanField(default=False)
+    biz_profile = models.ReferenceField(Profile, default=None)
     contact = models.ReferenceField(Contact, default=None)
 
 class Registered(models.Model):
@@ -97,14 +98,14 @@ class UserPermissions(models.Model):
     permission_ids = models.ListField(str, default=[], required=True)
 
 class BizProfile(models.Model):
-    name = models.Attribute(required=True)
     short_description = models.Attribute(indexed=False)
     long_description = models.Attribute(indexed=False)
-    twitter_handle = models.Attribute(indexed=False)
-    facebook_page = models.Attribute(indexed=False)
-    blog = models.Attribute(indexed=True)
-    linkedin_biz = models.Attribute(indexed=True)
     tags = models.ListField(str, default=[])
+    website = models.Attribute(indexed=False, default=None)
+    twitter = models.ListField(str, indexed=False)
+    facebook = models.ListField(str, indexed=False)
+    blog = models.ListField(str, indexed=True)
+    linkedin = models.ListField(str, indexed=True)
 
 class BizInvoicingPref(models.Model):
     invoice_logo = models.Attribute()
@@ -118,7 +119,7 @@ class Biz(models.Model):
     timezone = models.Attribute()
     holidays = models.ListField(str, default=['6'])
     logo = models.Attribute()
-    profile = models.ReferenceField(Profile, default=None)
+    profile = models.ReferenceField(BizProfile, default=None)
     services = models.ReferenceField(MemberServices, default=None)
     contact = models.ReferenceField(Contact, default=None)
     booking_contact = models.Attribute()

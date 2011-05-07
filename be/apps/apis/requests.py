@@ -18,7 +18,10 @@ user_store = stores.userstore
 user_perms_store = stores.user_perms_store
 permission_store = stores.permission_store
 
-class Request(object): pass
+class Request(object):
+    @classmethod
+    def set_approved(self, req):
+        request_store.edit(req.id, mod_data=dict(approver_id=env.context.user_id, status=APPROVED))
 
 class NewNetworkRequest(Request):
     name = 'new_network'
@@ -29,10 +32,21 @@ class MembershipRequest(Request):
     name = 'membership'
     approver_perm = 'Biz:{{biz_id_from_plan_id}}::' + permission_store.fetch_one_by(name='approve_plan').id
     label = "membership request"
-    template = "Membership request by \"{{requestor_display_name}}\" for plan {{name_from_plan_id}}"
+    template = 'Membership request by "{{requestor_display_name}}" for plan {{name_from_plan_id}}'
     @classmethod
     def approve(self, req):
         signals.send_signal('plan_approved', req.requestor_id, req.req_data['plan_id'])
+        self.set_approved(req)
+
+class NewBizRequest(Request):
+    name = "newbiz"
+    label = "add new business request"
+    approver_perm = "{{id_by_name:admin}}"
+    template = 'New co-working place "{{name}}" at {{city}} by "{{requestor_display_name}}"'
+    @classmethod
+    def approve(self, req):
+        signals.send_signal('newbiz_approved', **req.req_data)
+        self.set_approved(req)
 
 request_types = dict((req.name, req) for req in globals().values() if inspect.isclass(req) and req is not Request and issubclass(req, Request))
 
@@ -51,7 +65,7 @@ class Requests(bases.app.Collection):
         return req.id
 
     def forme(self):
-        return [request_methods.to_info(req) for req in self.store.fetch_all() if is_approver(env.context.user_id, req)]
+        return [request_methods.to_info(req) for req in self.store.fetch_by(status=ACTION_AWAITED) if is_approver(env.context.user_id, req)]
 
     def mine(self):
         requestor_id = env.context.user_id

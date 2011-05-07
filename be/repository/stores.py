@@ -62,6 +62,8 @@ class ProfileStore(RedisStore):
     model = schemas.Profile
     def add(self, first_name, last_name, display_name, short_description, long_description, twitter_handle, facebook_name, blog, linkedin_contact, use_gravtar):
         profile = self.model(first_name=first_name, last_name=last_name, display_name=display_name, short_description=short_description, long_description=long_description, twitter_handle=twitter_handle, facebook_name=facebook_name, blog=blog, linkedin_contact=linkedin_contact, use_gravtar=use_gravtar)
+        if not profile.is_valid():
+            print profile.errors # fail here
         profile.save()
         return profile
 
@@ -82,10 +84,24 @@ class SessionStore(RedisStore):
         session.save()
         return session
 
+class BizProfileStore(RedisStore):
+    model = schemas.BizProfile
+    def add(self, short_description, long_description, tags, website, twitter, facebook, linkedin, blog):
+        self.model(short_description=short_description, long_description=long_description, tags=tags, twitter=twitter, facebook=facebook, linkedin=linkedin, website=website, blog=blog)
+        biz_profile = self.model(short_description=short_description, long_description=long_description, tags=tags, twitter=twitter, facebook=facebook, linkedin=linkedin, website=website, blog=blog)
+        if not biz_profile.is_valid():
+            print biz_profile.errors # fail here
+        else:
+            biz_profile.save()
+            return biz_profile
+
 class BizStore(RedisStore):
     model = schemas.Biz
-    def add(self, name):
-        biz = self.model(name=name)
+    def add(self, name, city, short_description, long_description, tags, website, twitter, facebook, linkedin, blog, enabled):
+        biz_profile = bizprofile_store.add(short_description=short_description, long_description=long_description, tags=tags, twitter=twitter, facebook=facebook, linkedin=linkedin, website=website, blog=blog)
+        biz = self.model(name=name, city=city, enabled=enabled, profile=biz_profile)
+        if not biz.is_valid():
+            print biz.errors
         biz.save()
         return biz
 
@@ -197,6 +213,7 @@ permission_store = persistence.CachedStore(PermissionStore())
 user_perms_store = UserPermissions()
 user_roles_store = UserRoles()
 biz_store = BizStore()
+bizprofile_store = BizProfileStore()
 request_store = RequestStore()
 plan_store = PlanStore()
 activity_store = ActivityStore

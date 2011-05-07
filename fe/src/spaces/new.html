@@ -1,76 +1,102 @@
 {% extends "layout.html" %}
 
-{% block tabs %}
-    <h2 class="b beer">Add Coworking space</h2>
-    <hr/>
 
-    {{ macros.tabs(pubroot, [('Business Information', '/new'), ('Contact Information', '/PLACEID/contact'), ('Billing Preferences', '/PLACEID/billing')]) }}
+{% block tabs %}
 {% endblock %}
 
 {% block content %}
 
-<div>
-<form action="/spaces/new" method="post">
-    <table class="dl60 rc box-shadow">
-        <tr>
-            <td><label for="name">Name </label></td>
-            <td><input type="text" id="name" placeholder="My Co-Working Place" /></td>
-        </tr>
-        <tr>
-            <td><label for="summary">Summary</label>  </td>
-            <td><input type="text" name="summary" placeholder="Best coworking place in Amsterdamn"/></td>
-        </tr>
-        <tr>
-            <td><label for="description">Business Description</label></td>
-            <td><textarea name="description" id="description" class="richtext"> </textarea></td>
-        </tr>
-        <tr>
-            <td><label for="company_number">Company Number</label>  </td>
-            <td><input type="text" name="company_number" placeholder="If any"/></td>
-        </tr>
-    </table>
-</form>
-</div>
+#editsection.p2.rc.box-shadow
+    h3 | Add Coworking space
+    form#addspaceform
+        .hp
+            fieldset
+                legend | About Business
+
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Name
+                    .dp75.ml2
+                        > input.text name=name type=text placeholder="Eg. Hub Madrid"
+
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Short Description
+                    .dp75.ml2
+                        > textarea.text name=short_description placeholder="Few words about the place"
+
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Description
+                    .dp75.ml2
+                        > textarea#long_description.richtext name=long_description
+
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Website
+                    .dp75.ml2
+                        > input.text type=url name=website placeholder=http://
+
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | Tags
+                    .dp75.ml2
+                        > input.text type=text name=tags placeholder="Business tags, keywords"
+
+            fieldset
+                legend | Social networks
+                {% for name in ('twitter', 'linkedin', 'facebook', 'blog') %}
+                .dp75.ml2.p1
+                    .dp20.tr.boldtitle | {{ name|capitalize }}
+                    .dp30.ml2
+                        > input.data-label-{{name}} type=text name={{name}} placeholder=Label
+                    .dp40.ml2
+                        > input.data-url-{{name}} type=url name={{name}} placeholder=URL
+                {% endfor %}
+
+        > hr
+
+        .mt2.middlecol
+            > div#submit_status
+            button#submit type=button | Submit
+            button#reset  type=button | Reset
+            > br
+        > hr
 
 <script>
-    $('description').mooEditable({
-        actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview'
-    });
-    
+
+H5F.setup(document.getElementById("addspaceform"));
+
+var long_description_editor = new MooEditable('long_description', {
+    actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview',
+    dimensions: {x: '100%', y: '100%'}
+});
+
+var submit_btn = $('submit');
+var submit_status = $('submit_status');
+
+function show_saved() {
+    submit_btn.set('class', 'btn-success');
+    submit_btn.set('text', 'Request sent');
+    submit_status.set('html', '<big>☑</big> Request for new Co-working place registration is sent for approval.');
+};
+
+function show_saving() {
+    submit_btn.set('class', 'btn-saving');
+    submit_btn.set('text', "Saving...");
+};
+
+var req = new JSONRequest({
+    url: "/api/0.1/requests/new",
+    onRequest: show_saving,
+    // onComplete: hide_loading,
+    on_success: show_saved
+});
+function send_req() {
+    var data = collect_form_data('addspaceform');
+    if (data.tags) {
+        data.tags = csv2array(data.tags)
+    };
+    req.json_send({name: 'newbiz', req_data: data});
+};
+
+submit_btn.addEvent('click', send_req);
+
 </script>
 
-<div class="clear"/>
 {% endblock %}
-<!--
-Name
-Summary
-Description
-Company number
-Cutstom fields
-
-Contact Info
-Phone number
-Fax number
-Email address
-Website
-Blog
-Twitter
-City
-Address
-Pincode
-Country
-
-Billing 
-Currency
-Locale
-TimeZone
-
-Invoicing Preferences
-Bank
-Account number
-Tax Included
-
-Resources
-
-Messages
--->
