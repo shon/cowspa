@@ -8,11 +8,38 @@
         <img class="mt1" src="/images/us.png"/>
         <br/>
     </div>
+    {% if role != 'new' %}
     <div class="dp30 search-box tc p1 mt2 rc">
+
         <div class="ml1 tc">
-            <input class="tc dp80 search-text" placeholder="Search.." type="text"/><button class="search-btn dp10">Go!</button> 
+            <input class="tc dp80 search-text" id="search" name="search" placeholder="Search.." type="text"/><button class="search-btn dp10">Go!</button> 
         </div>
+        <script>
+        new Autocompleter.Request.HTML('search', '/search', {
+            'postVar': 'query',
+            minLength: 3,
+            maxChoices: 10,
+            selectMode: 'type-ahead', // Instant completion
+            autoSubmit: false,
+            cache: true,
+            delay: 300,
+            onRequest: function() {
+                $('search').setStyles({
+                    'background-image':'url(/images/loading.gif)',
+                    'background-position':'350px 7px',
+                    'background-repeat':'no-repeat'
+                });
+            },
+            onComplete: function() {
+                $('search').setStyle('background','');
+                $$('.search-res').addEvent('click', function () {
+                    alert(this.get('id'));
+                });
+            }
+        });
+        </script>
     </div>
+    {% endif %}
     <div>
     <!-- links on the right goes at the top -->
     <c class="toplink">
@@ -22,7 +49,15 @@
     <c class="toplink"><a>Language</a>
         <p class="toplink-opts">
         {% for lang in available_langs %}
-            <a>{{ lang[1] }} </a><br/>
+            <a id="lang_{{lang[0]}}">{{ lang[1] }} </a><br/>
+            <script>
+                var cur_uri = new URI();
+                var cur_uri_parts = cur_uri.toString().split('/');
+                cur_uri_parts[3] = '{{ lang[0] }}';
+                var new_uri = cur_uri_parts.join('/');
+                $('lang_{{ lang[0] }}').set('href', new_uri);
+            </script>
+
         {% endfor %}
         </p>
     </c>

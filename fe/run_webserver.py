@@ -77,6 +77,15 @@ def logout():
     resp.delete_cookie('authcookie')
     return resp
 
+@app.route('/search', methods=['POST'])
+def search():
+    query = '*%s*' % request.form['query']
+    import be.libs.search as searchlib
+    items = searchlib.do_search(query)
+    html_list = ''.join([('<li class="search-res" id="search-opt-%s">%s</li>' % (item['id'], item['display_name'])) for item in items])
+    print html_list
+    return html_list, 200, {'Content-Type': 'text/html; charset=utf-8'}
+
 @app.route('/<path:path>')
 def static(path):
     if path.startswith('en/Assets'): # mooEditable smileys

@@ -1,6 +1,7 @@
 import bases
 import bases.constants as constants
 import be.repository.stores as stores
+import be.libs.search as searchlib
 
 import commonlib
 import commonlib.messaging.email as emaillib
@@ -62,7 +63,17 @@ class Members(bases.app.Collection):
         if not display_name:
             display_name = first_name + ' ' + last_name
         member = memberstore.add(username, password, enabled, email, language, display_name, address, city, country, pincode, organization, home_no, mobile_no, fax_no, skype_name, sip_id, website, first_name, last_name, short_description, long_description, twitter, facebook, blog, linkedin, use_gravtar)
+        search_d = self.member2searchdict(member)
+        searchlib.add(search_d)
         return member.id
+    def member2searchdict(self, member):
+        profile = member.profile
+        d = dict((attr, getattr(profile, attr)) for attr in ('display_name', 'short_description', 'long_description'))
+        d['id'] = unicode(member.id)
+        d['username'] = member.user.username
+        return d
+
+
     def search(self, crit):
         return 'TEST'
 
@@ -88,7 +99,9 @@ class MemberMethods(bases.app.ObjectMethods):
 
     def get(self, member_id, attr):
         member = memberstore.fetch_by_id(member_id)
-        return profilestore.obj2dict(getattr(member, attr))
+        d = profilestore.obj2dict(getattr(member, attr))
+        d['member_id'] = member_id
+        return d
 
     def set(self, member_id, attr, v):
         mod_data = {attr: v}
