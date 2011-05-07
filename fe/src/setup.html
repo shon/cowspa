@@ -29,7 +29,7 @@
                 Password:
                 <input class="login-field" type="password" name="password" placeholder="password"/>
                 Email Address:
-                <input class="login-field" type="email" name="email" placeholder="Email Address"/>
+                <input class="login-field" type="email" name="email" placeholder="Email Address" required/>
                 <br/>
                 <div>
                     <div class="login-error"><strong id="msg"/></div>
@@ -39,6 +39,8 @@
                 </div>
 
                 <script>
+H5F.setup(document.getElementById("setup_form"));
+
 var msgbox = $('msg');
 
 var login_req = new JSONRequest({

@@ -74,7 +74,7 @@ function load_requests(data, data_text) {
             confirm_approval.show();
         });
     } else {
-        requests_box.hide();
+        requests_box.set('html', 'No requests to approve.');
     };
     $$('.confirm_approval').hide();
 };

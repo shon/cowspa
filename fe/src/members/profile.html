@@ -23,11 +23,18 @@ function showeditpage(){
         c.data-display_name | Loading ...
         span.edit-link
             a onclick=showeditpage() | Edit
+    div
+        Membership Number:
+        c#data-member_id
+            Loading...
+
     > hr
 
     .p1.data-long_description
         Loading...
+
     > hr
+
     .p1
         .dp50.leftcol | Interests
         #data-interests.dp50.rightcol | Loading ...
@@ -40,57 +47,56 @@ function showeditpage(){
 #editsection.p2.rc.box-shadow
     h3 | Edit Profile
     form#myprofileedit
-        .hp
-            fieldset
-                legend | About me
+        fieldset
+            legend | About me
 
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Show name as
-                    .dp75.ml2
-                        > select#display_name-select name="display_name"
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | First Name
-                    .dp75.ml2
-                        > input.text.data-first_name name=first_name type=text placeholder="First name"
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Last Name
-                    .dp75.ml2
-                        > input.text.data-last_name name=last_name type=text placeholder="Last name"
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Short Description
-                    .dp75.ml2
-                        > textarea.text.data-short_description name=short_description placeholder="Few words about you"
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Show name as
+                .dp75.ml2
+                    > select#display_name-select name="display_name"
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | First Name
+                .dp75.ml2
+                    > input.text.data-first_name name=first_name type=text placeholder="First name"
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Last Name
+                .dp75.ml2
+                    > input.text.data-last_name name=last_name type=text placeholder="Last name"
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Short Description
+                .dp75.ml2
+                    > textarea.text.data-short_description name=short_description placeholder="Few words about you"
 
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Description
-                    .dp75.ml2
-                        textarea#long_description.richtext name=long_description | Loading ...
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Description
+                .dp75.ml2
+                    textarea#long_description.richtext name=long_description | Loading ...
 
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Website
-                    .dp75.ml2
-                        > input.data-website.text type=url name=website placeholder=http://
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Website
+                .dp75.ml2
+                    > input.data-website.text type=url name=website placeholder=http://
 
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Interests in
-                    .dp75.ml2
-                        > input#edit_interests.text type=text name=interests placeholder="Fields you are interested in"
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Interests in
+                .dp75.ml2
+                    > input#edit_interests.text type=text name=interests placeholder="Fields you are interested in"
 
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Expertise in
-                    .dp75.ml2
-                        > input#edit_expertise.text type=text name=expertise placeholder="Your expertise"
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Expertise in
+                .dp75.ml2
+                    > input#edit_expertise.text type=text name=expertise placeholder="Your expertise"
 
-            fieldset
-                legend | Social me
-                {% for name in ('twitter', 'linkedin', 'facebook', 'blog') %}
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | {{ name|capitalize }}
-                    .dp30.ml2
-                        > input.data-label-{{name}} type=text name={{name}} placeholder=Label
-                    .dp40.ml2
-                        > input.data-url-{{name}} type=url name={{name}} placeholder=URL
-                {% endfor %}
+        fieldset
+            legend | Social me
+            {% for name in ('twitter', 'linkedin', 'facebook', 'blog') %}
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | {{ name|capitalize }}
+                .dp30.ml2
+                    > input.data-label-{{name}} type=text name={{name}} placeholder=Label
+                .dp40.ml2
+                    > input.data-url-{{name}} type=url name={{name}} placeholder=URL
+            {% endfor %}
 
         > hr
 
@@ -138,11 +144,13 @@ function show_social_link(data, nw_name) {
 
 function hide_loading() {};
 function load_data(data) {
+    var member_id = data['member_id'];
     var first_name = data['first_name'];
     var last_name = data['last_name'];
     var display_name = data['display_name'];
     var first_and_last_name = first_name + ' ' + last_name;
     var last_and_first_name = last_name + ' ' + first_name;
+    $('data-member_id').set('text', member_id);
     $$('.data-first_name').set('value', first_name);
     $$('.data-last_name').set('value', last_name);
     var display_name_select = $('display_name-select');
@@ -173,7 +181,7 @@ function load_data(data) {
     $('long_description').set('text', long_description);
     var long_description_editor = new MooEditable('long_description', {
         actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview',
-        dimensions: {x: '100%', y: '100%'}
+        dimensions: {x: '100%', y: '50%'}
     });
     //long_description_editor.setContent(long_description);
     var website = data['website'];

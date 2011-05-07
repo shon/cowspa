@@ -73,7 +73,7 @@
             <form class="popup-form dl40" id="signupform">
                 <input class="login-field" type="text" name="first_name" placeholder="First Name" />
                 <input class="login-field" type="text" name="last_name" placeholder="Last Name"/>
-                <input class="login-field" type="text" name="email" placeholder="Email Address" />
+                <input class="login-field" type="email" name="email" placeholder="Email Address" />
                 <br/><c id="signup_msgbox"></c>
                 <button type="button" id="signup" class="dp70 signup-btn tc">Sign Up</button>
                 <br/>
@@ -86,6 +86,9 @@
 <script>
 var signupform = $('signupform');
 var signup_msgbox = $('signup_msgbox');
+
+H5F.setup(document.getElementById("signupform"));
+H5F.setup(document.getElementById("login_form"));
 
 function popup_registration(e) {
     signupform.MooDialog();
