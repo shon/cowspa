@@ -11,7 +11,7 @@ class Message(object):
         self.path = path
     def create_message(self, data):
         rendered = render(self.path, data)
-        message_dict = {}
+        message_dict = dict(author = data.get('author'), to = data.get('to'))
         exec(rendered, {}, message_dict)
         return message_dict
 
