@@ -45,7 +45,7 @@ class NewBizRequest(Request):
     template = 'New co-working place "{{name}}" at {{city}} by "{{requestor_display_name}}"'
     @classmethod
     def approve(self, req):
-        signals.send_signal('newbiz_approved', **req.req_data)
+        signals.send_signal('newbiz_approved', director_id=req.requestor_id, **req.req_data)
         self.set_approved(req)
 
 request_types = dict((req.name, req) for req in globals().values() if inspect.isclass(req) and req is not Request and issubclass(req, Request))
