@@ -23,21 +23,31 @@ function showeditpage(){
     > hr
 
     .p1
-        .p1
-            .dp30.leftcol.b | Location
-            .dp30.middlecol.b | Tariff
-            .dp30.rightcol.b | Role
-        .p1
-            .dp30.leftcol | Amsterdam
-            .dp30.middlecol | Start 50
-            .dp30.rightcol | Member
-        .p1
-            .dp30.leftcol | Amsterdam
-            .dp30.middlecol | Start 50
-            .dp30.rightcol | Member
+        .dp30.b.tl | Location
+        .dp30.b.tl | Tariff
+        .dp30.b.tl | Role
+
+    > div#memberships
+
     > hr
 
     h3 | Services related information
+
+<script>
+{% include "members/membershiplister.js" %}
+
+var on_success = function(data) {
+    var html = show_memberships({memberships: data});
+    $('memberships').set('html', html);
+};
+var req = new JSONRequest({
+    url: "/api/0.1/me/memberships",
+    // onRequest: show_saving,
+    // onComplete: hide_loading,
+    on_success: on_success
+});
+req.json_send();
+</script>
 
 #editsection
     .pl2.pr2.dp60.rc.box-shadow
@@ -137,7 +147,7 @@ function load_data(places) {
 ';
     var plan_template = '\
 {{#plans}} \
-    <p><a class="plan-selector" id="plan_selected-{{id}}">{{name}}</a></p> \
+    <li><a class="plan-selector" id="plan_selected-{{id}}">{{name}}</a></li> \
 {{/plans}} \
 ';
 

@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+
+{% block tabs %}
+{% endblock %}
+
+{% block content %}
+
+<script>
+    {% include "spaces/plans/lister.js" %}
+</script>
+
+#editsection.p2.dp80.rc.box-shadow
+    h3 | Manage Plans
+    > hr
+    
+    div 
+        #panels-box | Loading...
+
+    > hr
+
+<script>
+
+on_success = function(data) {
+    var html = plan_panels({plans: data});
+    $('panels-box').set('html', html);
+};
+
+var cur_uri = new URI();
+var cur_uri_parts = cur_uri.toString().split('/');
+var biz_id = cur_uri_parts[7];
+
+var req = new JSONRequest({
+    url: "/api/0.1/biz/"+ biz_id  +"/plans",
+    // onRequest: show_saving,
+    // onComplete: hide_loading,
+    on_success: on_success
+});
+req.json_send();
+
+</script>
+
+{% endblock %}

@@ -1,5 +1,5 @@
 <div class="navheader" id="shownav">
-    <a><small>N A V I G A T I O N </small></a>
+    <a><small> N A V I G A T I O N </small></a>
 </div>
 <div id="navbar" class="around p1 dp80">
     <div id="accordion">
@@ -12,11 +12,13 @@
             <div class="tr"><a href="/{{lang}}/{{role}}/{{theme}}/profile">My Profile</a></div>
         </div>
 
+
+        {% if role in ('host', 'admin') %}
         <h3 class="toggler">Hosting</h3>
         <div class="element">
-            <div class="tr"><a>Invoicing</a></div>
-            <div class="tr"><a>Administration</a></div>
+            <div class="tr"><a href="/{{lang}}/{{role}}/{{theme}}/spaces/list">Manage Spaces</a></div>
         </div>
+        {% endif %}
         
         <h3 class="toggler">Booking</h3>
         <div class="element">
@@ -24,7 +26,6 @@
         
         <h3 class="toggler">Network</h3>
         <div class="element">
-            <div class="tr"><a href="/{{lang}}/{{role}}/{{theme}}/new">Add Member</a></div>
             <div class="tr"><a href="/{{lang}}/{{role}}/{{theme}}/contacts/new">Add Contact</a></div>
             <div class="tr"><a href="/{{lang}}/{{role}}/{{theme}}/spaces/new">Add Space</a></div>
         </div>

@@ -33,12 +33,12 @@
             </div>
         {% endif %}
             <div class="pl1 content">
+                {% block tabs %}
                 <div class="p1">
-                    {% block tabs %}
                         macros.tabs()
                         <br/>
-                    {% endblock %}
                 </div>
+                {% endblock %}
                 <div class="">
                     {% block content %}{% endblock %}
                     <div class="clear"/> <br/>

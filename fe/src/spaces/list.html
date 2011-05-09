@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+
+{% block tabs %}
+{% endblock %}
+
+{% block content %}
+
+<script>
+    {% include "spaces/list.js" %}
+</script>
+
+#editsection.p2.dp80.rc.box-shadow
+    h3 | Manage Spaces
+    > hr
+    
+    div 
+        #spacelist | Loading...
+
+    > hr
+
+<script>
+
+on_success = function(data) {
+    var html = space_adm_panels({spaces: data});
+    $('spacelist').set('html', html);
+};
+
+var req = new JSONRequest({
+    url: "/api/0.1/biz",
+    // onRequest: show_saving,
+    // onComplete: hide_loading,
+    on_success: on_success
+});
+req.json_send();
+
+</script>
+
+{% endblock %}

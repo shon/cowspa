@@ -86,11 +86,22 @@ def search():
     print html_list
     return html_list, 200, {'Content-Type': 'text/html; charset=utf-8'}
 
+static_root = "pub/"
+
+@app.route('/<path:prefix>/spaces/<path:biz_id>/<path:path>')
+def newplan(prefix, biz_id, path):
+    fspath = os.path.join(static_root, prefix, 'spaces', path)
+    filename = os.path.basename(path)
+    if '.' in path:
+        content_type = "text/" + path.split('.')[-1]
+    else:
+        content_type = "text/html"
+    return file(fspath).read(), 200, {'Content-Type': content_type +'; charset=utf-8'}
+
 @app.route('/<path:path>')
 def static(path):
     if path.startswith('en/Assets'): # mooEditable smileys
         path = path[3:]
-    static_root = "pub/"
     fspath = os.path.join(static_root, path)
     filename = os.path.basename(path)
     if '.' in path:

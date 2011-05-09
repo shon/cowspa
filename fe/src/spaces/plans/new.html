@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+
+{% block tabs %}
+{% endblock %}
+
+{% block content %}
+
+#editsection.p2.rc.box-shadow
+    h3 | Add New Plan
+    form#addplanform
+        fieldset
+            legend | About Plan
+
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Name
+                .dp75.ml2
+                    > input.text name=name type=text placeholder="Eg. Hub 25"
+
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Description
+                .dp75.ml2
+                    > textarea#long_description.richtext name=description
+
+        > hr
+
+        .mt2.middlecol
+            > div#submit_status
+            button#submit type=button | Submit
+            button#reset  type=button | Reset
+            > br
+        > hr
+
+<script>
+
+H5F.setup(document.getElementById("addplanform"));
+
+var long_description_editor = new MooEditable('long_description', {
+    actions: 'bold italic underline strikethrough | formatBlock justifyleft justifyright justifycenter justifyfull | smiley urlimage | insertunorderedlist insertorderedlist indent outdent insertHorizontalRule | undo redo removeformat | createlink unlink | urlimage | toggleview',
+    dimensions: {x: '100%', y: '100%'}
+});
+
+var submit_btn = $('submit');
+var submit_status = $('submit_status');
+
+function show_saved() {
+    submit_btn.set('class', 'btn-success');
+    submit_btn.set('text', 'Request sent');
+    submit_status.set('html', '<big>☑</big> New plan is created successfully.<br/>Click <a href="./list">here</a> to review.');
+};
+
+function show_saving() {
+    submit_btn.set('class', 'btn-saving');
+    submit_btn.set('text', "Saving...");
+};
+
+var req = new JSONRequest({
+    url: "/api/0.1/plans/new",
+    onRequest: show_saving,
+    // onComplete: hide_loading,
+    on_success: show_saved
+});
+function send_req() {
+    var data = collect_form_data('addplanform');
+    var cur_uri = new URI();
+    var cur_uri_parts = cur_uri.toString().split('/');
+    var biz_id = cur_uri_parts[7];
+    data.biz_id = biz_id;
+    req.json_send(data);
+};
+
+submit_btn.addEvent('click', send_req);
+
+</script>
+
+{% endblock %}
