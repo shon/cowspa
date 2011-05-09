@@ -9,45 +9,49 @@
 #editsection.p2.rc.box-shadow
     h3 | Add Coworking space
     form#addspaceform
-        .hp
-            fieldset
-                legend | About Business
+        fieldset
+            legend | About Business
 
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Name
-                    .dp75.ml2
-                        > input.text name=name type=text placeholder="Eg. Hub Madrid"
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Name
+                .dp75.ml2
+                    > input.text name=name type=text placeholder="Eg. Hub Madrid"
 
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Short Description
-                    .dp75.ml2
-                        > textarea.text name=short_description placeholder="Few words about the place"
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Location
+                .dp75.ml2
+                    > input.text name=city placeholder="Madrid"
 
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Description
-                    .dp75.ml2
-                        > textarea#long_description.richtext name=long_description
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Short Description
+                .dp75.ml2
+                    > textarea.text name=short_description placeholder="Few words about the place"
 
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Website
-                    .dp75.ml2
-                        > input.text type=url name=website placeholder=http://
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Description
+                .dp75.ml2
+                    > textarea#long_description.richtext name=long_description
 
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | Tags
-                    .dp75.ml2
-                        > input.text type=text name=tags placeholder="Business tags, keywords"
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Website
+                .dp75.ml2
+                    > input.text type=url name=website placeholder=http://
 
-            fieldset
-                legend | Social networks
-                {% for name in ('twitter', 'linkedin', 'facebook', 'blog') %}
-                .dp75.ml2.p1
-                    .dp20.tr.boldtitle | {{ name|capitalize }}
-                    .dp30.ml2
-                        > input.data-label-{{name}} type=text name={{name}} placeholder=Label
-                    .dp40.ml2
-                        > input.data-url-{{name}} type=url name={{name}} placeholder=URL
-                {% endfor %}
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | Tags
+                .dp75.ml2
+                    > input.text type=text name=tags placeholder="Business tags, keywords"
+
+        fieldset
+            legend | Social networks
+            {% for name in ('twitter', 'linkedin', 'facebook', 'blog') %}
+            .dp75.ml2.p1
+                .dp20.tr.boldtitle | {{ name|capitalize }}
+                .dp30.ml2
+                    > input.data-label-{{name}} type=text name={{name}} placeholder=Label
+                .dp40.ml2
+                    > input.data-url-{{name}} type=url name={{name}} placeholder=URL
+            {% endfor %}
 
         > hr
 

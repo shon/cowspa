@@ -43,6 +43,10 @@ legend {
     text-align: left;
     text-shadow: 1px 1px 0px gray;
     font-size: 1.3em;
+    padding: 0.5em;
+    background: {{ page_bg }};
+    color: {{footer_color}};
+    border: 1px solid {{ main_bg_end }};
 }
 button {
     margin: 0.5em;
@@ -571,6 +575,14 @@ div.hidediv  {
 }
 .bio {
     white-space: pre-wrap;
+}
+.btn-link {
+    background: {{ page_bg }};
+    color: {{ footer_color }};
+    border: 0.1em solid {{ main_bg_end }};
+}
+.btn-link:hover {
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.8);
 }
 .btn-saving {
     background: linear-gradient(top, orange, {{ main_bg_end }}); 
