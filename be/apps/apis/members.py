@@ -1,3 +1,5 @@
+import collections
+
 import bases
 import bases.constants as constants
 import be.repository.stores as stores
@@ -13,6 +15,10 @@ memberstore = stores.memberstore
 profilestore = stores.profilestore
 registered_store = stores.registered_store
 contactstore = stores.contactstore
+user_roles_store = stores.user_roles_store
+role_store = stores.role_store
+plan_store = stores.plan_store
+biz_store = stores.biz_store
 
 create_activation_key = commonlib.helpers.random_key_gen
 
@@ -22,7 +28,8 @@ class Registrations(bases.app.Collection):
         activation_key = create_activation_key()
         registered = self.store.add(activation_key, first_name, last_name, email, ipaddr)
         activation_url = env.config.http_baseurl + "/activate#" + activation_key
-        data = dict (to=email, first_name=first_name, activation_url=activation_url)
+        author = ('Cowspa activation service', 'cowspa.dev@gmail.com')
+        data = dict (author=author, to=(first_name, email), first_name=first_name, activation_url=activation_url)
         mail_data = messaging.activation.create_message(data)
         if sendmail:
             env.mailer.send(**mail_data)
@@ -112,7 +119,7 @@ class MemberMethods(bases.app.ObjectMethods):
         memberstore.edit(member_id, mod_data)
 
 class MeMethods(bases.app.ObjectMethods):
-    methods_available = ['info', 'update', 'get', 'set']
+    methods_available = ['info', 'update', 'get', 'set', 'memberships']
     get_attributes = ['profile', 'contact']
     set_attributes = ['profile', 'contact']
 
@@ -127,6 +134,22 @@ class MeMethods(bases.app.ObjectMethods):
     def set(self, attr, v):
         member_id = env.context.user_id
         return member_methods.set(member_id, attr, v)
+
+    def memberships(self):
+        member_id = env.context.user_id
+        d = collections.defaultdict(lambda: ([], []))
+        role_ids = user_roles_store.fetch_one_by(user_id=member_id).role_ids
+        for role_id in role_ids:
+            if not '::' in role_id: continue
+            biz_id, role_id = role_id.split('::')
+            biz_id = biz_id.split(':')[1]
+            role_name = role_store.fetch_by_id(role_id).name
+            d[biz_id][0].append(role_name)
+        for plan in plan_store.fetch_by(subscribers=member_id):
+            d[plan.biz_id][1].append(plan.name)
+        print tuple(dict(name=biz_store.fetch_by_id(biz_id).name, roles=v[0], plans=v[1]) for biz_id, v in d.items())
+        return tuple(dict(name=biz_store.fetch_by_id(biz_id).name, roles=v[0], plans=v[1]) for biz_id, v in d.items())
+
 
     def update(self, mod_data):
         member_id = env.context.user_id
