@@ -6,6 +6,7 @@ from pycerberus.validators import StringValidator
 import bases
 import commonlib
 import bases
+import be.libs.signals as signals
 import bases.errors as errors
 import be.repository.stores as stores
 
@@ -92,14 +93,20 @@ class Users(bases.app.Collection):
 
 class UserMethods(bases.app.ObjectMethods):
     methods_available = ['info', 'assign_roles']
+
     def info(self, username):
         user = self.store.fetch_one_by(username=username)
         return dict(role=get_biggest_role(user.id), id=user.id)
+
     def assign_roles(self, username, biz_id, role_names):
         if isinstance(role_names, basestring):
             role_names = [role_names]
 
-        user = userstore.fetch_one_by(username=username)
+        if username.isdigit():
+            user = userstore.fetch_by_id(username)
+        else:
+            user = userstore.fetch_one_by(username=username)
+
         user_roles = user_roles_store.soft_fetch_one_by(user_id=user.id)
         roles = [role_store.fetch_one_by(name=name) for name in role_names]
         user_perms = user_perms_store.soft_fetch_one_by(user_id=user.id)
@@ -125,3 +132,4 @@ class UserMethods(bases.app.ObjectMethods):
 
 users = Users(userstore)
 user_methods = UserMethods(userstore)
+signals.connect("assign_roles", user_methods.assign_roles)
