@@ -127,7 +127,7 @@ class RedisStore(BaseStore):
     def fetch_by_id(self, oid):
         """
         """
-        return self.model.objects.get_by_id(oid)
+        return self.model.objects.get_by_id(str(oid))
 
     def fetch_all(self):
         return self.model.objects.all()
