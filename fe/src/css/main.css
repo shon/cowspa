@@ -189,7 +189,7 @@ div.hidediv  {
 }
 .toplinks { color: {{ toplinks_color }}; }
 .main {
-    background-image: url({{main_bg}});
+    background-image: url({{main_background_image}});
     /*
     background: linear-gradient(top, {{ main_bg_start }}, {{ main_bg_end }}); 
     background: -moz-linear-gradient(top, {{ main_bg_start }}, {{ main_bg_end }}); 
