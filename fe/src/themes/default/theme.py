@@ -5,6 +5,7 @@ orange = "orange"
 page_bg = "#001200"
 page_font_size = "0.81em"
 topbar_bg = page_bg
+main_background_image = "images/bg.png"
 main_bg_start = "#133300"
 main_bg_end = "#CBE8C1"
 nav_bg_start = page_bg

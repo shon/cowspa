@@ -19,7 +19,8 @@ pathjoin = os.path.join
 api_version = '0.1'
 srcroot = "fe/src"
 dstroot = "pub"
-themes_root = "fe/src/themes"
+themes_srcroot = "fe/src/themes"
+themes_dstroot = "pub/themes"
 themes = (('default', 'Green'), ('bw', 'Black and White'), ('fb', 'Facebook'))
 theme_labels = [theme[1] for theme in themes]
 theme_codes = [theme[0] for theme in themes]
@@ -36,16 +37,16 @@ theme_root = pathjoin(srcroot, "themes")
 
 template_env = jinja2.Environment(loader=jinja2.FileSystemLoader(srcroot))
 
+def compute_possible_pathdata(data):
+    data_prefixed = {}
+    for k, v in data.items():
+        v_new = [(k + ':' + x)  for x in v]
+        data_prefixed[k] = v_new
+    path_data_prefixed = itertools.product(*data_prefixed.values())
+    return list(dict(y.split(':', 1) for y in x) for x in path_data_prefixed)
+
 
 class Template(object):
-    @classmethod
-    def compute_possible_pathdata(cls, data):
-        data_prefixed = {}
-        for k, v in data.items():
-            v_new = [(k + ':' + x)  for x in v]
-            data_prefixed[k] = v_new
-        path_data_prefixed = itertools.product(*data_prefixed.values())
-        cls.pathdata_combinations = list(dict(y.split(':', 1) for y in x) for x in path_data_prefixed)
     def __init__(self, src, dsts):
         self.src = src
         # self.source = file(src).read()
@@ -68,7 +69,7 @@ class Template(object):
     def process_dst_data(self):
         paths_data = []
         paths = []
-        for path_dict in self.pathdata_combinations:
+        for path_dict in path_combinations:
             for dst in self.dsts:
                 path = jinja2.Template(dst).render(path_dict)
                 if path not in paths: # check to avoid duplicates
@@ -103,22 +104,27 @@ class CSSTemplate(Template):
     def render(self, context):
         theme_dir = pathjoin(theme_root, context['theme'])
         print "compiling", theme_dir
-        cssdefs_path = os.path.join(theme_dir, 'cssdefs.py')
+        cssdefs_path = os.path.join(theme_dir, 'theme.py')
         theme_data = {}
         execfile(cssdefs_path, {}, theme_data)
+        print theme_data
         context.update(theme_data)
         out = super(CSSTemplate, self).render(context)
         out = cssprefixer.process(out, debug=False, minify=(not DEBUG))
         return out
 
-
 def copydirs(srcs, dst, verbose=False):
-    srcs = list(srcs)
+    if isinstance(srcs, basestring):
+        srcs = [srcs]
+    else:
+        srcs = list(srcs)
+    if not srcs:
+        raise Exception("No source specified")
     print "%s -> %s" % (srcs, dst)
     v = verbose and 'v' or ''
     dstdir = os.path.dirname(dst)
     if dstdir and not os.path.exists(dstdir):
-        os.mkdir(dstdir)
+        os.makedirs(dstdir)
     srcs = ' '.join(srcs)
     cmd = "/bin/cp -r%s %s %s" % (v, srcs, dst)
     print "Executing ", cmd
@@ -134,7 +140,7 @@ data = dict(
     role = role_codes,
     theme = theme_codes )
 
-Template.compute_possible_pathdata(data)
+path_combinations = compute_possible_pathdata(data)
 
 templates = [
     Template('login.html', dsts = ['login']),
@@ -151,7 +157,7 @@ templates = [
     SHPAMLTemplate('spaces/plans/list.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/spaces/plans/list']),
     Template('next.html', dsts = ['{{ lang }}/{{ role }}/{{ theme }}/next']),
     Template('activate.html', dsts = ['activate']),
-    CSSTemplate('css/cowspa.css', dsts = ['css/main.css', '{{ lang }}/{{ role }}/{{ theme }}/css/main.css']),
+    CSSTemplate('css/main.css', dsts = ['css/main.css', 'themes/{{ theme }}/main.css']),
     CSSTemplate('css/MooDialog.css', dsts = ['css/MooDialog.css', '{{ lang }}/{{ role }}/{{ theme }}/css/MooDialog.css']),
     Template('setup.html', dsts = ['setup']),
     ]
@@ -172,11 +178,22 @@ def compile_templates():
             theme = theme_codes )
         template.build({}, dst_data=dst_data)
 
+def copy_theme_assets():
+    asset_dirs = ('images',)
+    combinations = itertools.product(theme_codes, asset_dirs)
+    srcdir_combinations = (pathjoin(themes_srcroot, *c) for c in combinations)
+    #print list(srcdir_combinations)
+    src_dirs = (path for path in srcdir_combinations if os.path.isdir(path))
+    for src_dir in src_dirs:
+        dst = pathjoin(dstroot, src_dir.replace(srcroot, '')[1:])
+        copydirs(src_dir, dst)
+
 def prep():
     if not os.path.exists(dstroot):
         os.mkdir(dstroot)
 
 prep()
+copy_theme_assets()
 copy_contribs()
 copy_statics()
 compile_templates()
