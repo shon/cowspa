@@ -1,7 +1,8 @@
 class ACObject(object): # Access Control Object
-    def __init__(self):
-        self.label = self.__class__.__name__.capitalize()
-        self.description = self.label
+    def __init__(self, name):
+        self.name = name
+        self.label = name.replace('_', ' ').capitalize()
+        self.description = self.label + ' ' + self.__class__.__name__.capitalize()
     def __str__(self):
         return "<%s: %s>" % (self.__class__.__name__, self.label)
     def __repr__(self):
@@ -9,58 +10,30 @@ class ACObject(object): # Access Control Object
 
 class Permission(ACObject): pass
 
-admin = Permission()
-admin.name = 'admin'
-admin.label = 'Superuser'
-
-access_business = Permission()
-access_business.name = "access_business"
-access_business.label = "Access Business"
-
-manage_own_profile = Permission()
-manage_own_profile.name = "manage_own_profile"
-
-manage_biz_invoices = Permission()
-manage_biz_invoices.name = "manage_biz_invoices"
-
-manage_biz_profile = Permission()
-manage_biz_profile.name = "manage_biz_profile"
-
-apply_membership = Permission()
-apply_membership.name = "apply_membership"
-
-view_own_invoices = Permission()
-view_own_invoices.name = "view_own_invoices"
-
-search_biz = Permission()
-search_biz.name = "search_biz"
-
-approve_plan = Permission()
-approve_plan.name = "approve_plan"
-
-invite_member = Permission()
-invite_member.name = "invite_member"
-
-activate_member = Permission()
-activate_member.name = "activate_member"
-
-change_member_role = Permission()
-change_member_role.name = "change_member_role"
+admin = Permission('admin')
+access_business = Permission('access_business')
+manage_own_profile = Permission('manage_own_profile')
+manage_biz_invoices = Permission('manage_biz_invoices')
+manage_biz_profile = Permission('manage_biz_profile')
+apply_membership = Permission('apply_membership')
+view_own_invoices = Permission('view_own_invoices')
+search_biz = Permission('search_biz')
+approve_plan = Permission('approve_plan')
+invite_member = Permission('invite_member')
+activate_member = Permission('activate_member')
+change_member_role = Permission('change_member_role')
 
 class Role(ACObject): pass
 
-admin = Role()
-admin.name = "admin"
+admin = Role('admin')
 admin.permissions = [admin]
 
-registered = Role()
-registered.name = "registered"
+registered = Role("registered")
 registered.permissions = [
     apply_membership,
     ]
 
-member = Role()
-member.name = "member"
+member = Role("member")
 member.permissions = [
     access_business,
     manage_own_profile,
@@ -68,8 +41,7 @@ member.permissions = [
     view_own_invoices,
     ]
 
-host = Role()
-host.name = "host"
+host = Role("host")
 host.permissions = [
     approve_plan,
     invite_member,
