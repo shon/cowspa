@@ -1,7 +1,7 @@
 jinja2
 flask
-redis
-git+git://github.com/shon/redisco.git
+#redis
+#git+git://github.com/shon/redisco.git
 colander
 greenlet
 #gevent
