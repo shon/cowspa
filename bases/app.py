@@ -20,7 +20,9 @@ class API(object):
         update_wrapper(self, target)
         f = target
         for wrapper in api_wrappers:
-            if getattr(target, wrapper.prop, None):
+            target_pref = getattr(target, wrapper.prop, None)
+            if target_pref is None: target_pref = getattr(wrapper, 'default', None)
+            if target_pref:
                 f = wrapper(f)
                 update_wrapper(f, target)
         self.f = f
@@ -32,6 +34,7 @@ class API(object):
             retcode = errors.execution_error
             res = err.msgs
         except Exception, err:
+            print "UNCAUGHT EXCEPTION"
             traceback.print_exc()
             retcode = getattr(err, 'suggested_retcode', errors.exception_retcode)
             res = getattr(err, 'suggested_result', str(err))
@@ -48,9 +51,9 @@ class Mapper(object):
         path = self.prefix + '/' + path
         if not methods:
             self.rules.append(routing.Rule(path, endpoint=endpoint))
-            print path, endpoint
+            #print path, endpoint
         else:
-            print path, endpoint, methods
+            #print path, endpoint, methods
             self.rules.append(routing.Rule(path, endpoint=endpoint, methods=methods))
     def connect(self, path, function=None):
         if callable(path):
@@ -117,11 +120,11 @@ class Collection(object):
             raise TypeError("Typs mismatch: %s is not instance of persistence.Store" % store)
         self.store = store
     def list(self):
-        return [self.store.obj2dict(o) for o in self.store.fetch_all()]
+        return self.store.get_all()
     def new(self):
         raise NotImplemented
     def search(self, crit):
-        return self.store.fetch_by(**crit)
+        raise NotImplemented
     def delete_all(self):
         raise NotImplemented
 
@@ -139,36 +142,31 @@ class ObjectMethods(object):
             self.store = store
     def info(self, *args, **kw):
         oid = kw.get(self.id_name)
-        o = self.store.fetch_by_id(oid)
-        return self.store.obj2dict(o)
+        return self.store.get(oid)
     info.console_debug = True
     def details(self, oid):
         oid = kw.get(self.id_name)
-        o = self.store.fetch_by_id(oid)
-        return self.store.obj2dict(o)
+        return self.store.get(oid)
     def delete(self, oid):
         raise NotImplemented
     def get(self, *args, **kw):
         oid = kw.get(self.id_name)
         attr = kw['attr']
-        o = self.store.fetch_by_id(oid)
+        o = self.store.get(oid)
         return getattr(o, attr)
     def set(self, *args, **kw):
         oid = kw.get(self.id_name)
         attr = kw['attr']
-        o = self.store.fetch_by_id(plan_id)
+        o = self.store.get(oid)
         setattr(o, attr, kw['v'])
     def update(self, oid, mod_data):
-        self.store.edit(oid, mod_data)
+        self.store.update(oid, mod_data)
         return True
 
 class Traverser(object):
-    def __init__(self, app, session_lookup):
+    def __init__(self, tree):
         self.path = []
-        self.app = app
-        self.session_lookup = session_lookup
-    def set_context(self, auth_token):
-        env.context.user_id = self.session_lookup(auth_token)
+        self.tree = tree
 
 class PyTraverser(Traverser):
     def __getattr__(self, name):
@@ -182,7 +180,7 @@ class PyTraverser(Traverser):
     def __call__(self, *args, **kw):
         path = '/' + '/'.join(self.path)
         try:
-            f, _kw = self.app.match(path)
+            f, _kw = self.tree.match(path)
             kw.update(_kw)
         except werkzeug.exceptions.NotFound:
             raise Exception("Handler for %s not found" % path)
@@ -192,18 +190,41 @@ class HTTPTraverser(Traverser):
     def __call__(self, path, http_method='GET', data={}):
         path = '/' + path
         try:
-            f, kw = self.app.match(path, http_method)
+            f, kw = self.tree.match(path, http_method)
             data.update(kw)
         except werkzeug.exceptions.NotFound:
             raise Exception("Handler for %s not found" % path)
         return f(**data)
 
 class TraverserFactory(object):
-    def __init__(self, Traverser, tree, session_lookup):
+    def __init__(self, Traverser, tree):
         self._traverser = Traverser
         self._tree = tree
-        self._session_lookup = session_lookup
     def __getattr__(self, name):
-        return self._traverser(self._tree, self._session_lookup)
+        return self._traverser(self._tree)
     def __getitem__(self, name):
-        return self._traverser(self._tree, self._session_lookup)
+        return self._traverser(self._tree)
+
+class Application(object):
+    def __init__(self, name):
+        self.name = name
+        self.on_startup = []
+        self.on_shutdown = []
+        self.session_lookup = None
+        self.tree  = None
+    @property
+    def root(self):
+        return PyTraverser(self.tree)
+    @property
+    def http(self):
+        return HTTPTraverser(self.tree)
+    def startup(self):
+        for f in self.on_startup:
+            f()
+            print self.name, ':startup::', f.__func__.__module__, '.', f.__name__
+    def shutdown(self):
+        # sys.atexit
+        for f in self.on_shutdown:
+            f()
+    def set_context(self, auth_token):
+        env.context.user_id = self.session_lookup(auth_token)
