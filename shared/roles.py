@@ -25,8 +25,8 @@ change_member_role = Permission('change_member_role')
 
 class Role(ACObject): pass
 
-admin = Role('admin')
-admin.permissions = [admin]
+admin_role = Role('admin')
+admin_role.permissions = [admin]
 
 registered = Role("registered")
 registered.permissions = [
@@ -52,4 +52,4 @@ host.permissions = [
     ]
 
 all_roles = (v for v in globals().values() if isinstance(v, Role))
-all_permissions = (v for v in locals().values() if isinstance(v, Permission))
+all_permissions = (v for v in globals().values() if isinstance(v, Permission))

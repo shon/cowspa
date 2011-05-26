@@ -5,7 +5,7 @@ import time
 path = os.path.abspath(os.getcwd())
 sys.path.append(path)
 
-import fe.repository.stores as stores
+#import fe.repository.stores as stores
 
 import be
 import be.bootstrap
@@ -56,15 +56,17 @@ def login():
         retcode, auth_token = res['retcode'], res['result']
         if retcode == 0 and auth_token:
             session_data = {}
-            session_data.update(cowapp.root['0.1'].users[username].info()['result'])
-            session_data.update(cowapp.root['0.1'].members[session_data['id']].get(attr='pref')['result'])
-            result = start_pages[session_data['role']] % session_data
+            try:
+                session_data.update(cowapp.root['0.1'].users[username].info()['result'])
+                session_data.update(cowapp.root['0.1'].members[session_data['id']].get(attr='pref')['result'])
+                result = start_pages[session_data['role']] % session_data
+            except Exception, err:
+                result = None
+                retcode = 5
             #session['authcookie'] = auth_token
             #session.permanent = remember
-            print 'login success'
         else:
             result = None
-            print 'login failed'
         resp = jsonify({'retcode': retcode, 'result': result})
         resp.set_cookie('authcookie',value=auth_token)
     elif request.method == 'GET':

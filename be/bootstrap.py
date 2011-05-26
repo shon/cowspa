@@ -1,15 +1,16 @@
 import __builtin__
+import sys
 import conf
 import commonlib
 import commonlib.helpers
 import commonlib.messaging.email
-import shared.roles
-import be.repository.stores as stores
 import gevent.local
+import be.repository.pgdb as pgdb
+import be.repository.stores as stores
 
-#import sys
-#reload(sys)
-#sys.setdefaultencoding('utf-8')
+def setdefaultencoding():
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
 
 def init():
     class env: pass
@@ -20,17 +21,13 @@ def init():
     env.context = gevent.local.local()
     return env
 
+def dbsetup():
+    pgdb.provider.startup()
+    pgdb.provider.tr_start(env.context)
+    stores.startup()
+    pgdb.provider.tr_complete(env.context)
+
+setdefaultencoding()
 __builtin__.env = init()
+dbsetup()
 
-def add_roles():
-    for role in shared.roles.all_roles:
-        permissions = []
-        for perm in role.permissions:
-            permission = stores.permission_store.soft_fetch_one_by(name=perm.name)
-            if not permission:
-                permission = stores.permission_store.add(perm.name, perm.label, perm.description)
-            permissions.append(permission)
-        if not stores.role_store.soft_fetch_one_by(name=role.name):
-            stores.role_store.add(role.name, role.label, role.description, permissions)
-
-add_roles()

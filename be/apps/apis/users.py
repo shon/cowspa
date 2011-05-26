@@ -19,24 +19,23 @@ user_roles_store = stores.user_roles_store
 
 role_names_ordered = ['new', 'member', 'host', 'director', 'network', 'admin']
 
-def create_session(username):
+def create_session(user_id):
     token  = commonlib.helpers.random_key_gen()
-    user = userstore.fetch_one_by(username=username)
-    session = session_store.add(token, user.id)
-    return session.token
+    session_store.add(token, user_id)
+    return token
 
 def get_or_create_session(username):
-    user = userstore.fetch_one_by(username=username)
+    user = userstore.get_one_by(username=username)
     try:
-        session = session_store.fetch_one_by(user_id=user.id)
+        session = session_store.get_one_by(user_id=user.id)
         token = session.token
     except IndexError:
-        token = create_session(username)
+        token = create_session(user.id)
     return token
 
 def session_lookup(token):
     try:
-        session = session_store.fetch_one_by(token=token)
+        session = session_store.get_one_by(token=token)
         user_id = session.user_id
     except IndexError:
         user_id = None
@@ -44,7 +43,7 @@ def session_lookup(token):
 
 def authenticate(username, password):
     try:
-        user = userstore.fetch_one_by(username=username)
+        user = userstore.get_one_by(username=username)
     except IndexError, err:
         return False
     return user.password == password
@@ -56,7 +55,7 @@ def login(username, password):
 
 def logout(token):
     try:
-        session = session_store.fetch_one_by(token=token)
+        session = session_store.get_one_by(token=token)
         session.delete()
     except Exception, err:
         print err
@@ -70,21 +69,20 @@ def add(username, password, enabled=True):
     return user.id
 
 def get_user_permissions(user_id):
-    return user_perms_store.fetch_one_by(user_id=user_id).permission_ids
+    return user_perms_store.get_one_by(user_id=user_id).permission_ids
 
 def get_context_permissions(context, user):
-    perms = user_perms_store.fetch_one_by(user_id=user_id)
+    perms = user_perms_store.get_one_by(user_id=user_id)
     ctx_ref = context.ref()
     return (p for p in perms if p.startswith(ctx_ref))
 
 def strip_context_from_ref(ref):
-    return ref.split('::')[-1]
+    return int(ref.split('::')[-1])
 
 def get_biggest_role(user_id):
-    roles = user_roles_store.fetch_by(user_id=user_id)
-    if roles:
-        role_ids = roles[0].role_ids
-        role_names = tuple(role_store.fetch_by_id(strip_context_from_ref(rid)).name for rid in role_ids)
+    role_ids = [ur.role_id for ur in user_roles_store.get_by(user_id=user_id)]
+    if role_ids:
+        role_names = tuple(role_store.get(strip_context_from_ref(rid)).name for rid in role_ids)
         return [name for name in role_names_ordered if name in role_names][-1]
     return role_names_ordered[0]
 
@@ -95,40 +93,31 @@ class UserMethods(bases.app.ObjectMethods):
     methods_available = ['info', 'assign_roles']
 
     def info(self, username):
-        user = self.store.fetch_one_by(username=username)
+        user = self.store.get_one_by(username=username)
         return dict(role=get_biggest_role(user.id), id=user.id)
 
     def assign_roles(self, username, biz_id, role_names):
         if isinstance(role_names, basestring):
             role_names = [role_names]
 
-        if username.isdigit():
-            user = userstore.fetch_by_id(username)
+        if isinstance(username, int) or (isinstance(username, basestring) and username.isdigit()):
+            user = userstore.get(username)
         else:
-            user = userstore.fetch_one_by(username=username)
+            user = userstore.get_one_by(username=username)
 
-        user_roles = user_roles_store.soft_fetch_one_by(user_id=user.id)
-        roles = [role_store.fetch_one_by(name=name) for name in role_names]
-        user_perms = user_perms_store.soft_fetch_one_by(user_id=user.id)
-        permissions = list(itertools.chain(*[role.permissions for role in roles]))
+        user_roles = user_roles_store.soft_get_one_by(user_id=user.id)
+        roles = [role_store.get_one_by(name=name) for name in role_names]
+        user_perms = user_perms_store.soft_get_one_by(user_id=user.id)
+        permission_ids = list(itertools.chain(*[role.permissions for role in roles]))
 
-        biz = None
+        biz_ref = None
         if biz_id:
-            biz = biz_store.fetch_by_id(biz_id)
+            biz_ref = biz_store.ref(biz_id)
 
-        if user_roles:
-            user_roles_store.extend(user, biz, roles)
-            user_roles.save()
-        else:
-            user_roles_store.add(user, biz, roles)
+        user_roles_store.add(user, biz_ref, roles)
+        user_perms_store.add(user, biz_ref, permission_ids)
 
-        if user_perms:
-            user_perms_store.extend(user, biz, permissions)
-            user_perms.save()
-        else:
-            user_perms = user_perms_store.add(user, biz, permissions)
-
-        return user_perms.permission_ids
+        return True
 
 users = Users(userstore)
 user_methods = UserMethods(userstore)

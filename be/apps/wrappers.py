@@ -2,10 +2,26 @@ import inspect
 #import pycerberus
 import bases.errors as errors
 import be.repository.stores as stores
+import be.repository.pgdb as dblib
 
 import apis.users as userlib
 
 user_perms_store = stores.user_perms_store
+
+def dbtransaction(f):
+    def wrapper(*args, **kw):
+        dblib.provider.tr_start(env.context)
+        try:
+            res = f(*args, **kw)
+        except:
+            dblib.provider.tr_abort(env.context)
+            raise
+        finally:
+            dblib.provider.tr_complete(env.context)
+        return res
+    return wrapper
+dbtransaction.prop = 'dbtransaction'
+dbtransaction.default = True
 
 def permission_checker(f):
     def wrapper(*args, **kw):

@@ -10,29 +10,29 @@ def cuser_id(context, data, macro_data):
 
 def cuser_perm_names(context, data, macro_data):
     user_id = context.user_id
-    return [p.name for p in user_perms_store.fetch_one_by(user_id=user_id)]
+    return [p.name for p in user_perms_store.get_one_by(user_id=user_id)]
 
 def cuser_biz_ids(context, data, macro_data):
     user_id = context.user_id
-    member = stores.member_store.fetch_by_id(user_id)
+    member = stores.member_store.get(user_id)
     return member.biz_memberships
 
 def biz_id_from_plan_id(context, data, macro_data):
     plan_id = data['plan_id']
-    plan = stores.plan_store.fetch_by_id(plan_id)
-    return str(plan.biz_id)
+    plan = stores.plan_store.get(plan_id)
+    return str(plan.bizplace_id)
 
 def requestor_display_name(context, data, macro_data):
     user_id = data['requestor_id']
-    profile = stores.memberstore.fetch_by_id(user_id).profile
-    return profile.display_name or stores.userstore.fetch_by_id(user_id).username
+    profile = stores.profilestore.get_one_by(member=user_id, _fields=['display_name'])
+    return profile.display_name or stores.userstore.get(user_id).username
 
 def name_from_plan_id(context, data, macro_data):
     plan_id = data['plan_id']
-    return stores.plan_store.fetch_by_id(plan_id).name
+    return stores.plan_store.get(plan_id).name
 
 def id_by_name(context, data, macro_data):
-    return stores.permission_store.fetch_by(name=macro_data)[0].id
+    return stores.permission_store.get_one_by(name=macro_data).id
 
 processors = dict(
     cuser_id = cuser_id,

@@ -13,7 +13,7 @@ mparser = MultifieldParser(["id", "display_name", "username", "short_description
 def populate(member_store):
     writer = build_writer()
     print "Populating whoosh..."
-    for m in member_store.fetch_all():
+    for m in member_store.get_all():
         writer.add_document(**member2dict(m))
     writer.commit()
     print "Populating whoosh: Done"
