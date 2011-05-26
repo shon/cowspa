@@ -1,5 +1,4 @@
 import abc
-import datetime
 
 from commonlib.helpers import odict
 
@@ -12,135 +11,271 @@ def ref2o(ref):
 class BaseStore(object):
     __metaclass__ = abc.ABCMeta
 
+class BaseStore(object):
+
     def __init__(self):
         known_stores[self.model.__name__] = self
 
-    def ref(self, obj):
-        return obj.__class__.__name__ + ':' + str(obj.id)
+    def ref(self, oid):
+        return self.model.__name__ + ':' + str(oid)
 
-    @abc.abstractmethod
-    def add(self, **data):
+    def get(self, oid, fields=None):
         """
-        returns oid
-        """
-
-    @abc.abstractmethod
-    def remove(self, oids):
-        """
+        oid: object id. match with id field of row.
+        fields: fields to include in result. None return all.
+        -> odict which is jsonable
         """
 
-    @abc.abstractmethod
-    def edit(self, oid, mod_data):
+    def query(self, q):
         """
-        """
-
-    @abc.abstractmethod
-    def fetch_by(self, **crit):
-        """
+        q: query string
+        -> list/iterable
         """
 
-    @abc.abstractmethod
-    def fetch_by_id(self, oid):
+    def count(self):
         """
-        """
-
-    @abc.abstractmethod
-    def fetch_one_by(self, **crit):
-        """
+        -> int
         """
 
-    def soft_fetch_one_by(self, *args, **kw):
+    def add(self, data):
         """
-        returns None if not found
+        add a row based on data
+        data: dict
+        -> id/True
         """
+
+    def update(self, oid, mod_data):
+        """
+        update a row based on mod_data passed
+        mod_data: dict
+        -> True/False
+        """
+
+    def remove(self, oid):
+        """
+        delete all rows where id is oid
+        -> int: number of rows deleted
+        """
+
+    def remove_by(self, crit, params):
+        """
+        delete all matching rows
+        crit: eg. WHERE userid = %s
+        params: list/iterable
+        -> int: number of rows deleted
+        """
+
+    def soft_get_one_by(self, *args, **kw):
         try:
-            return self.fetch_one_by(*args, **kw)
+            return self.get_one_by(*args, **kw)
         except IndexError, err:
             pass
 
-    @abc.abstractmethod
-    def obj2dict(self, obj):
+
+class PGStore(BaseStore):
+
+    odicter = odict
+
+    def fields2cols(self, fields):
+        cols_str = '*'
+        if fields:
+            cols_str = ', '.join(fields)
+        return cols_str
+
+    def get(self, oid, _fields=None):
         """
-        returns dictionary created with attribute names and values
+        oid: object id. match with id field of row.
+        _fields: fields to include in result. None return all.
+        -> odict which is jsonable
+        """
+        cols_str = self.fields2cols(_fields)
+        q = "SELECT %(cols_str)s FROM %(table_name)s WHERE id = %%s" %dict(table_name=self.model.table_name, cols_str=cols_str)
+        env.context.db.execute(q, (oid,))
+        cols = (r[0] for r in env.context.db.description)
+        values = env.context.db.fetchone()
+        if not values:
+            raise Exception("User with id %d does not exist" % oid)
+        return self.odicter(zip(cols, values))
+
+    def get_all(self, _fields=None):
+        cols_str = self.fields2cols(_fields)
+        q = "SELECT %(cols_str)s FROM %(table_name)s" %dict(table_name=self.model.table_name, cols_str=cols_str)
+        env.context.db.execute(q)
+        cols = [r[0] for r in env.context.db.description]
+        rows = env.context.db.fetchall()
+        return [self.odicter(zip(cols, row)) for row in rows]
+
+    def get_by(self, _fields=None, **crit):
+        """
+        crit: eg. dict(name='Joe', lang='en')
+        -> list of odict
+        """
+        cols_str = self.fields2cols(_fields)
+        crit_keys = crit.keys()
+        values = [crit[k] for k in crit_keys]
+        crit_keys_s = ' AND '.join(('%s = %%s' % k for k in crit_keys))
+        table_name = self.model.table_name
+        q = 'SELECT %(cols_str)s FROM %(table_name)s WHERE %(crit_keys_s)s' % locals()
+        env.context.db.execute(q, values)
+        cols = [r[0] for r in env.context.db.description]
+        rows = env.context.db.fetchall()
+        return [self.odicter(zip(cols, row)) for row in rows]
+
+    def get_one_by(self, _fields=None, **crit):
+        """
+        crit: eg. name='Joe', lang='en'
+        -> odict
+        """
+        cols_str = self.fields2cols(_fields)
+        crit_keys = crit.keys()
+        values = [crit[k] for k in crit_keys]
+        crit_keys_s = ', '.join(('%s = %%s' % k for k in crit_keys))
+        table_name = self.model.table_name
+        q = 'SELECT %(cols_str)s FROM %(table_name)s WHERE %(crit_keys_s)s' % locals()
+        env.context.db.execute(q, values)
+        cols = [r[0] for r in env.context.db.description]
+        row = env.context.db.fetchall()[0]
+        return self.odicter(zip(cols, row))
+
+
+    def query(self, crit, values, fields=None):
+        """
+        crit: eg. WHERE userid = %s
+        values: values to parameterize for crit
+        fields: fields to include in result. None return all.
+        -> list/iterable
+        """
+        cols_str = self.fields2cols(fields)
+        table_name = self.model.table_name
+        q = 'SELECT %(cols_str)s FROM %(table_name)s WHERE %(crit)s' % locals()
+        env.context.db.execute(q, values)
+        return env.context.db.fetchall()
+
+    def count(self):
+        """
+        -> int
+        """
+        env.context.db.execute('SELECT count(*) from %s' % self.model.table_name)
+        return env.context.db.fetchone()[0]
+
+    def _add(self, **data):
+        cols = data.keys()
+        cols_str = ', '.join(cols)
+        values_str = ', '.join( ['%s' for i in cols] )
+        q = 'INSERT INTO %(table_name)s (%(cols)s) VALUES (%(values_str)s)' % \
+            dict(table_name=self.model.table_name, cols=cols_str, values_str=values_str)
+        values = tuple(data[k] for k in cols)
+        env.context.db.execute(q, values)
+        if self.model.auto_id:
+            q = 'SELECT lastval()'
+            env.context.db.execute(q)
+            oid = env.context.db.fetchone()[0]
+            return oid
+        return True
+
+
+    def update(self, oid, **mod_data):
+        """
+        update a row based on mod_data passed
+        mod_data: dict
+        -> True/False
+        """
+        cols = mod_data.keys()
+        cols_str = ', '.join('%s=%%(%s)s' % (k,k) for k in mod_data.keys())
+        table_name = self.model.table_name
+        q = 'UPDATE %(table_name)s SET %(cols)s WHERE id = %(oid)s' % dict(table_name=table_name, cols=cols_str, oid=oid)
+        values = dict((k, mod_data[k]) for k in cols)
+        try:
+            env.context.db.execute(q, values)
+        except:
+            print q
+            print values
+            raise
+        return True
+
+    def update_by(self, crit, **mod_data):
+        """
+        condition: sql condition expression
+        """
+        crit_keys = crit.keys()
+        values = [crit[k] for k in crit_keys]
+        condition = ', '.join(('%s = %%s' % k for k in crit_keys))
+        cols = mod_data.keys()
+        cols_str = ', '.join('%s=%%s' % k for k in mod_data.keys())
+        table_name = self.model.table_name
+        q = 'UPDATE %(name)s SET %(cols)s WHERE %(condition)s' % dict(name=table_name, cols=cols_str, condition=condition)
+        values = [mod_data[k] for k in cols] + values
+        env.context.db.execute(q, values)
+        return True
+
+    def remove(self, oid):
+        """
+        delete all rows where id is oid
+        -> int: number of rows deleted
+        """
+
+    def remove_by(self, **crit):
+        """
+        delete all matching rows
+        -> int: number of rows deleted
         """
 
 class CachedStore(BaseStore):
-    def __init__(self, store, *args, **kw):
+    def __init__(self, store):
         self.store = store
-        self._cache_by_id = dict((o.id, odict(self.store.obj2dict(o))) for o in self.store.model.objects.all())
+        self._cache_by_id = {}
+        self.load()
+    def load(self, *args, **kw):
+        self.store.load(*args, **kw)
+        self._cache_by_id = dict((o.id, o) for o in self.store.get_all())
         for k,v in self._cache_by_id.items():
             v['id'] = k
     def add(self, *args, **kw):
-        obj = self.store.add(*args, **kw)
-        self._cache_by_id[obj.id] = odict(self.store.obj2dict(obj))
-        self._cache_by_id[obj.id]['id'] = obj.id
+        oid = self.store.add(*args, **kw)
+        obj = self.store.get(oid)
+        self._cache_by_id[oid] = obj
         return obj
-    def edit(self, oid, mod_data):
-        raise NotImplemented # unless we take care of cache invalidation
-    def list(self, limit=None, order_by=None):
-        raise NotImplemented
-    def fetch_one_by(self, **crit):
-        for d in self._cache_by_id.values():
-            if all((v==d[k]) for k,v in crit.items()):
-                return d
-        else:
-            raise IndexError("No match")
-    def fetch_all(self):
+    def get_all(self, _fields=None): # fields ignored
         return self._cache_by_id.values()
-    def fetch_by(self, **crit):
-        #print tuple(d for d in self._cache_by_id.values())
-        #d = self._cache_by_id.values()[0]
-        #print list(((k,v),(k,d[k])) for k,v in crit.items())
-        return tuple(d for d in self._cache_by_id.values() if \
+    def get_one_by(self, _fields=None, **crit):
+        for d in self._cache_by_id.values():
+            if all(((k,v)==(k,d[k])) for k,v in crit.items()):
+                return d
+        raise IndexError("No match: %s" % str(crit))
+    def get_by(self, _fields, **crit):
+        if _fields:
+            strip_dict = lambda d: [d[k] for k in _fields]
+        else:
+            strip_dict = lambda d: d
+        return tuple(strip_dict(d) for d in self._cache_by_id.values() if \
             all(((k,v)==(k,d[k])) for k,v in crit.items()))
-    def fetch_by_id(self, oid):
+    def get(self, oid):
         return self._cache_by_id[oid]
     def remove(self, oid):
         raise NotImplemented # unless we take care of cache invalidation
-    def obj2dict(self, obj):
-        return self._cache_by_id[obj.id]
 
-class RedisStore(BaseStore):
-    def add(self, **data):
-        """
-        returns oid
-        """
-        raise NotImplemented
 
-    def edit(self, oid, mod_data):
-        o = self.fetch_by_id(oid)
-        for k,v in mod_data.items():
-            setattr(o, k, v)
-        o.save()
-        return True
+class DBProvider(object):
+    __metaclass__ = abc.ABCMeta
 
-    def fetch_by(self, **crit):
+    @abc.abstractmethod
+    def startup(self):
         """
         """
-        return self.model.objects.filter(**crit)
-
-    def fetch_one_by(self, **crit):
+    @abc.abstractmethod
+    def shutdown(self):
         """
         """
-        return self.model.objects.filter(**crit)[0]
-
-    def fetch_by_id(self, oid):
+    @abc.abstractmethod
+    def tr_start(self, context):
+        """
+        context: context storage
+        """
+    @abc.abstractmethod
+    def tr_abort(self, context):
         """
         """
-        return self.model.objects.get_by_id(str(oid))
-
-    def fetch_all(self):
-        return self.model.objects.all()
-
-    def remove(self, oid):
-        obj = self.model.objects.filter(id=oid)[0]
-        return obj.delete()
-
-    @classmethod
-    def obj2dict(self, obj):
-        d = {'id': obj.id}
-        for k, v in obj.attributes_dict.items():
-            if isinstance(v, datetime.datetime):
-                v = v.isoformat()
-            d[k] = v
-        return d
+    @abc.abstractmethod
+    def tr_complete(self, context):
+        """
+        """
